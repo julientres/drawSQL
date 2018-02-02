@@ -9,9 +9,6 @@
 	else{
 		$info['info'] = "Vous devez être connecté pour accéder à ce contenu.";
 	}
-	//$retour=doConnexion();	
-	//$_SESSION['databaseConnected']=false;
-	//var_dump($bdd);
 ?>
 
 <!DOCTYPE html>
@@ -57,12 +54,6 @@
 <body>
 	<div id="connexion_bloc">
 		<?php
-			// if(!isset($_SESSION['databaseConnected'])){
-			// 	echo "<div class='alert alert-info alert-dismissible' role='alert'>
-			// 			<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-			// 			<span class='glyphicon glyphicon-ok-circle' aria-hidden='true'></span><strong> Déconnexion réussie !</strong> Vous avez été déconnecté de nos services.
-			// 		</div>";
-			// }
 			if(isset($info['disconnected'])){
 				echo "<div class='alert alert-info alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>

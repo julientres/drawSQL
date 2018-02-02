@@ -27,9 +27,6 @@
 			}
 			catch (PDOException $e)
 			{
-				//echo 'erreur : '.$e->getMessage()."<br />";
-				//echo 'N° : '.$e->getCode();
-				//exit();
 				return array('success' => false,
 							'object' => $e);
 			}

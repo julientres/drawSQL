@@ -156,13 +156,13 @@
 			<div class="form-group row">
 			    <label for="host" class="col-lg-4 col-form-label">Host*</label>
 			    <div class="col-lg-6">
-			      <input type="text" class="form-control" id="host" name="host"  value="<?= getValueFromPost('host') ?>" placeholder="ex : localhost">
+			      <input type="text" class="form-control" id="host" name="host" value="<?= getValueFromPost('host') ?>" placeholder="ex : localhost">
 				</div>
 			</div>
 			<div class="form-group row">
 			    <label for="port" class="col-lg-4 col-form-label">Port*</label>
 			    <div class="col-lg-6">
-			      <input type="text" class="form-control" id="port" name="port" value="<?= getValueFromPost('port') ?>" placeholder="ex : 3306">
+			      <input type="text" class="form-control" id="port" name="port" value="<?= getValueFromPost('port') ?>" placeholder="ex : 3306" maxlength="4">
 				</div>
 			</div>
 			<div class="form-group row">
