@@ -9,6 +9,10 @@
 		$_SESSION['passwd']=$m;		
 	}
 
+	function bla(){
+		print_r($_SESSION);
+	}
+
 	function getValueFromPost($string){
 		if(!isset($_POST['btnReinit'])){
 			if($string === 'host' && isset($_POST['host']))
@@ -188,7 +192,7 @@
 			<p><i>* Champs obligatoires</i></p>
 			<div class="btn-group" role="group" aria-label="...">			
 				<button type="submit" name="btnCo" class="btn btn-primary active">Se connecter <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></button>
-				<button type="submit" name="btnReinit" class="btn btn-warning active" onclick="this.form.reset();">Réinitialiser <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+				<button type="reset" name="btnReinit" class="btn btn-warning active">Réinitialiser <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
 			</div>
 		</form>
 	</div>
