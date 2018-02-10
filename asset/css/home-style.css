@@ -1,0 +1,39 @@
+body{
+	margin:auto;
+	width:100%;
+	background-color: #34495e;
+}
+
+#connexion_bloc{
+	width:35%;
+	margin:auto;
+	margin-top:10%;
+	border:2px solid #444;
+	padding:50px;
+	border-radius:10px;
+	box-shadow: 10px 10px 0px 2px #222;
+	background-color:#ecf0f1;
+}
+
+#connexion_form{
+	text-align: center;
+}
+
+h3{
+	margin:0;
+}
+
+hr{
+	margin:auto;
+	margin-top:20px;
+	width:60%;
+	height:1px;
+	background-color: #222;
+	border: 0;
+	text-align:center;
+}
+
+#inputHostError, #inputPortError, #inputBDDError, #inputUserError{
+	margin-bottom:0;
+	color: #F22613;
+}
