@@ -52,8 +52,8 @@ $(document).ready(function() {
     $("#btnReset").click(function() {
 	    var i = $("#connexion_form").find("input[type=text]");
        	$.each(i , function() {
-       		$(i).css('borderColor', "");
-			$(i).css('borderWidth', "");
+       		$(i).removeClass('errorBorder');
+			$(i).removeClass('successBorder');
        	})
 
        	$('.errorMsg').html("");
@@ -69,8 +69,8 @@ $(document).ready(function() {
 
 function loadError(champ, erreur) {
 	if(erreur) {
-		$(champ).css('borderColor', "#F22613");
-		$(champ).css('borderWidth', "1px");		
+		$(champ).removeClass('successBorder');	
+		$(champ).addClass('errorBorder');	
 		var div = $(champ).attr("name");
 		switch(div) {
 			case 'host':
@@ -88,8 +88,8 @@ function loadError(champ, erreur) {
 		}
 	}	
 	else {
-		$(champ).css('borderColor', "#26A65B");
-		$(champ).css('borderWidth', "1px");	
+		$(champ).removeClass('errorBorder');	
+		$(champ).addClass('successBorder');
 		var div = $(champ).attr("name");
 		switch(div) {
 			case 'host':

@@ -37,3 +37,11 @@ hr{
 	margin-bottom:0;
 	color: #F22613;
 }
+
+.successBorder {
+	border:1px solid #26A65B;
+}
+
+.errorBorder {
+	border:1px solid #F22613;
+}
