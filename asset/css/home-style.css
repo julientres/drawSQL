@@ -35,7 +35,7 @@ hr {
 
 .errorMsg {
 	margin-bottom:0;
-	color: #F22613;
+	color: #C0392B;
 }
 
 .successBorder {
@@ -43,5 +43,5 @@ hr {
 }
 
 .errorBorder {
-	border:1px solid #F22613;
+	border:1px solid #C0392B;
 }

@@ -21,10 +21,11 @@
 </head>
 <body>
 	<div id="connexion_bloc">
-		<form method="POST" action="home.php" id="connexion_form" enctype="multipart/form-data">
-			<div id="successForm"></div>
-			<div id="errorForm"></div>
-			<div id="infoForm"></div>
+		<div id="successForm" class="msg"></div>
+		<div id="errorForm" class="msg"></div>
+		<div id="infoForm" class="msg"></div>
+
+		<form method="POST" action="home.php" id="connexion_form" enctype="multipart/form-data">			
 			<h3>Application de requêtes algébriques Connexion</h3>
 			<hr>
 			<br>

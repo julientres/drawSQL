@@ -50,16 +50,22 @@ $(document).ready(function() {
        	$.each(i , function() {
        		$(i).removeClass('errorBorder');
 			$(i).removeClass('successBorder');
+			$(i).css("backgroundColor", "");
        	})
 
-       	$("#connexion_form").reset();
-       	$('.errorMsg').html("");
-    	$("#successForm").html("");
-	    $("#errorForm").html("");
-	    $("#infoForm").html("");	 
-       	$("#btnCo").attr("disabled", true);
-    	$("#btnReset").attr("disabled", true);
+       	var d1 = $("#connexion_form").find("div[class=errorMsg]");
+       	$.each(d1 , function() {
+       		$(d1).html("");
+       	})
 
+       	var d2 = $("#connexion_bloc").find("div[class=msg]");
+       	$.each(d2 , function() {
+       		$(d2).html("");
+       	})
+
+       	$('#btnCo').attr('disabled', true);
+       	$('#btnReset').attr('disabled', true);
+       	$("#connexion_form")[0].reset();	
     	checkHostOk = false;
 		checkPortOk = false;
 		checkBDDOk = false;
@@ -74,7 +80,6 @@ $(document).ready(function() {
     		data:$(this).serialize(),
     		dataType:'JSON',    		
     		success:function(data) {
-    			console.log(data);
     			if(data.success) {
     				$("#successForm").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-check'></i><strong> Succès !</strong> Connexion à la base de données réussie avec succès ! Vous allez être redirigé dans 2 secondes.</div>");
 	    			window.setTimeout(function() {
@@ -100,15 +105,19 @@ function loadError(champ, erreur) {
 		switch(div) {
 			case 'host':
 				$("#inputHostError").html("Le champ [Host] est obligatoire");
+				$("#host").css("backgroundColor", "#FBE3E4");
 				break;
 			case 'port':
 				$("#inputPortError").html("Le champ [Port] est obligatoire");
+				$("#port").css("backgroundColor", "#FBE3E4");
 				break;
 			case 'bdd':
 				$("#inputBDDError").html("Le champ [BDD] est obligatoire");
+				$("#bdd").css("backgroundColor", "#FBE3E4");
 				break;
 			case 'user':
 				$("#inputUserError").html("Le champ [Identifiant] est obligatoire");
+				$("#user").css("backgroundColor", "#FBE3E4");
 				break;
 		}
 	}	
@@ -119,15 +128,19 @@ function loadError(champ, erreur) {
 		switch(div) {
 			case 'host':
 				$("#inputHostError").html("");
+				$("#host").css("backgroundColor", "");
 				break;
 			case 'port':
 				$("#inputPortError").html("");
+				$("#port").css("backgroundColor", "");
 				break;
 			case 'bdd':
 				$("#inputBDDError").html("");
+				$("#bdd").css("backgroundColor", "");
 				break;
 			case 'user':
 				$("#inputUserError").html("");
+				$("#user").css("backgroundColor", "");
 				break;
 		}
 	}
@@ -135,14 +148,14 @@ function loadError(champ, erreur) {
 
 function checkAllInputs() {
 	if (checkHostOk && checkPortOk && checkBDDOk && checkUserOk) {
-        $('#btnCo').attr('disabled', false);
+        $('#btnCo').removeAttr("disabled");	
 	}
 	else {
-	    $('#btnCo').attr('disabled', true);		    
+	    $('#btnCo').attr('disabled', true); 
    	}
 
    	if (checkHostOk || checkPortOk || checkBDDOk || checkUserOk) {
-		$('#btnReset').attr('disabled', false);
+		 $('#btnReset').removeAttr("disabled");
 	}
 	else {
 	    $('#btnReset').attr('disabled', true);			    
