@@ -1,6 +1,5 @@
 <?php
 	require_once('../fonctions.php');
-	require_once('../asset/php/check-database.php');
 ?>
 
 <!DOCTYPE html>
@@ -22,31 +21,10 @@
 </head>
 <body>
 	<div id="connexion_bloc">
-		<?php
-			if(isset($error)){
-				echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-						<i class='fas fa-ban'></i><strong> Erreur !</strong> ".$error."
-					</div>";
-			}
-
-			if(isset($info)){				
-				echo "<div class='alert alert-info alert-dismissible' role='alert'>
-						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-							<i class='fas fa-info'></i><strong> Information :</strong> ".$info."
-					</div>";			
-			}
-
-			if(isset($success)){
-				echo "<div class='alert alert-success alert-dismissible' role='alert'>
-						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-						<i class='fas fa-check'></i><strong> Succès !</strong> ".$success."
-					</div>";
-			}
-		?>
-
-		<form method="POST" action="home.php" id="connexion_form">
+		<form method="POST" action="home.php" id="connexion_form" enctype="multipart/form-data">
+			<div id="successForm"></div>
 			<div id="errorForm"></div>
+			<div id="infoForm"></div>
 			<h3>Application de requêtes algébriques Connexion</h3>
 			<hr>
 			<br>
@@ -93,6 +71,8 @@
 			</div>
 		</form>
 	</div>
+
+	<div id="debug"></div>
 
 	<script src="../asset/js/home-js.js" type="text/javascript"></script>
 </body>

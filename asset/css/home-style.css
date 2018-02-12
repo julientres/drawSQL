@@ -1,10 +1,10 @@
-body{
+body {
 	margin:auto;
 	width:100%;
 	background-color: #34495e;
 }
 
-#connexion_bloc{
+#connexion_bloc {
 	width:35%;
 	margin:auto;
 	margin-top:10%;
@@ -15,15 +15,15 @@ body{
 	background-color:#ecf0f1;
 }
 
-#connexion_form{
+#connexion_form {
 	text-align: center;
 }
 
-h3{
+h3 {
 	margin:0;
 }
 
-hr{
+hr {
 	margin:auto;
 	margin-top:20px;
 	width:60%;
@@ -33,7 +33,7 @@ hr{
 	text-align:center;
 }
 
-#inputHostError, #inputPortError, #inputBDDError, #inputUserError{
+.errorMsg {
 	margin-bottom:0;
 	color: #F22613;
 }

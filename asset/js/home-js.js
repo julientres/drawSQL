@@ -43,11 +43,7 @@ $(document).ready(function() {
     		checkInput($('#user'));
     		checkAllInputs();
 	    })
-    })
-
-    $("#btnCo").click(function() {
-    	
-    })
+    })    
 
     $("#btnReset").click(function() {
 	    var i = $("#connexion_form").find("input[type=text]");
@@ -56,7 +52,11 @@ $(document).ready(function() {
 			$(i).removeClass('successBorder');
        	})
 
+       	$("#connexion_form").reset();
        	$('.errorMsg').html("");
+    	$("#successForm").html("");
+	    $("#errorForm").html("");
+	    $("#infoForm").html("");	 
        	$("#btnCo").attr("disabled", true);
     	$("#btnReset").attr("disabled", true);
 
@@ -64,7 +64,32 @@ $(document).ready(function() {
 		checkPortOk = false;
 		checkBDDOk = false;
 		checkUserOk = false;
-   	})	
+   	})
+
+   	$("#connexion_form").submit(function(e) {
+   		e.preventDefault();
+    	$.ajax({
+    		url:'../asset/php/check-database.php',
+    		type:'POST',
+    		data:$(this).serialize(),
+    		dataType:'JSON',    		
+    		success:function(data) {
+    			console.log(data);
+    			if(data.success) {
+    				$("#successForm").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-check'></i><strong> Succès !</strong> Connexion à la base de données réussie avec succès ! Vous allez être redirigé dans 2 secondes.</div>");
+	    			window.setTimeout(function() {
+					    window.location.href = 'draw-algebraic-queries.php';
+					}, 2000);
+    			} else {
+	    			$("#errorForm").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-ban'></i><strong> Erreur !</strong> Impossible de se connecter à la base de données. "+data.object+"</div>");
+	    			$("#infoForm").html("<div class='alert alert-info alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-info'></i><strong> Information :</strong> Vérifiez que les champs du formulaire soient corrects puis essayez à nouveau</div>");	
+    			}
+    		},
+    		error:function(data) {
+    			console.log(data);
+    		}
+    	})
+    })	
 });		
 
 function loadError(champ, erreur) {
