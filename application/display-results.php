@@ -1,7 +1,6 @@
 <?php
 	require_once('../fonctions.php');	
 	$retour = doConnexion();
-	var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -22,27 +21,27 @@
 	<link rel="stylesheet" href="../asset/css/result-style.css" type="text/css">
 </head>
 <body>
-	<?php
-		if($retour['success']==true){
-			echo "<div class='alert alert-success alert-dismissible' role='alert'>
-					<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-					<i class='fas fa-check'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
-				</div>";
-			
-			echo "<a href='draw-algebraic-queries.php' class='alert-link'>Partie dessin</a><br>";
-			echo "<a href='disconnect.php' class='alert-link'>Se déconnecter</a>";
-		}
-		else
-			echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-					<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-					<i class='fas fa-ban'></i><strong> Erreur !</strong> Vous devez être connecté pour accéder à ce contenu. <a href='home.php' class='alert-link'>Se connecter</a>
-				</div>";
-	?>
-
 	<div id="menu">
 		<?php
-			require_once('modules/nav.php');
+			if($retour['success']==true){
+				require_once('modules/navbar-result.php');
+				echo "<div class='alert alert-success alert-dismissible' role='alert'>
+						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+						<i class='fas fa-check'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
+					</div>";		
+			}
+			else {
+				require_once('modules/navbar-default.php');
+				echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+						<i class='fas fa-ban'></i><strong> Erreur !</strong> Vous devez être connecté pour accéder à ce contenu. <a href='home.php' class='alert-link'>Se connecter</a>
+					</div>";
+			}
 		?>
+	</div>
+
+	<div id="results">
+
 	</div>
 
 	<div id="footer">

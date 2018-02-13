@@ -1,3 +1,29 @@
 body {
-	
+	margin:auto;
+	width:100%;
+}
+
+#drawing {
+	width:100%;
+	margin: auto;
+	overflow: auto;
+	padding-top: 30px;
+}
+
+#drawing ul {
+	float: right;
+	width: 12%;
+	margin-right: 10px;
+}
+
+#drawing canvas {
+	float: left;
+	width: 80%;
+	margin-left: 10px;
+	margin-right:50px;
+}
+
+canvas {
+	border:1px solid #003399;
+	border-radius:5px;
 }

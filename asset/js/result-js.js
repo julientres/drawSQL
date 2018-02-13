@@ -1,1 +1,1 @@
-var test = 0;
+$(".alert-success").show("slow").delay(2000).hide("slow");
