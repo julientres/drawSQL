@@ -13,10 +13,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">
 	
-<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
 	<script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
 	<script src="librairies/jquery-3.3.1.min.js"></script>
-	<script src="librairies/fabric.js-master/dist/fabric.min.js" type="text/javascript"></script>
 	<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="../asset/css/result-style.css" type="text/css">
 </head>

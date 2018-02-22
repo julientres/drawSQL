@@ -16,7 +16,6 @@
 	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
 	<script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
 	<script src="librairies/jquery-3.3.1.min.js"></script>
-	<script src="librairies/fabric.js-master/dist/fabric.min.js" type="text/javascript"></script>
 	<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
 </head>
@@ -42,24 +41,28 @@
 
 	<?php if($returnBDD['success'] == true) : ?>
 
-	<div id="drawing">
-		<ul class="list-group">
-			<button id="copy" onclick="Copy()" class="list-group-item list-group-item-action">Copy</button>
-		    <button id="paste" onclick="Paste()" class="list-group-item list-group-item-action">Paste</button>
-		    <button id="delete" onclick="Delete()" class="list-group-item list-group-item-action">Delete</button>
-		    <button id="zoomIn" onclick="ZoomIn()" class="list-group-item list-group-item-action">Zoom in</button>
-		    <button id="zoomOut" onclick="ZoomOut()" class="list-group-item list-group-item-action">Zoom out</button>
-		    <button id="zoomReset" onclick="ResetZoom()" class="list-group-item list-group-item-action">Reset zoom</button>
-			<button id="selectObject" onclick="createSelectObject()" class="list-group-item list-group-item-action">SELECT</button>
-		    <button id="fromObject" onclick="createFromObject()" class="list-group-item list-group-item-action">FROM</button>
-			<button id="whereObject" onclick="createWhereObject()" class="list-group-item list-group-item-action">WHERE</button>
-		    <button id="joinObject" onclick="createJoinObject()" class="list-group-item list-group-item-action">JOIN</button>
-		    <button id="chooseMode" onclick="chooseMode()" class="list-group-item list-group-item-action">Shapes / Drawing mod</button>
-		    <button id="clear" onclick="clearCanvas()" class="list-group-item list-group-item-action">Clear</button>
-		    <button id="grid" onclick="showHideGrid()" class="list-group-item list-group-item-action">Show / Hide grid</button>
-		</ul>	
+	<div id="main">
+		<div id="forms">
+			<ul class="list-group">
+				<button id="copy" class="list-group-item list-group-item-action">Copy</button>
+			    <button id="paste" class="list-group-item list-group-item-action">Paste</button>
+			    <button id="delete" class="list-group-item list-group-item-action">Delete</button>
+			    <button id="zoomIn" class="list-group-item list-group-item-action">Zoom in</button>
+			    <button id="zoomOut" class="list-group-item list-group-item-action">Zoom out</button>
+			    <button id="zoomReset" class="list-group-item list-group-item-action">Reset zoom</button>
+				<button id="selectObject" class="list-group-item list-group-item-action">SELECT</button>
+			    <button id="fromObject" class="list-group-item list-group-item-action">FROM</button>
+				<button id="whereObject" class="list-group-item list-group-item-action">WHERE</button>
+			    <button id="joinObject" class="list-group-item list-group-item-action">JOIN</button>
+			    <button id="joinObject" class="list-group-item list-group-item-action">SUBQUERY</button>
+			    <button id="clear" class="list-group-item list-group-item-action">Clear</button>
+			    <button id="grid" class="list-group-item list-group-item-action">Show / Hide grid</button>
+			</ul>
+		</div>
 
-		<canvas id="canvas"></canvas>		
+		<div id="drawing">	
+
+		</div>
 	</div>
 
 	<div id="footer">
