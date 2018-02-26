@@ -1,5 +1,7 @@
 <?php
 	require_once('../fonctions.php');
+	require_once('modules/modal/modal-generate.php');
+	require_once('modules/modal/modal-help-drawing.php');
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -9,20 +11,21 @@
 	</button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
-	    	<li class="nav-item">
-	        	<a class="nav-link" href="#">Fichier</a>
-	      	</li>	        
+	    	<div class="dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Fichier</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Export algébrique</a>
+                    <a class="dropdown-item" href="#">Import algébrique</a>
+                  </div>
+            </div>        
 	        <li class="nav-item">
-	        	<a class="nav-link" href="#">Générer le code</a>
-	        </li>
-	        <li class="nav-item">
-	        	<a class="nav-link" href="display-results.php">Résultats</a>
+	        	<a class="nav-link" href="#generateCodeModal" data-toggle="modal" data-target="#generateCodeModal">Générer</a>
 	        </li>
 	    </ul>
 
 	    <ul class="navbar-nav ml-auto">
 	    	<li class="nav-item">
-	        	<a class='nav-link' href='#'>Aide</a>	        			
+	        	<a class='nav-link' href="helpDrawingModal" data-toggle="modal" data-target="#helpDrawingModal">Aide</a>	        			
 		    </li>
 	        <li class="nav-item">
 	        	<a class='nav-link' href='disconnect.php'>Se déconnecter</a>

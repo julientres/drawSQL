@@ -17,20 +17,21 @@
 	<script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
 	<script src="librairies/jquery-3.3.1.min.js"></script>
 	<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="librairies/interact.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
 </head>
 <body>
 	<div id="menu">
 		<?php
 			if($returnBDD['success'] == true) {
-				require_once('modules/navbar-drawing.php');
+				require_once('modules/navbar/navbar-drawing.php');
 				echo "<div class='alert alert-success alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 						<i class='fas fa-check'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
 					</div>";			
 			}
 			else {
-				require_once('modules/navbar-default.php');
+				require_once('modules/navbar/navbar-default.php');
 				echo "<div class='alert alert-danger alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 						<i class='fas fa-ban'></i><strong> Erreur !</strong> Vous devez être connecté pour accéder à ce contenu. <a href='home.php' class='alert-link'>Se connecter</a>
@@ -67,7 +68,7 @@
 
 	<div id="footer">
 		<?php
-			require_once('modules/footer.php');
+			require_once('modules/footer/footer.php');
 		?>
 	</div>	
 

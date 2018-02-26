@@ -23,14 +23,14 @@
 	<div id="menu">
 		<?php
 			if($retour['success']==true){
-				require_once('modules/navbar-result.php');
+				require_once('modules/navbar/navbar-result.php');
 				echo "<div class='alert alert-success alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 						<i class='fas fa-check'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
 					</div>";		
 			}
 			else {
-				require_once('modules/navbar-default.php');
+				require_once('modules/navbar/navbar-default.php');
 				echo "<div class='alert alert-danger alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 						<i class='fas fa-ban'></i><strong> Erreur !</strong> Vous devez être connecté pour accéder à ce contenu. <a href='home.php' class='alert-link'>Se connecter</a>
@@ -45,7 +45,7 @@
 
 	<div id="footer">
 		<?php
-			require_once('modules/footer.php');
+			require_once('modules/footer/footer.php');
 		?>
 	</div>
 
