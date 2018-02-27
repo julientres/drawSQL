@@ -47,22 +47,22 @@
 	<div id="main">
 		<div id="forms">
 			<ul class="list-group">
-				<button id="selectObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SELECT">
+				<button id="selectObject" class="list-group-item list-group-item-action" data-form="1" data-toggle="tooltip" data-placement="right" title="SELECT">
 					<svg height="100" width="200">
 						<path id="polySelect" d="M10 30L40 80L120 80L150 30z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg> 
 				</button>
-			    <button id="fromObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="FROM">
+			    <button id="fromObject" class="list-group-item list-group-item-action" data-form="2" data-toggle="tooltip" data-placement="right" title="FROM">
 			    	<svg height="100" width="200">
 						<circle id="polyFrom" r="30" cx="50" cy="50" fill="#FFFFFF" stroke="#000" stroke-width="2"></circle>
 					</svg>
 			    </button>
-				<button id="whereObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="WHERE">
+				<button id="whereObject" class="list-group-item list-group-item-action" data-form="3" data-toggle="tooltip" data-placement="right" title="WHERE">
 					<svg height="100" width="200">
 						<path id="polyWhere" d="M10 30L10 120L110 90L110 60z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>
 				</button>
-			    <button id="joinObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="JOIN">
+			    <button id="joinObject" class="list-group-item list-group-item-action"  data-toggle="tooltip" data-placement="right" title="JOIN">
 			    	<svg height="100" width="200">
 						<path id="polyJoin" d="M10 30L10 80L60 30L60 80z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>

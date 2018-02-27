@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav ml-auto">
 	        <li class="nav-item">
-	        	<a class='nav-link' href='home.php'>Se connecter <i class='fas fa-sign-in-alt'></a>	        			
+                <a class='nav-link' href='home.php'>Se connecter <i class='fas fa-sign-in-alt'></i></a>
 		    </li>
 	    </ul>
     </div>
