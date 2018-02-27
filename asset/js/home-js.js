@@ -81,13 +81,13 @@ $(document).ready(function() {
     		dataType:'JSON',    		
     		success:function(data) {
     			if(data.success) {
-    				$("#successForm").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-check'></i><strong> Succès !</strong> Connexion à la base de données réussie avec succès ! Vous allez être redirigé dans 2 secondes.</div>");
+    				$("#successForm").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-check-circle'></i><strong> Succès !</strong> Connexion à la base de données réussie avec succès ! Vous allez être redirigé dans 2 secondes.</div>");
 	    			window.setTimeout(function() {
 					    window.location.href = 'draw-algebraic-queries.php';
 					}, 2000);
     			} else {
 	    			$("#errorForm").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-ban'></i><strong> Erreur !</strong> Impossible de se connecter à la base de données. "+data.object+"</div>");
-	    			$("#infoForm").html("<div class='alert alert-info alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-info'></i><strong> Information :</strong> Vérifiez que les champs du formulaire soient corrects puis essayez à nouveau</div>");	
+	    			$("#infoForm").html("<div class='alert alert-info alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><i class='fas fa-info-circle'></i><strong> Information :</strong> Vérifiez que les champs du formulaire soient corrects puis essayez à nouveau</div>");	
     			}
     		},
     		error:function(data) {

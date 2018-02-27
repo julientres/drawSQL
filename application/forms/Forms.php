@@ -6,6 +6,6 @@
 			$this->image = $image;
 		}
 
-		abstract public function convertToSQL();
+		abstract public function convertToSQL() {}
 	}
 ?>

@@ -26,7 +26,7 @@
 				require_once('modules/navbar/navbar-result.php');
 				echo "<div class='alert alert-success alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-						<i class='fas fa-check'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
+						<i class='fas fa-check-circle'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
 					</div>";		
 			}
 			else {

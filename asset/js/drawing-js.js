@@ -1,5 +1,3 @@
-$(".alert-success").show("slow").delay(2000).hide("slow");
-
 function dragMoveListener (event) {
     var target = event.target,
         // keep the dragged position in the data-x/data-y attributes
@@ -21,6 +19,28 @@ window.dragMoveListener = dragMoveListener;
 
 
 $(document).ready(function () {
+    $(".alert-success").show("slow").delay(2000).hide("slow");
+
+    $('#btnGenerate').on("click", function() {
+        window.open("display-results.php");
+    })
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+
+    //SVG JS
+    if (SVG.supported) {
+        /*var draw = SVG('drawing').size('100%', '100%');
+        var polySelect = draw.path('M10 30L40 80L120 80L150 30z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
+        var polyFrom = draw.circle(100).attr({fill: '#FFFFFF', stroke:'#000', 'stroke-width': 2});
+        var polyWhere = draw.path('M10 30L10 120L110 90L110 60z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
+        var polyJoin = draw.path('M10 30L10 80L60 30L60 80z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});*/
+    } 
+    else {
+        alert('SVG not supported');
+    } 
+
     $('#btnGenerate').on("click", function () {
         window.open("display-results.php");
     });

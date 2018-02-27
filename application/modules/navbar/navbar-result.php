@@ -20,10 +20,10 @@
 	    </ul>
 	    <ul class="navbar-nav ml-auto">
 	    	<li class="nav-item">
-	        	<a class='nav-link' href='#helpResultModal' data-toggle="modal" data-target="#helpResultModal">Aide</a>	        			
+	        	<a class='nav-link' href='#helpResultModal' data-toggle="modal" data-target="#helpResultModal">Aide <i class='fas fa-question-circle'></i></a>	        			
 		    </li>
 	        <li class="nav-item">
-	        	<a class='nav-link' href='disconnect.php'>Se déconnecter</a>
+	        	<a class='nav-link' href='disconnect.php'>Se déconnecter <i class='fas fa-sign-out-alt'></i></a>
 		    </li>
 	    </ul>
     </div>

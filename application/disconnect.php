@@ -32,12 +32,12 @@
 		<?php
 			if(isset($info['disconnected'])){
 				echo "<div class='alert alert-info' role='alert'>
-						<i class='fas fa-info'></i><strong> Information :</strong> ".$info['disconnected']."
+						<i class='fas fa-info-circle'></i><strong> Information :</strong> ".$info['disconnected']."
 					</div>";
 			}
 			if(isset($info['info'])){
 				echo "<div class='alert alert-info' role='alert'>
-						<i class='fas fa-info'></i><strong> Information :</strong> ".$info['info']."
+						<i class='fas fa-info-circle'></i><strong> Information :</strong> ".$info['info']."
 					</div>";
 			}
 		?>

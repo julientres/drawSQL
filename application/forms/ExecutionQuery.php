@@ -23,9 +23,9 @@
 			$this->subQuery = $subQuery;
 		}
 
-		public function exec($s, $f, $w, $j, $h, $o, $g, $sQ) {
-			$str = "" + $s + $f + $w + " ;";
-			$query = $bdd->prepare($str);
+		public function exec($s, $f, $w, $j, $h, $o, $g, $s) {
+			$str = "";
+			$query = $bdd->prepare($query);	
 			$query->execute();
 			$result = $query->fetchAll();
 			return $result;
