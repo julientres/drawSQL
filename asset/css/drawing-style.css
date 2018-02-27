@@ -13,14 +13,20 @@ body {
 	border:1px solid #343A40;
 }
 
-#main #forms {
-	float: left;
-	width: 15%;
-	margin-right: 10px;
+#main #forms button {
+	padding:0;	
 }
 
-#forms ul {
-	text-align: center;
+#main #forms {
+	float: left;
+	width: 8%;
+	margin-right: 10px;
+	margin-left:10px;
+}
+
+#forms svg {
+	display:inline-block;
+	vertical-align: middle;	
 }
 
 #main #drawing {
@@ -34,6 +40,7 @@ body {
 	float:right;
 	width:4%;
 	margin-left:10px;
+	margin-right: 10px;
 }
 
 #drag1{
