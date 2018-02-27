@@ -19,6 +19,14 @@ body {
 #main #drawing {
 	float: right;
 	width: 80%;
+	height:89vh;
 	margin-left: 10px;
 	margin-right:50px;
+}
+#drag1{
+	border-radius: 8px;
+	padding: 20px;
+	margin: 30px 20px;
+	width: 130px;
+	box-sizing: border-box;
 }

@@ -51,16 +51,15 @@
 			    <button id="zoomIn" class="list-group-item list-group-item-action">Zoom in</button>
 			    <button id="zoomOut" class="list-group-item list-group-item-action">Zoom out</button>
 			    <button id="zoomReset" class="list-group-item list-group-item-action">Reset zoom</button>
-				<button id="selectObject" class="list-group-item list-group-item-action">SELECT</button>
-			    <button id="fromObject" class="list-group-item list-group-item-action">FROM</button>
-				<button id="whereObject" class="list-group-item list-group-item-action">WHERE</button>
-			    <button id="joinObject" class="list-group-item list-group-item-action">JOIN</button>
+				<button id="selectObject" data-form="1" class="list-group-item list-group-item-action">SELECT</button>
+			    <button id="fromObject" data-form="2" class="list-group-item list-group-item-action">FROM</button>
+				<button id="whereObject" data-form="3" class="list-group-item list-group-item-action">WHERE</button>
+			    <button id="joinObject" data-form="4" class="list-group-item list-group-item-action">JOIN</button>
 			    <button id="joinObject" class="list-group-item list-group-item-action">SUBQUERY</button>
 			    <button id="clear" class="list-group-item list-group-item-action">Clear</button>
 			    <button id="grid" class="list-group-item list-group-item-action">Show / Hide grid</button>
 			</ul>
 		</div>
-
 		<div id="drawing">	
 
 		</div>
