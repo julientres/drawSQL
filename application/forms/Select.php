@@ -1,22 +1,26 @@
 <?php
-	class Select extends Form{
+	class Select{
 		private $column;
-		private $aggregate;
 
-		public function __construct($image, $column, $aggregate) {
-			super($image);
+		public function __construct($column) {
 			$this->column = $column;
-			$this->aggregate = $aggregate;
 		}
 
-		public function convertToSQL($c, $a) {
-			$strC = implode(",", $c);
-			$strA = implode(",", $a);
+		public function convertToSQL() {
+		    if(is_array($this->column)){
+                $strC = implode(",", $this->column);
+            }else{
+                $strC = $this->column;
+            }
+   //         if(is_array($this->aggregate)){
+       //         $strA = implode(",", $this->aggregate);
+       //     }else{
+        //        $strA = $this->column;
+        //    }
 
-			$querySelect = array("index" => 1,
-							"query" => "SELECT " . $a . $c);
+
+			$querySelect ="SELECT " . $strC;
 
 			return $querySelect;
 		}
 	}
-?>

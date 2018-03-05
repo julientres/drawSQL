@@ -1,11 +1,9 @@
 <?php
 	abstract class Form {
-		private $image;
 
-		public function __construct($image) {
-			$this->image = $image;
+		public function __construct() {
 		}
 
-		abstract public function convertToSQL() {}
+		abstract public function convertToSQL();
 	}
 ?>

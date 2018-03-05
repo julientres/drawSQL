@@ -1,15 +1,13 @@
 <?php
-	class From extends Form {
+	class From{
 		private $table;
 
-		public function __construct($image, $table) {
-			super($image);
+		public function __construct($table) {
 			$this->table = $table;
 		}
 
-		public function convertToSQL($t) {
-			$queryFrom = array("index" => 2,
-							"query" => "FROM ".$t);
+		public function convertToSQL() {
+			$queryFrom = "FROM ".$this->table;
 
 			return $queryFrom;
 		}

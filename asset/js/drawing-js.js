@@ -79,7 +79,7 @@ interact('.draggable')
         // minimum size
         restrictSize: {
             min: { width: 100, height: 50 },
-            max : { width: 300, height: 150},
+            max : { width: 300, height: 150}
         },
 
         inertia: true,
