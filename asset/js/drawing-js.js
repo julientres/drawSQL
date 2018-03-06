@@ -1,5 +1,5 @@
 function dragMoveListener (event) {
-    var target = event.target,
+    var target = event.currentTarget,
         // keep the dragged position in the data-x/data-y attributes
         x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
         y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
@@ -47,13 +47,44 @@ $(document).ready(function () {
         window.open("display-results.php");
     });
     $('[data-form="1"]').on("click",function () {
-        $('#drawing').append('<img src="../asset/img/svg/Select.svg" class="draggable" id="drag1">');
+        $('#drawing').append('<img src="../asset/img/svg/Select.svg" class="draggable tap-target drag1">');
     });
     $('[data-form="2"]').on("click",function () {
-        $('#drawing').append('<img src="../asset/img/svg/From.svg" class="draggable" id="drag1">');
+        $('#drawing').append('<img src="../asset/img/svg/From.svg" class="draggable tap-target drag1">');
     });
     $('[data-form="3"]').on("click",function () {
-        $('#drawing').append('<img src="../asset/img/svg/Where.svg" class="draggable" id="drag1">');
+        $('#drawing').append('<img src="../asset/img/svg/Where.svg" class="draggable tap-target drag1">');
+    });
+    $('#link').on("click", function () {
+        var x_1 = 0;
+        var y_1 = 0;
+        var x_2 = 0;
+        var y_2 = 0;
+        $('#link').data('processing', true);
+        interact('.tap-target')
+            .on('tap', function(event){
+                if($('#link').data('processing') == true){
+                    if(x_1 === 0 && y_1 === 0){
+                        var target = event.currentTarget,
+                        x = (parseFloat(target.getAttribute('data-x')) || 0),
+                        y = (parseFloat(target.getAttribute('data-y')) || 0);
+                        x_1 = x+((parseFloat(target.offsetWidth))/2)-5;
+                        y_1 = y+((parseFloat(target.offsetHeight))/2)-5;
+                        //$('#drawing').append('<div class="point" style="left:'+x_1+'px; top:'+y_1+'px"></div>');
+                        event.preventDefault();
+                    }else{
+                        target = event.target,
+                        x = (parseFloat(target.getAttribute('data-x')) || 0),
+                        y = (parseFloat(target.getAttribute('data-y')) || 0);
+                        x_2 = x+((parseFloat(target.offsetWidth))/2)-5;
+                        y_2 = y+((parseFloat(target.offsetHeight))/2)-5;
+                        //$('#drawing').append('<div class="point" style="left:'+x_2+'px; top:'+y_2+'px"></div>');
+                        $('#drawing').append('<svg height="100%" width="100%"><line x1="'+x_1+'" y1="'+y_1+'" x2="'+x_2+'" y2="'+y_2+'" style="stroke:#000"/></svg>');
+                        $('#link').data('processing', false);
+                        event.preventDefault();
+                    }
+                }
+            });
     });
 });
 
@@ -79,7 +110,7 @@ interact('.draggable')
         // minimum size
         restrictSize: {
             min: { width: 100, height: 50 },
-            max : { width: 300, height: 150}
+            max : { width: 300, height: 150},
         },
 
         inertia: true,

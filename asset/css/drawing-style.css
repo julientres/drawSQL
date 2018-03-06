@@ -13,11 +13,11 @@ body {
 	border:1px solid #343A40;
 }
 
-#main #forms button {
+#forms button {
 	padding:0;	
 }
 
-#main #forms {
+#forms {
 	float: left;
 	width: 8%;
 	margin-right: 10px;
@@ -29,24 +29,36 @@ body {
 	vertical-align: middle;	
 }
 
-#main #drawing {
+#drawing {
+	position: relative;
 	float: left;
 	width: 80%;
+	height: 80vh;
 	margin-left: 10px;
 	margin-right:50px;
 }
 
-#main #options {
+#options {
 	float:right;
 	width:4%;
 	margin-left:10px;
 	margin-right: 10px;
 }
 
-#drag1{
+.drag1{
 	border-radius: 8px;
-	padding: 20px;
-	margin: 30px 20px;
 	width: 130px;
 	box-sizing: border-box;
+	position: absolute;
+}
+
+.point{
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background-color: red;
+}
+
+.tap-target{
+	cursor: pointer;
 }
