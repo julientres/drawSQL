@@ -1,5 +1,5 @@
 <?php
-$_SESSION['host']  = "localhost";
+$_SESSION['host'] = "localhost";
 $_SESSION['port'] = "3306";
 $_SESSION['bdd'] = "siscram";
 $_SESSION['user'] = "root";
@@ -9,6 +9,8 @@ require_once('forms/HelpDataEntry.php');
 
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
+
+
 ?>
 <!doctype html>
 <html lang="fr">
@@ -31,12 +33,15 @@ $table = $help->allTables($_SESSION['bdd']);
 <main style="margin-left: 15px">
     <br>
     <form id="formSQL" method="POST" action="function.php">
-        Select : <input type="text" name="select"><br>
+        Select :
+        <div id="divSelect"></div>
         <br>
-        From : <select name="from">
+        <br>
+        From : <select id="from">
+            <option value=""></option>
             <?php
-            foreach($table as $t){
-                echo '<option value="'.$t["TABLE_NAME"].'">'. $t["TABLE_NAME"]. '</option>';
+            foreach ($table as $t) {
+                echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
             }
             ?>
         </select>
@@ -51,17 +56,40 @@ $table = $help->allTables($_SESSION['bdd']);
 <footer>
 </footer>
 <script>
-    $(document).ready(function(){
-        $('#formSQL').on('submit', function(e){
+    $(document).ready(function () {
+        $('#formSQL').on('submit', function (e) {
+            var dataSelect = "select=";
+            $("input[type='checkbox']:checked").each(
+                function () {
+                    dataSelect += $(this).val();
+                    dataSelect += "%2C";
+                });
+            var str = dataSelect.substring(0, dataSelect.length-3);
+            str += "&from=" + $('#from').find(":selected").text();
             e.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
                 type: "POST",
-                data : $(this).serialize(),
-                success : function(data){
-                        $('#addDiv').append(data);
+                data: str,
+                success: function (data) {
+                    $('#addDiv').append(data);
                 },
-                error : function (data) {
+                error: function (data) {
+                    console.log("erreur");
+                }
+            });
+        });
+        $('#from').on('change', function (e) {
+            var dataForm = "fromInput=" + $(this).find(":selected").text();
+            e.preventDefault();
+            $.ajax({
+                url: 'function.php',
+                type: 'POST',
+                data: dataForm,
+                success: function (data) {
+                    $('#divSelect').html(data);
+                },
+                error: function (data) {
                     console.log("erreur");
                 }
             });

@@ -17,7 +17,20 @@ class HelpDataEntry
         return $result;
     }
 
-    public function columnsFromTable()
+    public function columnsFromTable($table,$schema)
     {
+        $bdd = doConnexion();
+        $str = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$table."' AND TABLE_SCHEMA='".$schema."'";
+        $query = $bdd['object']->prepare($str);
+        $query->execute();
+        $result = $query->fetchAll();
+        return $result;
+    }
+
+    public function showResultsColumns($resultat) {
+        echo '<input type="checkbox" id="subscribeNews" name="select" value="*">*<br>';
+        foreach($resultat as $r) {
+            echo '<input type="checkbox" id="subscribeNews" name="select" value="'.$r['COLUMN_NAME'].'">'.$r['COLUMN_NAME'] .'<br>';
+        }
     }
 }
