@@ -30,7 +30,12 @@ class HelpDataEntry
     public function showResultsColumns($resultat) {
         echo '<input type="checkbox" id="subscribeNews" name="select" value="*">*<br>';
         foreach($resultat as $r) {
-            echo '<input type="checkbox" id="subscribeNews" name="select" value="'.$r['COLUMN_NAME'].'">'.$r['COLUMN_NAME'] .'<br>';
+            echo '<input type="checkbox" name="select" value="'.$r['COLUMN_NAME'].'">'.$r['COLUMN_NAME'] .'<br>';
+        }
+    }
+    public function showResultsColumnsOption($resultat) {
+        foreach($resultat as $r) {
+            echo '<option value="'.$r['COLUMN_NAME'].'">'.$r['COLUMN_NAME'] .'</option>';
         }
     }
 }

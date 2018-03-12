@@ -1,16 +1,15 @@
 <?php
-	class Join extends Form{
+	class Join{
 		private $table;
+        private $join;
 
-		public function __construct($image, $table) {
-			super($image);
+		public function __construct($table,$join) {
 			$this->table = $table;
+            $this->join = $join;
 		}
 		
-		public function convertToSQL($t) {
-			$queryJoin = array("index" => 3,
-							"query" => "JOIN ");
-
+		public function convertToSQL($equal) {
+			$queryJoin =  $this->join ." ".$this->table." ON ". $equal . ";";
 			return $queryJoin;
 		}
 	}

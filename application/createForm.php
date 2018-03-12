@@ -38,13 +38,52 @@ $table = $help->allTables($_SESSION['bdd']);
         <br>
         <br>
         From : <select id="from">
-            <option value=""></option>
+            <option value="null"></option>
             <?php
             foreach ($table as $t) {
                 echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
             }
             ?>
         </select>
+        <br>
+        <br>
+        Jointure :
+        <select id="join1">
+            <option value=""></option>
+            <option value="inner join">Inner join</option>
+            <option value="left join">Left join</option>
+            <option value="right join">Right join</option>
+        </select>
+        <select id="join2">
+            <option value="null"></option>
+            <?php
+            foreach ($table as $t) {
+                echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
+            }
+            ?>
+        </select>
+        <br>
+        <br>
+        Where : <select id="where1">
+
+
+        </select>
+        <select id="where2">
+            <option value=""></option>
+            <option value="=">=</option>
+            <option value="<>"><></option>
+            <option value="!=">!=</option>
+            <option value=">">></option>
+            <option value="<"><</option>
+            <option value=">=">>=</option>
+            <option value="<="><=</option>
+            <option value="IN">IN</option>
+            <option value="BETWEEN">BETWEEN</option>
+            <option value="LIKE">LIKE</option>
+            <option value="IS NULL">IS NULL</option>
+            <option value="IS NOT NULL">IS NOT NULL</option>
+        </select>
+        <input type="text" id="where3" value="">
         <br>
         <br>
         <input type="submit" value="Créer SQL">
@@ -66,13 +105,22 @@ $table = $help->allTables($_SESSION['bdd']);
                 });
             var str = dataSelect.substring(0, dataSelect.length-3);
             str += "&from=" + $('#from').find(":selected").text();
+            if($('#where1').find(":checked").text() != "" && $('#where2').find(":checked").text() != "" && $('#where3').val() != ""){
+                str += "&where1=" + $('#where1').find(":checked").text();
+                str += "&where2=" + $('#where2').find(":checked").text();
+                str += "&where3=" + $('#where3').val();
+            }
+            if($('#join1').find(":checked").text() != "" && $('#join2').find(":checked").text()){
+                str += "&join1=" + $('#join1').find(":checked").text();
+                str += "&join2=" + $('#join2').find(":checked").text();
+            }
             e.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
                 type: "POST",
                 data: str,
                 success: function (data) {
-                    $('#addDiv').append(data);
+                    $('#addDiv').html(data);
                 },
                 error: function (data) {
                     console.log("erreur");
@@ -80,7 +128,7 @@ $table = $help->allTables($_SESSION['bdd']);
             });
         });
         $('#from').on('change', function (e) {
-            var dataForm = "fromInput=" + $(this).find(":selected").text();
+            var dataForm = "fromInput1=" + $(this).find(":selected").text();
             e.preventDefault();
             $.ajax({
                 url: 'function.php',
@@ -88,6 +136,23 @@ $table = $help->allTables($_SESSION['bdd']);
                 data: dataForm,
                 success: function (data) {
                     $('#divSelect').html(data);
+                },
+                error: function (data) {
+                    console.log("erreur");
+                }
+            });
+        });
+        $('#from').on('change', function (e) {
+            var dataForm = "fromInput2=" + $(this).find(":selected").text();
+            e.preventDefault();
+            $.ajax({
+                url: 'function.php',
+                type: 'POST',
+                data: dataForm,
+                success: function (data) {
+                    var text = '<option value="null"> </option>' + data;
+                    $('#where1').html(text);
+
                 },
                 error: function (data) {
                     console.log("erreur");

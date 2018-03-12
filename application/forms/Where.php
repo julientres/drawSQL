@@ -1,19 +1,19 @@
 <?php
-	class Where extends Form{
+	class Where{
 		private $column;
+		private $operate;
 		private $value;
 
-		public function __construct($image, $column, $value) {
-			super($image);
+		public function __construct($column, $operate, $value) {
 			$this->column = $column;
-			$this->value = $value;
+			$this->operate = $operate;
+            $this->value = $value;
 		}
 
-		public function convertToSQL($c, $v) {
-			$queryWhere = array("index" => 4,
-							"query" => "WHERE ");
+        public function convertToSQL() {
+            $queryFrom = "WHERE ".$this->column. " " . $this->operate . " '" .  $this->value . "'";
 
-			return $queryWhere;
-		}
+            return $queryFrom;
+        }
 	}
 ?>
