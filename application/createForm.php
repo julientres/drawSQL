@@ -1,9 +1,4 @@
 <?php
-$_SESSION['host'] = "localhost";
-$_SESSION['port'] = "3306";
-$_SESSION['bdd'] = "siscram";
-$_SESSION['user'] = "root";
-$_SESSION['passwd'] = "";
 
 require_once('forms/HelpDataEntry.php');
 
