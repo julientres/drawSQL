@@ -94,7 +94,8 @@
 		</div>
 
 		<div id="drawing">	
-
+			<div id="line-container">
+			</div>
 		</div>
 	</div>
 

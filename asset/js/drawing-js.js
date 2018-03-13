@@ -55,33 +55,44 @@ $(document).ready(function () {
     $('[data-form="3"]').on("click",function () {
         $('#drawing').append('<img src="../asset/img/svg/Where.svg" class="draggable tap-target drag1">');
     });
-    $('#link').on("click", function () {
+    $('#link').on("click", function (event) {
         var x_1 = 0;
         var y_1 = 0;
         var x_2 = 0;
         var y_2 = 0;
         $('#link').data('processing', true);
+        console.log("exterieur");
         interact('.tap-target')
             .on('tap', function(event){
+                console.log('processing : '+$('#link').data('processing'));
                 if($('#link').data('processing') == true){
-                    if(x_1 === 0 && y_1 === 0){
+                    if(x_1 == 0 & y_1 == 0){
                         var target = event.currentTarget,
                         x = (parseFloat(target.getAttribute('data-x')) || 0),
                         y = (parseFloat(target.getAttribute('data-y')) || 0);
                         x_1 = x+((parseFloat(target.offsetWidth))/2)-5;
                         y_1 = y+((parseFloat(target.offsetHeight))/2)-5;
+                        console.log('Rentré 1');
+                        console.log('x_1 :'+x_1);
+                        console.log('y_1 :'+y_1);
+                        console.log('x_2 :'+x_2);
+                        console.log('y_2 :'+y_2);
                         //$('#drawing').append('<div class="point" style="left:'+x_1+'px; top:'+y_1+'px"></div>');
-                        event.preventDefault();
                     }else{
-                        target = event.target,
+                        target = event.currentTarget,
                         x = (parseFloat(target.getAttribute('data-x')) || 0),
                         y = (parseFloat(target.getAttribute('data-y')) || 0);
                         x_2 = x+((parseFloat(target.offsetWidth))/2)-5;
                         y_2 = y+((parseFloat(target.offsetHeight))/2)-5;
+                        console.log('Rentré 2');
+                        console.log('x_1 :'+x_1);
+                        console.log('y_1 :'+y_1);
+                        console.log('x_2 :'+x_2);
+                        console.log('y_2 :'+y_2);
                         //$('#drawing').append('<div class="point" style="left:'+x_2+'px; top:'+y_2+'px"></div>');
-                        $('#drawing').append('<svg height="100%" width="100%"><line x1="'+x_1+'" y1="'+y_1+'" x2="'+x_2+'" y2="'+y_2+'" style="stroke:#000"/></svg>');
+                        $('#line-container').append('<svg class="line" height="100%" width="100%"><line x1="'+x_1+'" y1="'+y_1+'" x2="'+x_2+'" y2="'+y_2+'" style="stroke:#000"/></svg>');
                         $('#link').data('processing', false);
-                        event.preventDefault();
+                        interact('.tap-target').off("tap");
                     }
                 }
             });
