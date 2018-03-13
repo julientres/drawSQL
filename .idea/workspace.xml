@@ -14,7 +14,7 @@
       <file leaf-file-name="createForm.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/createForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
+            <state relative-caret-position="2622">
               <caret line="114" column="71" lean-forward="false" selection-start-line="114" selection-start-column="71" selection-end-line="114" selection-end-column="71" />
               <folding />
             </state>
@@ -25,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/application/forms/Join.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
-              <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+              <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -44,7 +44,7 @@
       <file leaf-file-name="ExecutionQuery.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
+            <state relative-caret-position="759">
               <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
               <folding>
                 <marker date="1520811635863" expanded="true" signature="1181:1252" ph="SELECT COLUM... COLUMNS" />
@@ -59,7 +59,7 @@
       <file leaf-file-name="HelpDataEntry.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
+            <state relative-caret-position="736">
               <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
               <folding>
                 <marker date="1520810031070" expanded="true" signature="198:314" ph="SELECT TABLE... TABLES" />
@@ -134,6 +134,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -161,7 +162,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -200,11 +200,12 @@
       <workItem from="1519753857836" duration="512000" />
       <workItem from="1520378524411" duration="1713000" />
       <workItem from="1520808545541" duration="5369000" />
+      <workItem from="1520972288087" duration="34000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17620000" />
+    <option name="totallyTimeSpent" value="17654000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -242,6 +243,64 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/application/createForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2622">
+          <caret line="114" column="71" lean-forward="false" selection-start-line="114" selection-start-column="71" selection-end-line="114" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/Join.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+          <folding>
+            <marker date="1520811635863" expanded="true" signature="1181:1252" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520811635863" expanded="true" signature="1181:1265" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520811635863" expanded="true" signature="1181:1267" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520811635863" expanded="true" signature="1181:1269" ph="SELECT COLUM... COLUMNS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/Where.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="58" lean-forward="true" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+          <folding>
+            <marker date="1520810031070" expanded="true" signature="198:314" ph="SELECT TABLE... TABLES" />
+            <marker date="1520810031070" expanded="true" signature="567:638" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520810031070" expanded="true" signature="567:668" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520810031070" expanded="true" signature="567:680" ph="SELECT COLUM... COLUMNS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/function.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="20" column="54" lean-forward="false" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/createForm.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="897">
@@ -318,7 +377,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
+        <state relative-caret-position="736">
           <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
           <folding>
             <marker date="1520810031070" expanded="true" signature="198:314" ph="SELECT TABLE... TABLES" />
@@ -339,7 +398,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/createForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
+        <state relative-caret-position="2622">
           <caret line="114" column="71" lean-forward="false" selection-start-line="114" selection-start-column="71" selection-end-line="114" selection-end-column="71" />
           <folding />
         </state>
@@ -348,14 +407,14 @@
     <entry file="file://$PROJECT_DIR$/application/forms/Join.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
-          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
+        <state relative-caret-position="759">
           <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
           <folding>
             <marker date="1520811635863" expanded="true" signature="1181:1252" ph="SELECT COLUM... COLUMNS" />
