@@ -5,6 +5,7 @@ require_once('forms/HelpDataEntry.php');
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
 
+
 ?>
 <!doctype html>
 <html lang="fr">
