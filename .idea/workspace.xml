@@ -11,21 +11,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="createForm.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="createForm.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/createForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="2277">
+              <caret line="99" column="19" lean-forward="false" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Join.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/forms/Join.php">
+      <file leaf-file-name="draw-algebraic-queries.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/draw-algebraic-queries.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="264">
+              <caret line="167" column="26" lean-forward="true" selection-start-line="167" selection-start-column="26" selection-end-line="167" selection-end-column="26" />
+              <folding>
+                <element signature="e#7875#7882#1#HTML" expanded="true" />
+                <element signature="e#8900#8907#1#HTML" expanded="true" />
+                <marker date="1520975249726" expanded="true" signature="1494:1807" ph="..." />
+                <marker date="1520975249726" expanded="false" signature="1603:1610" ph="×" />
+                <marker date="1520975249726" expanded="true" signature="1959:2268" ph="..." />
+                <marker date="1520975249726" expanded="false" signature="2068:2075" ph="×" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="drawing-js.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/js/drawing-js.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1587">
+              <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -34,8 +51,8 @@
       <file leaf-file-name="function.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/function.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+            <state relative-caret-position="506">
+              <caret line="22" column="57" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -45,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="759">
-              <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+              <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
               <folding>
                 <marker date="1520811635863" expanded="true" signature="1181:1252" ph="SELECT COLUM... COLUMNS" />
                 <marker date="1520811635863" expanded="true" signature="1181:1265" ph="SELECT COLUM... COLUMNS" />
@@ -75,7 +92,7 @@
         <entry file="file://$PROJECT_DIR$/application/forms/Where.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="299">
-              <caret line="13" column="58" lean-forward="true" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
+              <caret line="13" column="58" lean-forward="false" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -91,18 +108,19 @@
       <list>
         <option value="$PROJECT_DIR$/asset/css/drawing-style.css" />
         <option value="$PROJECT_DIR$/application/modules/navbar/navbar-default.php" />
-        <option value="$PROJECT_DIR$/application/draw-algebraic-queries.php" />
         <option value="$PROJECT_DIR$/application/forms/Forms.php" />
         <option value="$PROJECT_DIR$/application/home.php" />
         <option value="$PROJECT_DIR$/application/forms/Select.php" />
         <option value="$PROJECT_DIR$/application/forms/From.php" />
-        <option value="$PROJECT_DIR$/asset/js/drawing-js.js" />
         <option value="$PROJECT_DIR$/application/forms/HelpDataEntry.php" />
         <option value="$PROJECT_DIR$/application/forms/Where.php" />
         <option value="$PROJECT_DIR$/application/forms/ExecutionQuery.php" />
         <option value="$PROJECT_DIR$/application/function.php" />
         <option value="$PROJECT_DIR$/application/forms/Join.php" />
         <option value="$PROJECT_DIR$/application/createForm.php" />
+        <option value="$PROJECT_DIR$/asset/php/createClass.php" />
+        <option value="$PROJECT_DIR$/asset/js/drawing-js.js" />
+        <option value="$PROJECT_DIR$/application/draw-algebraic-queries.php" />
       </list>
     </option>
   </component>
@@ -134,7 +152,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -150,19 +168,25 @@
             <path>
               <item name="Algebraic-Queries" type="b2602c69:ProjectViewProjectNode" />
               <item name="Algebraic-Queries" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="forms" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="asset" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="Algebraic-Queries" type="b2602c69:ProjectViewProjectNode" />
               <item name="Algebraic-Queries" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="asset" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="Algebraic-Queries" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Algebraic-Queries" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="asset" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="php" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -200,12 +224,13 @@
       <workItem from="1519753857836" duration="512000" />
       <workItem from="1520378524411" duration="1713000" />
       <workItem from="1520808545541" duration="5369000" />
-      <workItem from="1520972288087" duration="228000" />
+      <workItem from="1520972288087" duration="3522000" />
+      <workItem from="1521147532435" duration="20000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17848000" />
+    <option name="totallyTimeSpent" value="21162000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -246,6 +271,79 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/application/createForm.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2300">
+          <caret line="100" column="19" lean-forward="false" selection-start-line="100" selection-start-column="19" selection-end-line="100" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/drawing-js.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1081">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+          <folding>
+            <marker date="1520811635863" expanded="true" signature="1181:1252" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520811635863" expanded="true" signature="1181:1265" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520811635863" expanded="true" signature="1181:1267" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520811635863" expanded="true" signature="1181:1269" ph="SELECT COLUM... COLUMNS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/function.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="22" column="57" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+          <folding>
+            <marker date="1520810031070" expanded="true" signature="198:314" ph="SELECT TABLE... TABLES" />
+            <marker date="1520810031070" expanded="true" signature="567:638" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520810031070" expanded="true" signature="567:668" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1520810031070" expanded="true" signature="567:680" ph="SELECT COLUM... COLUMNS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/Where.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="58" lean-forward="false" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/draw-algebraic-queries.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2553">
+          <caret line="111" column="7" lean-forward="true" selection-start-line="111" selection-start-column="7" selection-end-line="111" selection-end-column="7" />
+          <folding>
+            <element signature="e#7875#7882#1#HTML" expanded="true" />
+            <element signature="e#8900#8907#1#HTML" expanded="true" />
+            <marker date="1520975249726" expanded="true" signature="1494:1807" ph="..." />
+            <marker date="1520975249726" expanded="false" signature="1603:1610" ph="×" />
+            <marker date="1520975249726" expanded="true" signature="1959:2268" ph="..." />
+            <marker date="1520975249726" expanded="false" signature="2068:2075" ph="×" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/createForm.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2622">
           <caret line="114" column="71" lean-forward="false" selection-start-line="114" selection-start-column="71" selection-end-line="114" selection-end-column="71" />
           <folding />
@@ -256,7 +354,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -335,7 +432,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="6" column="9" lean-forward="false" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -356,7 +452,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -364,7 +459,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -372,7 +466,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
           <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -392,15 +485,29 @@
     <entry file="file://$PROJECT_DIR$/application/forms/Where.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
-          <caret line="13" column="58" lean-forward="true" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
+          <caret line="13" column="58" lean-forward="false" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/Join.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/php/check-database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="759">
-          <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+          <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
           <folding>
             <marker date="1520811635863" expanded="true" signature="1181:1252" ph="SELECT COLUM... COLUMNS" />
             <marker date="1520811635863" expanded="true" signature="1181:1265" ph="SELECT COLUM... COLUMNS" />
@@ -412,25 +519,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/function.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+        <state relative-caret-position="506">
+          <caret line="22" column="57" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/forms/Join.php">
+    <entry file="file://$PROJECT_DIR$/asset/php/createClass.php" />
+    <entry file="file://$PROJECT_DIR$/asset/js/result-js.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/home-js.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-897">
+          <caret line="0" column="24" lean-forward="true" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/createForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="2277">
+          <caret line="99" column="19" lean-forward="false" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="66" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/js/drawing-js.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1587">
+          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/draw-algebraic-queries.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="167" column="26" lean-forward="true" selection-start-line="167" selection-start-column="26" selection-end-line="167" selection-end-column="26" />
+          <folding>
+            <element signature="e#7875#7882#1#HTML" expanded="true" />
+            <element signature="e#8900#8907#1#HTML" expanded="true" />
+            <marker date="1520975249726" expanded="true" signature="1494:1807" ph="..." />
+            <marker date="1520975249726" expanded="false" signature="1603:1610" ph="×" />
+            <marker date="1520975249726" expanded="true" signature="1959:2268" ph="..." />
+            <marker date="1520975249726" expanded="false" signature="2068:2075" ph="×" />
+          </folding>
         </state>
       </provider>
     </entry>
