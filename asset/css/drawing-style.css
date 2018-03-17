@@ -58,7 +58,12 @@ body {
 	height: 10px;
 	background-color: red;
 }
-
+.drag1{
+	border-radius: 8px;
+	width: 130px;
+	box-sizing: border-box;
+	position: absolute;
+}
 .tap-target{
 	cursor: pointer;
 }

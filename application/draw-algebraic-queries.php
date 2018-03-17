@@ -1,6 +1,10 @@
 <?php
-	require_once('../fonctions.php');	
-	$returnBDD = doConnexion();
+require_once('../fonctions.php');
+require_once('forms/HelpDataEntry.php');
+$returnBDD = doConnexion();
+
+$help = new HelpDataEntry();
+$table = $help->allTables($_SESSION['bdd']);
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +102,57 @@
 			</div>
 		</div>
 	</div>
+        <!-- Modal Select -->
+        <div class="modal fade" id="modalSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Select</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="textModal">
+                        <div id="divSelect"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Modal From -->
+        <div class="modal fade" id="modalFrom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">From</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="textModal">
+                        <select id="from">
+                            <option value="null"></option>
+                            <?php
+                            foreach ($table as $t) {
+                                echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div id="console">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="btdModalFrom" class="btn btn-primary">Sauvegarder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 	<div id="footer">
 		<?php
 			require_once('modules/footer/footer.php');
