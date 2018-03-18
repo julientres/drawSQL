@@ -10,9 +10,6 @@ $(document).ready(function () {
 
     $(".alert-success").show("slow").delay(2000).hide("slow");
 
-    $('#btnGenerate').on("click", function () {
-        window.open("display-results.php");
-    })
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -38,28 +35,23 @@ $(document).ready(function () {
 
     interact('[data-type="select"]').on('doubletap', function (event) {
         $('#modalSelect').modal('show');
-    })
+    });
     interact('[data-type="from"]').on('doubletap', function (event) {
         $('#modalFrom').modal('show');
-    })
+    });
 
-    $('[data-form="1"]').on("click", function (event) {
-        var dataSelect = "select=true";
+    $('#btdModalFrom').on('click', function () {
+        console.log('click');
+        var dataFromTable = "from=" + $('#from').find(":selected").text();
+        console.log(dataFromTable);
         $.ajax({
             url: "../asset/php/createClass.php",
             type: "POST",
-            data: dataSelect,
+            data: dataFromTable,
             success: function (data) {
                 $('#test').html(data);
                 if (data) {
-                    nb_select++;
-                    $('#drawing').append('<img src="../asset/img/svg/Select.svg" data-type="select" id="select' + nb_select + '" class="draggable tap-target form">');
-                    forms['select' + nb_select] = {
-                        'x': 0,
-                        'y': 0,
-                        'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
-                        'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
-                    };
+                    $('#modalFrom').modal('hide');
                 }
             },
             error: function (data) {
@@ -69,24 +61,24 @@ $(document).ready(function () {
         });
     });
 
-    $('[data-form="2"]').on("click", function (event) {
-
-        var dataFrom = "from=true";
+    $('#btdModalSelect').on('click', function () {
+        console.log('click');
+        var dataSelect = "select=";
+        $("input[type='checkbox']:checked").each(
+            function () {
+                dataSelect += $(this).val();
+                dataSelect += "%2C";
+            });
+        var str = dataSelect.substring(0, dataSelect.length-3);
         $.ajax({
             url: "../asset/php/createClass.php",
             type: "POST",
-            data: dataFrom,
+            data: str,
             success: function (data) {
                 $('#test').html(data);
                 if (data) {
-                    nb_from++;
-                    $('#drawing').append('<img src="../asset/img/svg/From.svg" data-type="from" id="from' + nb_from + '" class="draggable tap-target form">');
-                    forms['from' + nb_from] = {
-                        'x': 0,
-                        'y': 0,
-                        'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
-                        'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
-                    };}
+                    $('#modalSelect').modal('hide');
+                }
             },
             error: function (data) {
                 console.log(data);
@@ -95,30 +87,70 @@ $(document).ready(function () {
         });
     });
 
-    $('[data-form="3"]').on("click", function (event) {
+    $('#from').on('change', function (e) {
+        var dataForm = "fromInput=" + $('#from').find(":selected").text();
+        e.preventDefault();
+        $.ajax({
+            url: "../asset/php/createClass.php",
+            type: 'POST',
+            data: dataForm,
+            success: function (data) {
+                $('#divSelect').html(data);
+            },
+            error: function (data) {
+                console.log("erreur");
+            }
+        });
+    });
 
-        var dataWhere = "where=true";
+    $('#btdGenerer').on('click',function(){
+        var dataGenerer = "generer=true";
         $.ajax({
             url: "../asset/php/createClass.php",
             type: "POST",
-            data: dataWhere,
+            data: dataGenerer,
             success: function (data) {
-                $('#test').html(data);
-                if (data) {
-                    nb_where++;
-                    $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" id="where' + nb_where + '" class="draggable tap-target form">');
-                    forms['where' + nb_where] = {
-                        'x': 0,
-                        'y': 0,
-                        'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
-                        'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
-                    };              }
+                if(data){
+                    window.location.replace("./display-results.php");
+                }
             },
             error: function (data) {
-                console.log(data);
-                alert("Erreur de création")
+                console.log("erreur");
             }
         });
+    });
+
+    $('[data-form="1"]').on("click", function (event) {
+        nb_select++;
+        $('#drawing').append('<img src="../asset/img/svg/Select.svg" data-type="select" id="select' + nb_select + '" class="draggable tap-target form">');
+        forms['select' + nb_select] = {
+            'x': 0,
+            'y': 0,
+            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+        };
+    });
+
+    $('[data-form="2"]').on("click", function (event) {
+        nb_from++;
+        $('#drawing').append('<img src="../asset/img/svg/From.svg" data-type="from" id="from' + nb_from + '" class="draggable tap-target form">');
+        forms['from' + nb_from] = {
+            'x': 0,
+            'y': 0,
+            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+        };
+    });
+
+    $('[data-form="3"]').on("click", function (event) {
+        nb_where++;
+        $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" id="where' + nb_where + '" class="draggable tap-target form">');
+        forms['where' + nb_where] = {
+            'x': 0,
+            'y': 0,
+            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+        };
     });
 
     $('#link').on("click", function (event) {
@@ -210,7 +242,8 @@ $(document).ready(function () {
                 y = (parseFloat(target.getAttribute('data-y')) || 0);
 
             target.style.webkitTransform = target.style.transform =
-                'translate(' + x + 'px,' + y + 'px)';});
+                'translate(' + x + 'px,' + y + 'px)';
+        });
 
 
     function dragMoveListener(event) {

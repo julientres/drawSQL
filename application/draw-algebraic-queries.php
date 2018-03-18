@@ -116,7 +116,7 @@ $table = $help->allTables($_SESSION['bdd']);
                         <div id="divSelect"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
                     </div>
                 </div>
@@ -147,12 +147,15 @@ $table = $help->allTables($_SESSION['bdd']);
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         <button type="button" id="btdModalFrom" class="btn btn-primary">Sauvegarder</button>
                     </div>
                 </div>
             </div>
         </div>
+    <div id="test">
+
+    </div>
 	<div id="footer">
 		<?php
 			require_once('modules/footer/footer.php');

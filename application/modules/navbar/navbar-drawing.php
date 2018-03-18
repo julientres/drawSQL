@@ -19,7 +19,8 @@
                   </div>
             </div>        
 	        <li class="nav-item">
-	        	<a class="nav-link" href="#generateCodeModal" data-toggle="modal" data-target="#generateCodeModal">Générer</a>
+	        	<!--<a class="nav-link" href="#generateCodeModal" id="btdGenerer" data-toggle="modal" data-target="#generateCodeModal">Générer</a>-->
+                <a class="nav-link" href="#" id="btdGenerer">Générer</a>
 	        </li>
 	    </ul>
 
