@@ -55,6 +55,15 @@ class ExecutionQuery
             echo '</p>';
         }
     }
+    public function searchNameColumn($table)
+    {
+        $bdd = doConnexion();
+        $str = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" . $table . "';";
+        $query = $bdd['object']->prepare($str);
+        $query->execute();
+        $result = $query->fetchAll();
+        return $result;
+    }
 }
 
 ?>

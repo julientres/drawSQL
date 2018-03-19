@@ -18,8 +18,8 @@ if (isset($_POST['fromInput'])) {
 if(isset($_POST['select'])){
     if($_POST['select']){
         $select = new Select("".$_POST['select']."");
-        var_dump($select);
         $_SESSION['select'] = serialize($select);
+        var_dump($select);
         echo true;
     }else{
         echo false;
@@ -41,5 +41,21 @@ if(isset($_POST['generer'])){
         if(isset($_SESSION['select']) && isset($_SESSION['from'])){
             echo true;
         }
+    }
+}
+
+if(isset($_POST['result'])){
+    if($_POST['result']){
+        $select = unserialize($_SESSION['select']);
+        $from = unserialize($_SESSION['from']);
+
+
+        $tabSelect = $select->convertToSQL();
+        $tabFrom = $from->convertToSQL();
+
+
+        $execution = new ExecutionQuery($tabSelect, $tabFrom);
+        $column = $execution->searchNameColumn($from->getTable());
+        $execution->showResults($execution->exec(), $column);
     }
 }

@@ -11,38 +11,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="draw-algebraic-queries.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/draw-algebraic-queries.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="133" column="33" lean-forward="true" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
-              <folding>
-                <marker date="1521414967781" expanded="true" signature="1442:1751" ph="..." />
-                <marker date="1521414967781" expanded="false" signature="1551:1558" ph="×" />
-                <marker date="1521414967781" expanded="true" signature="1900:2209" ph="..." />
-                <marker date="1521414967781" expanded="false" signature="2009:2016" ph="×" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="createForm.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/createForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="112" column="44" lean-forward="true" selection-start-line="112" selection-start-column="44" selection-end-line="112" selection-end-column="44" />
+            <state relative-caret-position="770">
+              <caret line="112" column="44" lean-forward="false" selection-start-line="112" selection-start-column="44" selection-end-line="112" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="drawing-js.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="function.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/function.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1035">
+              <caret line="45" column="39" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="drawing-js.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/asset/js/drawing-js.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="100" column="26" lean-forward="true" selection-start-line="100" selection-start-column="26" selection-end-line="100" selection-end-column="26" />
+            <state relative-caret-position="1955">
+              <caret line="85" column="11" lean-forward="true" selection-start-line="71" selection-start-column="7" selection-end-line="85" selection-end-column="11" />
               <folding>
-                <marker date="1521416733560" expanded="true" signature="7832:7843" ph="..." />
+                <marker date="1521485776125" expanded="true" signature="7807:7818" ph="..." />
               </folding>
             </state>
           </provider>
@@ -51,18 +46,43 @@
       <file leaf-file-name="ExecutionQuery.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-12">
+              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HelpDataEntry.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="379">
+              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+              <folding>
+                <marker date="1521485376466" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
+                <marker date="1521485376466" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createClass.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/asset/php/createClass.php">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="241">
-              <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+              <caret line="39" column="26" lean-forward="true" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="createClass.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asset/php/createClass.php">
+      <file leaf-file-name="display-results.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/display-results.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="41" column="22" lean-forward="false" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+            <state relative-caret-position="368">
+              <caret line="40" column="25" lean-forward="false" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -91,13 +111,14 @@
         <option value="$PROJECT_DIR$/application/forms/Where.php" />
         <option value="$PROJECT_DIR$/application/createForm.php" />
         <option value="$PROJECT_DIR$/asset/css/drawing-style.css" />
-        <option value="$PROJECT_DIR$/application/forms/From.php" />
-        <option value="$PROJECT_DIR$/application/forms/ExecutionQuery.php" />
-        <option value="$PROJECT_DIR$/application/forms/HelpDataEntry.php" />
         <option value="$PROJECT_DIR$/application/draw-algebraic-queries.php" />
         <option value="$PROJECT_DIR$/application/modules/navbar/navbar-drawing.php" />
-        <option value="$PROJECT_DIR$/asset/php/createClass.php" />
+        <option value="$PROJECT_DIR$/application/forms/HelpDataEntry.php" />
+        <option value="$PROJECT_DIR$/application/forms/ExecutionQuery.php" />
         <option value="$PROJECT_DIR$/asset/js/drawing-js.js" />
+        <option value="$PROJECT_DIR$/application/display-results.php" />
+        <option value="$PROJECT_DIR$/application/forms/From.php" />
+        <option value="$PROJECT_DIR$/asset/php/createClass.php" />
       </list>
     </option>
   </component>
@@ -128,6 +149,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -173,8 +196,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -213,11 +234,12 @@
       <workItem from="1520378524411" duration="1713000" />
       <workItem from="1520808545541" duration="5369000" />
       <workItem from="1521412786020" duration="3971000" />
+      <workItem from="1521484364058" duration="2358000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23171000" />
+    <option name="totallyTimeSpent" value="25529000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -259,7 +281,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
           <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-          <folding />
+          <folding>
+            <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -283,7 +307,7 @@
         <state relative-caret-position="644">
           <caret line="73" column="35" lean-forward="true" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
           <folding>
-            <marker date="1521416733560" expanded="true" signature="7832:7843" ph="..." />
+            <marker date="1521485776125" expanded="true" signature="7807:7818" ph="..." />
           </folding>
         </state>
       </provider>
@@ -293,10 +317,10 @@
         <state relative-caret-position="161">
           <caret line="7" column="2" lean-forward="false" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
           <folding>
-            <marker date="1521414967781" expanded="true" signature="1442:1751" ph="..." />
-            <marker date="1521414967781" expanded="false" signature="1551:1558" ph="×" />
-            <marker date="1521414967781" expanded="true" signature="1900:2209" ph="..." />
-            <marker date="1521414967781" expanded="false" signature="2009:2016" ph="×" />
+            <marker date="1521484030770" expanded="true" signature="1442:1751" ph="..." />
+            <marker date="1521484030770" expanded="false" signature="1551:1558" ph="×" />
+            <marker date="1521484030770" expanded="true" signature="1900:2209" ph="..." />
+            <marker date="1521484030770" expanded="false" signature="2009:2016" ph="×" />
           </folding>
         </state>
       </provider>
@@ -305,7 +329,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
           <caret line="44" column="23" lean-forward="true" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -328,7 +351,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="759">
           <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-          <folding />
+          <folding>
+            <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -337,11 +362,8 @@
         <state relative-caret-position="736">
           <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
           <folding>
-            <marker date="1521414911030" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
-            <marker date="1521414911030" expanded="true" signature="578:649" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:683" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="943:1029" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1521485376466" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
+            <marker date="1521485376466" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
           </folding>
         </state>
       </provider>
@@ -383,11 +405,8 @@
         <state relative-caret-position="736">
           <caret line="32" column="72" lean-forward="false" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
           <folding>
-            <marker date="1521414911030" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
-            <marker date="1521414911030" expanded="true" signature="578:649" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:683" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="943:1029" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1521485376466" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
+            <marker date="1521485376466" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
           </folding>
         </state>
       </provider>
@@ -404,7 +423,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="851">
           <caret line="37" column="60" lean-forward="true" selection-start-line="37" selection-start-column="60" selection-end-line="37" selection-end-column="60" />
-          <folding />
+          <folding>
+            <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -437,11 +458,8 @@
         <state relative-caret-position="736">
           <caret line="32" column="40" lean-forward="false" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
           <folding>
-            <marker date="1521414911030" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
-            <marker date="1521414911030" expanded="true" signature="578:649" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:683" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="943:1029" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1521485376466" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
+            <marker date="1521485376466" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
           </folding>
         </state>
       </provider>
@@ -473,7 +491,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="759">
           <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-          <folding />
+          <folding>
+            <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -506,11 +526,8 @@
         <state relative-caret-position="736">
           <caret line="32" column="72" lean-forward="false" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
           <folding>
-            <marker date="1521414911030" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
-            <marker date="1521414911030" expanded="true" signature="578:649" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:683" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="943:1029" ph="SELECT COLUM... COLUMNS" />
+            <marker date="1521485376466" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
+            <marker date="1521485376466" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
           </folding>
         </state>
       </provider>
@@ -527,15 +544,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="851">
           <caret line="37" column="60" lean-forward="true" selection-start-line="37" selection-start-column="60" selection-end-line="37" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/forms/Select.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-          <folding />
+          <folding>
+            <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -566,42 +577,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="44" column="23" lean-forward="false" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/forms/From.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/display-results.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-483">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1519753595866" expanded="true" signature="1100:1409" ph="..." />
-            <marker date="1519753595866" expanded="false" signature="1209:1216" ph="×" />
-            <marker date="1519753595866" expanded="true" signature="1557:1866" ph="..." />
-            <marker date="1519753595866" expanded="false" signature="1666:1673" ph="×" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-          <folding>
-            <marker date="1521414911030" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
-            <marker date="1521414911030" expanded="true" signature="578:649" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:683" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
-            <marker date="1521414911030" expanded="true" signature="943:1029" ph="SELECT COLUM... COLUMNS" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -617,11 +592,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2070">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1519753595898" expanded="true" signature="2321:2328" ph="×" />
-            <marker date="1519753595898" expanded="true" signature="2836:2843" ph="×" />
-            <marker date="1519753595898" expanded="true" signature="3177:3184" ph="×" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -629,15 +599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fonctions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-702">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -645,7 +606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="21" column="149" lean-forward="false" selection-start-line="21" selection-start-column="149" selection-end-line="21" selection-end-column="149" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -653,62 +613,106 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/Select.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/draw-algebraic-queries.php">
+    <entry file="file://$PROJECT_DIR$/fonctions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="133" column="33" lean-forward="true" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
-          <folding>
-            <marker date="1521414967781" expanded="true" signature="1442:1751" ph="..." />
-            <marker date="1521414967781" expanded="false" signature="1551:1558" ph="×" />
-            <marker date="1521414967781" expanded="true" signature="1900:2209" ph="..." />
-            <marker date="1521414967781" expanded="false" signature="2009:2016" ph="×" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/function.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/createForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="112" column="44" lean-forward="true" selection-start-line="112" selection-start-column="44" selection-end-line="112" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/php/createClass.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="41" column="22" lean-forward="false" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/js/drawing-js.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="100" column="26" lean-forward="true" selection-start-line="100" selection-start-column="26" selection-end-line="100" selection-end-column="26" />
+        <state relative-caret-position="1955">
+          <caret line="85" column="11" lean-forward="true" selection-start-line="71" selection-start-column="7" selection-end-line="85" selection-end-column="11" />
           <folding>
-            <marker date="1521416733560" expanded="true" signature="7832:7843" ph="..." />
+            <marker date="1521485776125" expanded="true" signature="7807:7818" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/function.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1035">
+          <caret line="45" column="39" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/draw-algebraic-queries.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2185">
+          <caret line="134" column="26" lean-forward="true" selection-start-line="134" selection-start-column="26" selection-end-line="134" selection-end-column="26" />
+          <folding>
+            <marker date="1521484030770" expanded="true" signature="1442:1751" ph="..." />
+            <marker date="1521484030770" expanded="false" signature="1551:1558" ph="×" />
+            <marker date="1521484030770" expanded="true" signature="1900:2209" ph="..." />
+            <marker date="1521484030770" expanded="false" signature="2009:2016" ph="×" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/createForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="770">
+          <caret line="112" column="44" lean-forward="false" selection-start-line="112" selection-start-column="44" selection-end-line="112" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/display-results.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="40" column="25" lean-forward="false" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/HelpDataEntry.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <marker date="1521485376466" expanded="true" signature="208:324" ph="SELECT TABLE... TABLES" />
+            <marker date="1521485376466" expanded="true" signature="578:699" ph="SELECT COLUM... COLUMNS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/ExecutionQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding>
+            <marker date="1521485406191" expanded="true" signature="1421:1507" ph="SELECT COLUM... COLUMNS" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/forms/From.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="32" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/asset/php/createClass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="39" column="26" lean-forward="true" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>

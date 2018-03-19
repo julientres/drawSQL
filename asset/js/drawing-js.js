@@ -41,8 +41,7 @@ $(document).ready(function () {
     });
 
     $('#btdModalFrom').on('click', function () {
-        console.log('click');
-        var dataFromTable = "from=" + $('#from').find(":selected").text();
+        var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
         console.log(dataFromTable);
         $.ajax({
             url: "../asset/php/createClass.php",
