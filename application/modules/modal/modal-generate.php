@@ -12,12 +12,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Cum saepe multa, tum memini domi in hemicyclio sedentem, ut solebat, cum et ego essem una et pauci admodum familiares, in eum sermonem illum incidere qui tum forte multis erat in ore. Meministi enim profecto, Attice, et eo magis, quod P. Sulpicio utebare multum, cum is tribunus plebis capitali odio a Q. Pompeio, qui tum erat consul, dissideret, quocum coniunctissime et amantissime vixerat, quanta esset hominum vel admiratio vel querella.</p>
+          <code id="codeSelect"></code><br>
+          <code id="codeFrom"></code><br>
+          <code id="codeWhere"></code>
       </div>
       <div class="modal-footer">
         <div class="btn-group" role="group" aria-label="...">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary" id="btnGenerate">Exécuter la requête</button>
+          <button type="button" class="btn btn-primary" id="btdSql">Exécuter la requête</button>
         </div>
       </div>
     </div>

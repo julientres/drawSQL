@@ -32,9 +32,9 @@ class HelpDataEntry
 
     public function showResultsColumns($resultat)
     {
-        echo '<input type="checkbox" id="subscribeNews" name="select" value="*">*<br>';
+        echo '<input type="checkbox" id="checkAll" name="select" value="*">*<br>';
         foreach ($resultat as $r) {
-            echo '<input type="checkbox" name="select" value="' . $r['COLUMN_NAME'] . '">' . $r['COLUMN_NAME'] . '<br>';
+            echo '<input class="checkOne" type="checkbox" name="select" value="' . $r['COLUMN_NAME'] . '">' . $r['COLUMN_NAME'] . '<br>';
         }
     }
 

@@ -2,6 +2,8 @@
 	require_once('../fonctions.php');
 	require_once('modules/modal/modal-generate.php');
 	require_once('modules/modal/modal-help-drawing.php');
+    $_SESSION['from'] = null;
+    $_SESSION['select'] = null;
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

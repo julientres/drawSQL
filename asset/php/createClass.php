@@ -43,7 +43,22 @@ if(isset($_POST['generer'])){
         }
     }
 }
+if(isset($_POST['modal'])) {
+    if ($_POST['modal']) {
+        $select = unserialize($_SESSION['select']);
+        $from = unserialize($_SESSION['from']);
 
+        $tabSelect = $select->convertToSQL();
+        $tabFrom = $from->convertToSQL();
+
+        $myObj->select = $tabSelect;
+        $myObj->from = $tabFrom;
+
+        $myJson = json_encode($myObj);
+
+        echo $myJson;
+    }
+}
 if(isset($_POST['result'])){
     if($_POST['result']){
         $select = unserialize($_SESSION['select']);

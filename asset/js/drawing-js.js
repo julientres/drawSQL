@@ -40,6 +40,20 @@ $(document).ready(function () {
         $('#modalFrom').modal('show');
     });
 
+    function enable_cb() {
+        if($("input:checked")){
+            $(".checkOne").forEach(function () {
+                $(this).prop("disabled", true)
+            });
+        }else {
+            $(".checkOne").forEach(function () {
+                $(this).prop("disabled", false)
+            });
+        }
+    }
+
+    $('#checkAll').on('click',enable_cb);
+
     $('#btdModalFrom').on('click', function () {
         var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
         console.log(dataFromTable);
@@ -68,7 +82,7 @@ $(document).ready(function () {
                 dataSelect += $(this).val();
                 dataSelect += "%2C";
             });
-        var str = dataSelect.substring(0, dataSelect.length-3);
+        var str = dataSelect.substring(0, dataSelect.length - 3);
         $.ajax({
             url: "../asset/php/createClass.php",
             type: "POST",
@@ -101,15 +115,37 @@ $(document).ready(function () {
             }
         });
     });
+    $('#btdGenerer').on('click', function () {
+        var dataModal = "modal=true";
+        $.ajax({
+            url: "../asset/php/createClass.php",
+            type: "POST",
+            data: dataModal,
+            success: function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                var selectText = data.select;
+                var fromText = data.from;
+                $('#codeSelect').html(selectText);
+                $('#codeFrom').html(fromText);
+                $('#generateCodeModal').modal('show');
 
-    $('#btdGenerer').on('click',function(){
+            },
+            error: function (data) {
+                console.log("erreur");
+            }
+        });
+    });
+
+
+    $('#btdSql').on('click', function () {
         var dataGenerer = "generer=true";
         $.ajax({
             url: "../asset/php/createClass.php",
             type: "POST",
             data: dataGenerer,
             success: function (data) {
-                if(data){
+                if (data) {
                     window.location.replace("./display-results.php");
                 }
             },
