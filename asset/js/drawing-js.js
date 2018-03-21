@@ -40,19 +40,6 @@ $(document).ready(function () {
         $('#modalFrom').modal('show');
     });
 
-    function enable_cb() {
-        if($("input:checked")){
-            $(".checkOne").forEach(function () {
-                $(this).prop("disabled", true)
-            });
-        }else {
-            $(".checkOne").forEach(function () {
-                $(this).prop("disabled", false)
-            });
-        }
-    }
-
-    $('#checkAll').on('click',enable_cb);
 
     $('#btdModalFrom').on('click', function () {
         var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
