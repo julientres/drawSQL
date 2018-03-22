@@ -32,16 +32,10 @@ class HelpDataEntry
 
     public function showResultsColumns($resultat)
     {
-        echo '<input type="checkbox" id="checkAll" name="select" value="*">*<br>';
+        $data = [];
         foreach ($resultat as $r) {
-            echo '<input class="checkOne" type="checkbox" name="select" value="' . $r['COLUMN_NAME'] . '">' . $r['COLUMN_NAME'] . '<br>';
+            array_push($data,$r['COLUMN_NAME']);
         }
-    }
-
-    public function showResultsColumnsOption($resultat)
-    {
-        foreach ($resultat as $r) {
-            echo '<option value="' . $r['COLUMN_NAME'] . '">' . $r['COLUMN_NAME'] . '</option>';
-        }
+        echo json_encode($data);
     }
 }

@@ -18,12 +18,6 @@ $table = $help->allTables($_SESSION['bdd']);
 	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">
 	
 	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
-	<script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
-	<script src="librairies/jquery-3.3.1.min.js"></script>
-	<script src="librairies/popper.min.js" type="text/javascript"></script>
-	<script src="librairies/svg.min.js" type="text/javascript"></script>
-	<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="librairies/interact.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
 </head>
 <body>
@@ -102,6 +96,9 @@ $table = $help->allTables($_SESSION['bdd']);
 			</div>
 		</div>
 	</div>
+        <div id="test">
+
+        </div>
         <!-- Modal Select -->
         <div class="modal fade" id="modalSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -113,7 +110,8 @@ $table = $help->allTables($_SESSION['bdd']);
                         </button>
                     </div>
                     <div class="modal-body" id="textModal">
-                        <div id="divSelect"></div>
+                        <div id="divSelect">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -153,9 +151,61 @@ $table = $help->allTables($_SESSION['bdd']);
                 </div>
             </div>
         </div>
-    <div id="test">
 
-    </div>
+        <!-- Modal Where -->
+        <div class="modal fade" id="modalWhere" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Where</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="textModal">
+                        <select id="where1">
+
+                        </select>
+                        <br>
+                        <br>
+                        <select id="where2">
+                            <option value=""></option>
+                            <option value="=">=</option>
+                            <option value="<>"><></option>
+                            <option value="!=">!=</option>
+                            <option value=">">></option>
+                            <option value="<"><</option>
+                            <option value=">=">>=</option>
+                            <option value="<="><=</option>
+                            <option value="IN">IN</option>
+                            <option value="BETWEEN">BETWEEN</option>
+                            <option value="LIKE">LIKE</option>
+                            <option value="IS NULL">IS NULL</option>
+                            <option value="IS NOT NULL">IS NOT NULL</option>
+                        </select>
+                        <br>
+                        <br>
+                        <input type="text" id="where3" value="">
+                        <br>
+                        <div id="divBetween">
+                            <p>And</p>
+                            <input type="text" id="where4" value="">
+                        </div>
+
+                    </div>
+                    <div id="console">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 	<div id="footer">
 		<?php
 			require_once('modules/footer/footer.php');
@@ -163,7 +213,12 @@ $table = $help->allTables($_SESSION['bdd']);
 	</div>	
 
 	<?php endif; ?>
-
+    <script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
+    <script src="librairies/jquery-3.3.1.min.js"></script>
+    <script src="librairies/popper.min.js" type="text/javascript"></script>
+    <script src="librairies/svg.min.js" type="text/javascript"></script>
+    <script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="librairies/interact.min.js" type="text/javascript"></script>
 	<script src="../asset/js/drawing-js.js" type="text/javascript"></script>
 </body>
 </html>

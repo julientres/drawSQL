@@ -29,18 +29,53 @@ $(document).ready(function () {
         alert('SVG not supported');
     }
 
-    $('#btnGenerate').on("click", function () {
-        window.open("display-results.php");
-    });
-
-    interact('[data-type="select"]').on('doubletap', function (event) {
+    //Double clic sur la forme affiche la modal Select
+    interact('[data-type="select"]').on('doubletap', function () {
         $('#modalSelect').modal('show');
     });
-    interact('[data-type="from"]').on('doubletap', function (event) {
+    //Double clic sur la forme affiche la modal From
+    interact('[data-type="from"]').on('doubletap', function () {
         $('#modalFrom').modal('show');
+    });
+    //Double clic sur la forme affiche la modal Where
+    interact('[data-type="where"]').on('doubletap', function () {
+        $('#modalWhere').modal('show');
     });
 
 
+    //Bouton enregistrement de la modal du Where
+    $('#btdModalWhere').on('click', function () {
+        dataWhere = "";
+        where1 = $('#modalWhere #where1').find(":selected").text();
+        where2 = $('#where2').find(":selected").text();
+        where3 = $('#where3').val();
+        if ($('#modalWhere #where1').find(":selected").text() != "" && $('#where2').find(":selected").text() != "" && $('#where3').val() != "") {
+            dataWhere += "where1=" + $('#modalWhere #where1').find(":checked").text();
+            dataWhere += "&where2=" + $('#where2').find(":checked").text();
+            dataWhere += "&where3=" + $('#where3').val();
+        }
+        if ($('#where4').val() != "") {
+            dataWhere += "&where4=" + $('#where4').val();
+        }
+        console.log(dataWhere);
+        $.ajax({
+            url: "../asset/php/createClass.php",
+            type: "POST",
+            data: dataWhere,
+            success: function (data) {
+                $('#test').html(data);
+                if (data) {
+                    $('#modalWhere').modal('hide');
+                }
+            },
+            error: function (data) {
+                console.log(data);
+                alert("Erreur de création")
+            }
+        });
+    });
+
+    //Bouton enregistrement de la modal du From
     $('#btdModalFrom').on('click', function () {
         var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
         console.log(dataFromTable);
@@ -52,6 +87,7 @@ $(document).ready(function () {
                 $('#test').html(data);
                 if (data) {
                     $('#modalFrom').modal('hide');
+
                 }
             },
             error: function (data) {
@@ -61,6 +97,7 @@ $(document).ready(function () {
         });
     });
 
+    //Bouton enregistrement de la modal du Select
     $('#btdModalSelect').on('click', function () {
         console.log('click');
         var dataSelect = "select=";
@@ -87,21 +124,29 @@ $(document).ready(function () {
         });
     });
 
-    $('#from').on('change', function (e) {
+    //Au changement du from récupére le nom des colonnes
+    $('#from').on('change', function () {
+        $('#modalWhere #where1').html('<option value="null"></option>');
+        $('#divSelect').html('<input type="checkbox" value="*">*<br>');
         var dataForm = "fromInput=" + $('#from').find(":selected").text();
-        e.preventDefault();
         $.ajax({
             url: "../asset/php/createClass.php",
             type: 'POST',
             data: dataForm,
             success: function (data) {
-                $('#divSelect').html(data);
+                data = JSON.parse(data);
+                for (var i = 0; i < data.length; i++) {
+                    $('#modalWhere #where1').append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                    $('#divSelect').append('<input type="checkbox" name="select" value="' + data[i] + '">' + data[i] + '<br>');
+                }
             },
             error: function (data) {
                 console.log("erreur");
             }
         });
     });
+
+    //Bouton pour afficher la requête SQL
     $('#btdGenerer').on('click', function () {
         var dataModal = "modal=true";
         $.ajax({
@@ -113,6 +158,10 @@ $(document).ready(function () {
                 data = JSON.parse(data);
                 var selectText = data.select;
                 var fromText = data.from;
+                if(data.where != null){
+                    var whereText = data.where;
+                    $('#codeWhere').html(whereText);
+                }
                 $('#codeSelect').html(selectText);
                 $('#codeFrom').html(fromText);
                 $('#generateCodeModal').modal('show');
@@ -124,7 +173,7 @@ $(document).ready(function () {
         });
     });
 
-
+    //Bouton qui va envoyé l'execution de la requete pour nous rediriger vers la page de résultat
     $('#btdSql').on('click', function () {
         var dataGenerer = "generer=true";
         $.ajax({
@@ -142,6 +191,7 @@ $(document).ready(function () {
         });
     });
 
+    //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
         nb_select++;
         $('#drawing').append('<img src="../asset/img/svg/Select.svg" data-type="select" id="select' + nb_select + '" class="draggable tap-target form">');
@@ -152,7 +202,7 @@ $(document).ready(function () {
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
     });
-
+    //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {
         nb_from++;
         $('#drawing').append('<img src="../asset/img/svg/From.svg" data-type="from" id="from' + nb_from + '" class="draggable tap-target form">');
@@ -163,7 +213,7 @@ $(document).ready(function () {
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
     });
-
+    //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="3"]').on("click", function (event) {
         nb_where++;
         $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" id="where' + nb_where + '" class="draggable tap-target form">');
@@ -175,6 +225,7 @@ $(document).ready(function () {
         };
     });
 
+    //Créer les liens entre formes
     $('#link').on("click", function (event) {
         var x_1 = 0;
         var y_1 = 0;
@@ -227,7 +278,7 @@ $(document).ready(function () {
             });
     });
 
-
+    //Permettre le drag & drop de l'application
     interact('.draggable')
         .draggable({
             onmove: dragMoveListener,
