@@ -13,16 +13,16 @@
 	<!-- <link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css"> -->
 	<style>
 	body {
-		margin: 0 auto;
-		padding:0 auto;
-		background-color: #222;
+		/*margin: 0 auto;
+		padding:0 auto;*/
+		background: url('../asset/img/grid.png') repeat;
 	}
 	#outer-dropzone {
 		height: 140px;
 	}
 
 	#inner-dropzone {
-		height: 80px;
+		height: 180px;
 	}
 
 	.delete {
@@ -75,9 +75,15 @@
 		background-color: #4e4;
 	}
 
-	#drawing {
+	/*#drawing {
 		width:100%;
 		background-color: #444;
+	}*/
+
+	#options {
+		position: absolute;
+		top:2%;
+		right:3%;
 	}
 	</style>
 </head>
@@ -87,206 +93,250 @@
 		<div id="from1" class="draggable drag-drop" data-type="from"> #from1 </div>
 
 		<div id="inner-dropzone" class="delete">#delete-dropzone</div>
-		<div id="inner-dropzone" class="copy">#copy-dropzone</div>
+		<!-- <div id="inner-dropzone" class="copy">#copy-dropzone</div> -->		
 	</div>
 
+	<div id="options">
+		<input type="submit" id="zoomIn" value="zoom +">
+		<input type="submit" id="zoomOut" value="zoom -">
+		<input type="submit" id="zoomReset" value="zoom =">
+		<input type="submit" id="clear" value="delete all">
+	</div>
 
 	<script>
-	var nbSelect = 1;
-	var nbFrom = 1;
+	$(document).ready(function() {
+		var nbSelect = 1;
+		var nbFrom = 1;
+		var coefZoom = 1.0;
 
-	//----------------------------------------------------------------
-	//drop delete
-	//----------------------------------------------------------------
-	interact('.delete').dropzone({
-		// only accept elements matching this CSS selector
-		accept: ['#select1', '#from1'],
-		// Require a 75% element overlap for a drop to be possible
-		overlap: 0.75,
+		$('#drawing').css('zoom', coefZoom);
 
-		// listen for drop related events:
-
-		ondropactivate: function (event) {
-			// add active dropzone feedback
-			event.target.classList.add('drop-active');
-		},
-		ondragenter: function (event) {
-			var draggableElement = event.relatedTarget,
-			dropzoneElement = event.target;
-
-			// feedback the possibility of a drop
-			dropzoneElement.classList.add('drop-target');
-			draggableElement.classList.add('can-drop');
-			//draggableElement.textContent = 'Dragged in';
-
-		},
-		ondragleave: function (event) {
-			// remove the drop feedback style
-			event.target.classList.remove('drop-target');
-			event.relatedTarget.classList.remove('can-drop');
-			//event.relatedTarget.textContent = 'Dragged out';
-		},
-		ondrop: function (event) {
-			//event.relatedTarget.textContent = 'Dropped';
-			if(confirm('sure to remove ?')) {
-				var type = event.relatedTarget.getAttribute('data-type');
-				event.relatedTarget.remove();
-				if(type == 'select')
-				nbSelect--;
-				else if(type == 'from')
-				nbFrom--;
+		$('#zoomIn').click(function() {
+			if(coefZoom < 2.5) {
+				coefZoom += 0.2;
+				console.log(coefZoom);
+				$('#drawing').css('zoom', coefZoom);
 			}
 			else {
-				var posX = parseFloat(event.relatedTarget.getAttribute('data-x'));
-				var posY = parseFloat(event.relatedTarget.getAttribute('data-y'));
+				alert('zoom + max atteint');
+			}			
+		});
 
-				event.relatedTarget.style.webkitTransform =
-				event.relatedTarget.style.transform =
-				'translate(' + (posX-posX) + 'px, ' + (posY-posY) + 'px)';
-
-				event.relatedTarget.setAttribute('data-x', posX-posX);
-				event.relatedTarget.setAttribute('data-y', posY-posY);
-				event.relatedTarget.classList.remove('can-drop');
+		$('#zoomOut').click(function() {
+			if(coefZoom > 0.5) {
+				coefZoom -= 0.2;
+				console.log(coefZoom);
+				$('#drawing').css('zoom', coefZoom);
 			}
-		},
-		ondropdeactivate: function (event) {
-			// remove active dropzone feedback
-			event.target.classList.remove('drop-active');
-			event.target.classList.remove('drop-target');
-		}
-	});
-
-	//----------------------------------------------------------------
-	//drop clone
-	//----------------------------------------------------------------
-	interact('.copy').dropzone({
-		// only accept elements matching this CSS selector
-		accept: ['#select1', '#from1'],
-		// Require a 75% element overlap for a drop to be possible
-		overlap: 0.75,
-
-		// listen for drop related events:
-
-		ondropactivate: function (event) {
-			// add active dropzone feedback
-			event.target.classList.add('drop-active');
-		},
-		ondragenter: function (event) {
-			var draggableElement = event.relatedTarget,
-			dropzoneElement = event.target;
-
-			// feedback the possibility of a drop
-			dropzoneElement.classList.add('drop-target');
-			draggableElement.classList.add('can-drop');
-			//draggableElement.textContent = 'Dragged in';
-		},
-		ondragleave: function (event) {
-			// remove the drop feedback style
-			event.target.classList.remove('drop-target');
-			event.relatedTarget.classList.remove('can-drop');
-			//event.relatedTarget.textContent = 'Dragged out';
-		},
-		ondrop: function (event) {
-			//event.relatedTarget.textContent = 'Dropped';
-
-			var original = event.relatedTarget,
-			// create a clone of the currentTarget element
-			clone = event.relatedTarget.cloneNode(true);
-
-			// insert the clone to the page
-			// TODO: position the clone appropriately
-			$('#drawing').append(clone);
-			clone.classList.remove('can-drop');
-			original.classList.remove('can-drop');
-
-			var type = event.relatedTarget.getAttribute('data-type');
-			if(type == 'select') {
-				nbSelect++;
-				clone.setAttribute('id', type+nbSelect);
-				var attrId = clone.getAttribute('id');
-				$('#'+attrId).text('#'+type+nbSelect);
-			}
-			else if(type == 'from') {
-				nbFrom++;
-				clone.setAttribute('id', type+nbFrom);
-				var attrId = clone.getAttribute('id');
-				$('#'+attrId).text('#'+type+nbFrom);
-			}
-
-			//move original
-			var posXOrigin = parseFloat(original.getAttribute('data-x'));
-			var posYOrigin = parseFloat(original.getAttribute('data-y'));
-
-			original.style.webkitTransform =
-			original.style.transform =
-			'translate(' + (posXOrigin-posXOrigin) + 'px, ' + (posYOrigin-posYOrigin) + 'px)';
-
-			original.setAttribute('data-x', posXOrigin-posXOrigin);
-			original.setAttribute('data-y', posYOrigin-posYOrigin);
-
-			//move clone
-			clone.style.webkitTransform =
-			clone.style.transform =
-			'translate(' + 0 + 'px, ' + 0 + 'px)';
-
-			clone.setAttribute('data-x', 0);
-			clone.setAttribute('data-y', 0);
-		},
-		ondropdeactivate: function (event) {
-			// remove active dropzone feedback
-			event.target.classList.remove('drop-active');
-			event.target.classList.remove('drop-target');
-		}
-	});
-
-	//----------------------------------------------------------------
-	//drag
-	//----------------------------------------------------------------
-	interact('.draggable')
-	.draggable({
-		// enable inertial throwing
-		inertia: true,
-		// keep the element within the area of it's parent
-		restrict: {
-			restriction: "parent",
-			endOnly: true,
-			elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-		},
-		// enable autoScroll
-		autoScroll: true,
-
-		// call this function on every dragmove event
-		onmove: dragMoveListener,
-		// call this function on every dragend event
-		onend: function (event) {
-			var textEl = event.target.querySelector('p');
-
-			textEl && (textEl.textContent =
-				'moved a distance of '
-				+ (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-				Math.pow(event.pageY - event.y0, 2) | 0))
-				.toFixed(2) + 'px');
+			else {
+				alert('zoom - max atteint');
 			}
 		});
 
-		function dragMoveListener (event) {
-			var target = event.target,
-			// keep the dragged position in the data-x/data-y attributes
-			x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-			y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+		$('#zoomReset').click(function() {
+			coefZoom = 1.0;
+			$('#drawing').css('zoom', coefZoom);
+		});
 
-			// translate the element
-			target.style.webkitTransform =
-			target.style.transform =
-			'translate(' + x + 'px, ' + y + 'px)';
+		$('#clear').click(function() {
+			coefZoom = 1.0;
+			$('#drawing').css('zoom', coefZoom);
+		});
 
-			// update the posiion attributes
-			target.setAttribute('data-x', x);
-			target.setAttribute('data-y', y);
-		}
 
-		// this is used later in the resizing and gesture demos
-		window.dragMoveListener = dragMoveListener;
-		</script>
+		//----------------------------------------------------------------
+		//drop delete
+		//----------------------------------------------------------------
+		interact('.delete').dropzone({
+			// only accept elements matching this CSS selector
+			accept: ['#select1', '#from1'],
+			// Require a 75% element overlap for a drop to be possible
+			overlap: 0.75,
+
+			// listen for drop related events:
+
+			ondropactivate: function (event) {
+				// add active dropzone feedback
+				event.target.classList.add('drop-active');
+			},
+			ondragenter: function (event) {
+				var draggableElement = event.relatedTarget,
+				dropzoneElement = event.target;
+
+				// feedback the possibility of a drop
+				dropzoneElement.classList.add('drop-target');
+				draggableElement.classList.add('can-drop');
+				//draggableElement.textContent = 'Dragged in';
+
+			},
+			ondragleave: function (event) {
+				// remove the drop feedback style
+				event.target.classList.remove('drop-target');
+				event.relatedTarget.classList.remove('can-drop');
+				//event.relatedTarget.textContent = 'Dragged out';
+			},
+			ondrop: function (event) {
+				//event.relatedTarget.textContent = 'Dropped';
+				if(confirm('sure to remove ?')) {
+					var type = event.relatedTarget.getAttribute('data-type');
+					event.relatedTarget.remove();
+					if(type == 'select')
+						nbSelect--;
+					else if(type == 'from')
+						nbFrom--;
+				}
+				else {
+					var posX = parseFloat(event.relatedTarget.getAttribute('data-x'));
+					var posY = parseFloat(event.relatedTarget.getAttribute('data-y'));
+
+					event.relatedTarget.style.webkitTransform =
+					event.relatedTarget.style.transform =
+					'translate(' + (posX-posX) + 'px, ' + (posY-posY) + 'px)';
+
+					event.relatedTarget.setAttribute('data-x', posX-posX);
+					event.relatedTarget.setAttribute('data-y', posY-posY);
+					event.relatedTarget.classList.remove('can-drop');
+				}
+			},
+			ondropdeactivate: function (event) {
+				// remove active dropzone feedback
+				event.target.classList.remove('drop-active');
+				event.target.classList.remove('drop-target');
+			}
+		});
+
+		//----------------------------------------------------------------
+		//drop clone
+		//----------------------------------------------------------------
+		/*interact('.copy').dropzone({
+			// only accept elements matching this CSS selector
+			accept: ['#select1', '#from1'],
+			// Require a 75% element overlap for a drop to be possible
+			overlap: 0.75,
+
+			// listen for drop related events:
+
+			ondropactivate: function (event) {
+				// add active dropzone feedback
+				event.target.classList.add('drop-active');
+			},
+			ondragenter: function (event) {
+				var draggableElement = event.relatedTarget,
+				dropzoneElement = event.target;
+
+				// feedback the possibility of a drop
+				dropzoneElement.classList.add('drop-target');
+				draggableElement.classList.add('can-drop');
+				//draggableElement.textContent = 'Dragged in';
+			},
+			ondragleave: function (event) {
+				// remove the drop feedback style
+				event.target.classList.remove('drop-target');
+				event.relatedTarget.classList.remove('can-drop');
+				//event.relatedTarget.textContent = 'Dragged out';
+			},
+			ondrop: function (event) {
+				//event.relatedTarget.textContent = 'Dropped';
+
+				var original = event.relatedTarget,
+				// create a clone of the currentTarget element
+				clone = event.relatedTarget.cloneNode(true);
+
+				// insert the clone to the page
+				// TODO: position the clone appropriately
+				$('#drawing').append(clone);
+				clone.classList.remove('can-drop');
+				original.classList.remove('can-drop');
+
+				var type = event.relatedTarget.getAttribute('data-type');
+				if(type == 'select') {
+					nbSelect++;
+					clone.setAttribute('id', type+nbSelect);
+					var attrId = clone.getAttribute('id');
+					$('#'+attrId).text('#'+type+nbSelect);
+				}
+				else if(type == 'from') {
+					nbFrom++;
+					clone.setAttribute('id', type+nbFrom);
+					var attrId = clone.getAttribute('id');
+					$('#'+attrId).text('#'+type+nbFrom);
+				}
+
+				//move original
+				var posXOrigin = parseFloat(original.getAttribute('data-x'));
+				var posYOrigin = parseFloat(original.getAttribute('data-y'));
+
+				original.style.webkitTransform =
+				original.style.transform =
+				'translate(' + (posXOrigin-posXOrigin) + 'px, ' + (posYOrigin-posYOrigin) + 'px)';
+
+				original.setAttribute('data-x', posXOrigin-posXOrigin);
+				original.setAttribute('data-y', posYOrigin-posYOrigin);
+
+				//move clone
+				clone.style.webkitTransform =
+				clone.style.transform =
+				'translate(' + 0 + 'px, ' + 0 + 'px)';
+
+				clone.setAttribute('data-x', 0);
+				clone.setAttribute('data-y', 0);
+			},
+			ondropdeactivate: function (event) {
+				// remove active dropzone feedback
+				event.target.classList.remove('drop-active');
+				event.target.classList.remove('drop-target');
+			}
+		});*/
+
+		//----------------------------------------------------------------
+		//drag
+		//----------------------------------------------------------------
+		interact('.draggable')
+		.draggable({
+			// enable inertial throwing
+			inertia: true,
+			// keep the element within the area of it's parent
+			restrict: {
+				restriction: "parent",
+				endOnly: true,
+				elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+			},
+			// enable autoScroll
+			autoScroll: true,
+
+			// call this function on every dragmove event
+			onmove: dragMoveListener,
+			// call this function on every dragend event
+			onend: function (event) {
+				var textEl = event.target.querySelector('p');
+
+				textEl && (textEl.textContent =
+					'moved a distance of '
+					+ (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
+					Math.pow(event.pageY - event.y0, 2) | 0))
+					.toFixed(2) + 'px');
+				}
+			});
+
+			function dragMoveListener (event) {
+				var target = event.target,
+				// keep the dragged position in the data-x/data-y attributes
+				x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+				y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+				// translate the element
+				target.style.webkitTransform =
+				target.style.transform =
+				'translate(' + (x/coefZoom) + 'px, ' + (y/coefZoom) + 'px)';
+
+				// update the posiion attributes
+				target.setAttribute('data-x', x);
+				target.setAttribute('data-y', y);
+			}
+
+			// this is used later in the resizing and gesture demos
+			window.dragMoveListener = dragMoveListener;
+	});
+	</script>
 </body>
 </html>
