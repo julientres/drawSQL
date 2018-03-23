@@ -10,11 +10,10 @@
 	<script src="librairies/svg.min.js" type="text/javascript"></script>
 	<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="librairies/interact.min.js" type="text/javascript"></script>
-	<!-- <link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css"> -->
 	<style>
 	body {
-		/*margin: 0 auto;
-		padding:0 auto;*/
+		margin: 0 ;
+		padding:0 ;
 	}
 	#outer-dropzone {
 		height: 140px;
@@ -99,12 +98,12 @@
 	<div id="grille">
 		<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
 			<defs>
-				<pattern id="smallGrid" width="4" height="4" patternUnits="userSpaceOnUse">
-					<path d="M 4 0 L 0 0 0 4" fill="none" stroke="gray" stroke-width="0.5"></path>
+				<pattern id="smallGrid" width="6" height="6" patternUnits="userSpaceOnUse">
+					<path d="M 6 0 L 0 0 0 6" fill="none" stroke="gray" stroke-width="0.5"></path>
 				</pattern>
-				<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-					<rect width="40" height="40" fill="url(#smallGrid)"></rect>
-					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="gray" stroke-width="1"></path>
+				<pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+					<rect width="60" height="60" fill="url(#smallGrid)"></rect>
+					<path d="M 60 0 L 0 0 0 60" fill="none" stroke="gray" stroke-width="1"></path>
 				</pattern>
 			</defs>
 			<rect width="100%" height="100%" fill="url(#grid)"></rect>
@@ -113,6 +112,7 @@
 	<div id="drawing">
 		<div id="select1" class="draggable drag-drop click_target" data-type="select" data-click="false"> #select1 </div>
 		<div id="from1" class="draggable drag-drop click_target" data-type="from" data-click="false"> #from1 </div>
+		<div id="where1" class="draggable drag-drop click_target" data-type="where" data-click="false"> #where1 </div>
 
 		<div id="inner-dropzone" class="delete">#delete-dropzone</div>
 		<!-- <div id="inner-dropzone" class="copy">#copy-dropzone</div> -->		
@@ -122,7 +122,7 @@
 		<input type="submit" id="zoomIn" value="zoom +">
 		<input type="submit" id="zoomOut" value="zoom -">
 		<input type="submit" id="zoomReset" value="zoom =">
-		<input type="submit" id="delete" value="delete" data-processing="false">
+		<input type="submit" id="delete" value="delete">
 		<input type="submit" id="clear" value="delete all">
 	</div>
 
@@ -130,16 +130,18 @@
 	$(document).ready(function() {
 		var nbSelect = 1;
 		var nbFrom = 1;
+		var nbWhere = 1;
 		var coefZoom = 1.0;
+		var nbDraggableClicked = 0;
 
 		$('#drawing').css('zoom', coefZoom);
 		$('#select1').css('border', '3px dashed transparent');
 		$('#from1').css('border', '3px dashed transparent');
+		$('#where1').css('border', '3px dashed transparent');
 
 		$('#zoomIn').click(function() {
 			if(coefZoom < 2.5) {
 				coefZoom += 0.2;
-				console.log(coefZoom);
 				$('#drawing').css('zoom', coefZoom);
 				$('#grille').css('zoom', coefZoom);
 			}
@@ -151,7 +153,6 @@
 		$('#zoomOut').click(function() {
 			if(coefZoom > 0.5) {
 				coefZoom -= 0.2;
-				console.log(coefZoom);
 				$('#drawing').css('zoom', coefZoom);
 				$('#grille').css('zoom', coefZoom);
 			}
@@ -163,32 +164,41 @@
 		$('#zoomReset').click(function() {
 			coefZoom = 1.0;
 			$('#drawing').css('zoom', coefZoom);
+			$('#grille').css('zoom', coefZoom);
 		});
 
 		$('#clear').click(function() {
-			coefZoom = 1.0;
-			$('#drawing').css('zoom', coefZoom);
+			$('.draggable').each(function() {
+				$(this).remove();
+			})
 		});
 
-		$('#delete').click(function() {		
-			if($('#delete').attr('data-processing') == 'false')	{
-				$('#delete').attr('data-processing', 'true');
-				// interact('.click-target').on('tap', function (event) {
-				// 	console.log(event.currentTarget);
-				// });
-			}
-			else {
-				$('#delete').attr('data-processing', 'false');
-				console.log($('#delete').attr('data-processing'));
-			}
-		})
+		$('#delete').click(function() {							
+			$('.draggable').each(function() {
+				if($(this).attr('data-click') == 'true') {
+					if(confirm('sure to delete ?')) {
+						$(this).remove();
+					}					
+				}
+			});					
+		});
+
+		// $('#grille').click(function() {//works if #grille isn't z-index:-1
+		// 	$('.draggable').each(function() {
+		// 		console.log($(this));
+		// 		if($(this).attr('data-click') == 'true') {
+		// 			$(this).css('border', '3px dashed transparent');
+		// 			$(this).attr('data-click', 'false');
+		// 		}				
+		// 	})
+		// });
 
 		//----------------------------------------------------------------
 		//drop delete
 		//----------------------------------------------------------------
 		interact('.delete').dropzone({
 			// only accept elements matching this CSS selector
-			accept: ['#select1', '#from1'],
+			accept: ['#select1', '#from1', '#where1'],
 			// Require a 75% element overlap for a drop to be possible
 			overlap: 0.75,
 
@@ -223,6 +233,8 @@
 						nbSelect--;
 					else if(type == 'from')
 						nbFrom--;
+					else if(type == 'where')
+						nbWhere--;
 				}
 				else {
 					var posX = parseFloat(event.relatedTarget.getAttribute('data-x'));
@@ -330,13 +342,23 @@
 		//----------------------------------------------------------------
 		//drag
 		//----------------------------------------------------------------
+		var element = $('#grille'),
+    		x = 0, y = 0;
+
 		interact('.draggable')
 		.draggable({
+			snap: {
+				targets: [
+			    	interact.createSnapGrid({ x: 40, y: 40 })
+			    ],
+			      range: Infinity,
+			      relativePoints: [ { x: 0, y: 0 } ]
+			},
 			// enable inertial throwing
 			inertia: true,
 			// keep the element within the area of it's parent
 			restrict: {
-				restriction: "parent",
+				restriction: element.parentNode,
 				endOnly: true,
 				elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
 			},
@@ -354,18 +376,24 @@
 					+ (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
 					Math.pow(event.pageY - event.y0, 2) | 0))
 					.toFixed(2) + 'px');
-				
-				console.log(event.target);
+
 				$(event.target).css('border', '3px dashed transparent');
 				event.target.setAttribute('data-click', 'true');
 			}
 		})
-		.on('click', function (event) {		
+		.on('click', function (event) {	
 			if(event.target.getAttribute('data-click') == 'true') {
 				$(event.target).css('border', '3px dashed transparent');
 				event.target.setAttribute('data-click', 'false');
 			}
 			else {
+				$('.draggable').each(function() {
+					if($(this).attr('data-click') == 'true') {
+						$(this).css('border', '3px dashed transparent');
+						$(this).attr('data-click', 'false');
+					}
+				});
+
 				event.target.setAttribute('data-click', 'true');
 				$(event.target).css('border', '3px dashed red');
 			}
@@ -386,7 +414,13 @@
 			target.setAttribute('data-x', x);
 			target.setAttribute('data-y', y);
 
-			//event.target.setAttribute('data-click', 'true');
+			$('.draggable').each(function() {
+				if($(this).attr('data-click') == 'true') {
+					$(this).css('border', '3px dashed transparent');
+					$(this).attr('data-click', 'false');
+				}
+			});
+
 			$(event.target).css('border', '3px dashed red');			
 		}
 
