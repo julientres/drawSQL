@@ -212,6 +212,8 @@ $table = $help->allTables($_SESSION['bdd']);
 		?>
 	</div>	
 
+    <button id="test-button">Test</button>
+
 	<?php endif; ?>
     <script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
     <script src="librairies/jquery-3.3.1.min.js"></script>

@@ -5,6 +5,11 @@
 		public function __construct($column) {
 			$this->column = $column;
 		}
+
+		public function getColumn(){
+			return $this->column;
+		}
+
 		public function convertToSQL() {
 		    if(is_array($this->column)){
                 $strC = implode(",", $this->column);
@@ -15,4 +20,6 @@
 
 			return $querySelect;
 		}
+
+
 	}

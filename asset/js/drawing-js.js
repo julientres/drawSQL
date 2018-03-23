@@ -42,6 +42,35 @@ $(document).ready(function () {
         $('#modalWhere').modal('show');
     });
 
+    //Clic sur le bouton Ajout '+' d'une forme
+    interact('.add-button').on('tap', function(event){
+        var type = $(event.target).parent().attr("data-type");
+        if(type == 'select'){
+            $('#modalSelect').modal('show');
+        }else if(type == 'from'){
+            $('#modalFrom').modal('show');
+        }else if(type == 'where'){
+            $('#modalWhere').modal('show');
+        }
+    });
+
+
+    //Au survol d'une forme
+    $("#test-button").on('click', function(){
+        var hover = 'hover=from';
+        $.ajax({
+            url: "../asset/php/createClass.php",
+            type: "POST",
+            data: hover,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                alert("Erreur de création")
+            }
+        });
+    })
+
 
     //Bouton enregistrement de la modal du Where
     $('#btdModalWhere').on('click', function () {
@@ -191,35 +220,38 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
         nb_select++;
-        $('#drawing').append('<img src="../asset/img/svg/Select.svg" data-type="select" id="select' + nb_select + '" class="draggable tap-target form">');
+        $('#drawing').append('<div id="select'+nb_select+'" class="form draggable tap-target" data-type="select"><img src="../asset/img/svg/Select.svg"></div>');
         forms['select' + nb_select] = {
             'x': 0,
             'y': 0,
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
+        $('#select'+nb_select).append('<button class="add-button" style="left:'+(forms['select'+nb_select].x_center+10)+'px; top:'+(forms['select'+nb_select].y_center-8)+'px"><span class="fas fa-plus add-icon"></span></button>');
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {
         nb_from++;
-        $('#drawing').append('<img src="../asset/img/svg/From.svg" data-type="from" id="from' + nb_from + '" class="draggable tap-target form">');
+        $('#drawing').append('<div id="from'+nb_from+'" class="form draggable tap-target" data-type="from"><img src="../asset/img/svg/From.svg"></div>');
         forms['from' + nb_from] = {
             'x': 0,
             'y': 0,
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
+        $('#from'+nb_from).append('<button class="add-button" style="left:'+(forms['from'+nb_from].x_center+9)+'px; top:'+(forms['from'+nb_from].y_center+25)+'px"><span class="fas fa-plus add-icon"></span></button>');
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="3"]').on("click", function (event) {
         nb_where++;
-        $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" id="where' + nb_where + '" class="draggable tap-target form">');
+        $('#drawing').append('<div id="where'+nb_where+'" class="form draggable tap-target" data-type="where"><img src="../asset/img/svg/Where.svg"></div>');
         forms['where' + nb_where] = {
             'x': 0,
             'y': 0,
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
+        $('#where'+nb_where).append('<button class="add-button" style="left:'+(forms['where'+nb_select].x_center+10)+'px; top:'+(forms['where'+nb_select].y_center-8)+'px"><span class="fas fa-plus add-icon"></span></button>');
     });
 
     //Créer les liens entre formes
