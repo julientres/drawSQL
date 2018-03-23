@@ -69,7 +69,6 @@ $(document).ready(function () {
                 }
             },
             error: function (data) {
-                console.log(data);
                 alert("Erreur de création")
             }
         });
@@ -91,7 +90,6 @@ $(document).ready(function () {
                 }
             },
             error: function (data) {
-                console.log(data);
                 alert("Erreur de création")
             }
         });
@@ -118,7 +116,6 @@ $(document).ready(function () {
                 }
             },
             error: function (data) {
-                console.log(data);
                 alert("Erreur de création")
             }
         });
@@ -158,7 +155,7 @@ $(document).ready(function () {
                 data = JSON.parse(data);
                 var selectText = data.select;
                 var fromText = data.from;
-                if(data.where != null){
+                if (data.where != null) {
                     var whereText = data.where;
                     $('#codeWhere').html(whereText);
                 }
@@ -234,10 +231,8 @@ $(document).ready(function () {
         var id_premier;
         var id_second;
         $('#link').data('processing', true);
-        console.log("exterieur");
         interact('.tap-target')
             .on('tap', function (event) {
-                console.log('processing : ' + $('#link').data('processing'));
                 if ($('#link').data('processing') == true) {
                     if (x_1 == 0 & y_1 == 0) {
                         var target = event.currentTarget,
@@ -245,12 +240,7 @@ $(document).ready(function () {
                             y = (parseFloat(target.getAttribute('data-y')) || 0);
                         x_1 = x + ((parseFloat(target.offsetWidth)) / 2);
                         y_1 = y + ((parseFloat(target.offsetHeight)) / 2);
-                        id_premier = $(target).attr('id')
-                        console.log('Rentré 1');
-                        console.log('x_1 :' + x_1);
-                        console.log('y_1 :' + y_1);
-                        console.log('x_2 :' + x_2);
-                        console.log('y_2 :' + y_2);
+                        id_premier = $(target).attr('id');
                         //$('#drawing').append('<div class="point" style="left:'+x_1+'px; top:'+y_1+'px"></div>');
                     } else {
                         target = event.currentTarget,
@@ -259,13 +249,8 @@ $(document).ready(function () {
                         x_2 = x + ((parseFloat(target.offsetWidth)) / 2) - 5;
                         y_2 = y + ((parseFloat(target.offsetHeight)) / 2) - 5;
                         id_second = $(target).attr('id');
-                        console.log('Rentré 2');
-                        console.log('x_1 :' + x_1);
-                        console.log('y_1 :' + y_1);
-                        console.log('x_2 :' + x_2);
-                        console.log('y_2 :' + y_2);
                         //$('#drawing').append('<div class="point" style="left:'+x_2+'px; top:'+y_2+'px"></div>');
-                        $('#line-container').append('<svg class="line ' + id_premier + ' ' + id_second + '" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                        $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
                         nb_links++;
                         links[nb_links] = {
                             forme1: id_premier,
@@ -281,32 +266,46 @@ $(document).ready(function () {
     //Permettre le drag & drop de l'application
     interact('.draggable')
         .draggable({
-            onmove: dragMoveListener,
-            restrict: {
-                restriction: 'parent',
-                elementRect: {top: 0, left: 0, bottom: 1, right: 1}
-            },
-            onend: function (event) {
+            onmove: function (event) {
+                var target = event.currentTarget,
+                    // keep the dragged position in the data-x/data-y attributes
+                    x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                    y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                // translate the element
+                target.style.webkitTransform =
+                    target.style.transform =
+                        'translate(' + x + 'px, ' + y + 'px)';
+
+                // Update the position attributes
+                target.setAttribute('data-x', x);
+                target.setAttribute('data-y', y);
+
                 // On récupère l'ID de la forme qui est déplacé
-                var id_forms = $(event.target).attr('id');
+                var id_forms = $(target).attr('id');
                 // On modifie les coordonnées de la forme qui a été bougée
-                forms[id_forms].x = (parseFloat(event.target.getAttribute('data-x')) || 0);
-                forms[id_forms].y = (parseFloat(event.target.getAttribute('data-y')) || 0);
-                forms[id_forms].x_center = forms[id_forms].x + ((parseFloat(event.target.offsetWidth)) / 2) - 5;
-                forms[id_forms].y_center = forms[id_forms].y + ((parseFloat(event.target.offsetHeight)) / 2) - 5;
-                // On fait suivre les liens
+                forms[id_forms].x = x;
+                forms[id_forms].y = y;
+                forms[id_forms].x_center = x + ((parseFloat(event.target.offsetWidth)) / 2) - 5;
+                forms[id_forms].y_center = y + ((parseFloat(event.target.offsetHeight)) / 2) - 5;
+
                 if (links.length != 0) {
+                    // On fait suivre les liens
                     for (var i = 1; i < links.length; i++) {
                         if (links[i].forme1 == id_forms) {
-                            $('.' + id_forms + '').find('line').attr('x1', forms[id_forms].x_center);
-                            $('.' + id_forms + '').find('line').attr('y1', forms[id_forms].y_center);
+                            $('#' + id_forms + '-' + links[i].forme2 + '').find('line').attr('x1', forms[id_forms].x_center);
+                            $('#' + id_forms + '-' + links[i].forme2 + '').find('line').attr('y1', forms[id_forms].y_center);
                         }
                         if (links[i].forme2 == id_forms) {
-                            $('.' + id_forms + '').find('line').attr('x2', forms[id_forms].x_center);
-                            $('.' + id_forms + '').find('line').attr('y2', forms[id_forms].y_center);
+                            $('#' + links[i].forme1 + '-' + id_forms + '').find('line').attr('x2', forms[id_forms].x_center);
+                            $('#' + links[i].forme1 + '-' + id_forms + '').find('line').attr('y2', forms[id_forms].y_center);
                         }
                     }
                 }
+            },
+            restrict: {
+                restriction: 'parent',
+                elementRect: {top: 0, left: 0, bottom: 1, right: 1}
             }
         })
         .on('click', function (event) {
@@ -316,6 +315,7 @@ $(document).ready(function () {
 
             target.style.webkitTransform = target.style.transform =
                 'translate(' + x + 'px,' + y + 'px)';
+
         });
 
 
@@ -335,7 +335,5 @@ $(document).ready(function () {
         target.setAttribute('data-y', y);
     }
 
-    // this is used later in the resizing and gesture demos
-    window.dragMoveListener = dragMoveListener;
 
 });
