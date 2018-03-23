@@ -15,7 +15,6 @@
 	body {
 		/*margin: 0 auto;
 		padding:0 auto;*/
-		background: url('../asset/img/grid.png') repeat;
 	}
 	#outer-dropzone {
 		height: 140px;
@@ -85,12 +84,35 @@
 		top:2%;
 		right:3%;
 	}
+
+	#grille {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: -1;
+	}
 	</style>
 </head>
 <body>
+	<div id="grille">
+		<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<pattern id="smallGrid" width="4" height="4" patternUnits="userSpaceOnUse">
+					<path d="M 4 0 L 0 0 0 4" fill="none" stroke="gray" stroke-width="0.5"></path>
+				</pattern>
+				<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+					<rect width="40" height="40" fill="url(#smallGrid)"></rect>
+					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="gray" stroke-width="1"></path>
+				</pattern>
+			</defs>
+			<rect width="100%" height="100%" fill="url(#grid)"></rect>
+		</svg>
+	</div>
 	<div id="drawing">
-		<div id="select1" class="draggable drag-drop" data-type="select"> #select1 </div>
-		<div id="from1" class="draggable drag-drop" data-type="from"> #from1 </div>
+		<div id="select1" class="draggable drag-drop click_target" data-type="select" data-click="false"> #select1 </div>
+		<div id="from1" class="draggable drag-drop click_target" data-type="from" data-click="false"> #from1 </div>
 
 		<div id="inner-dropzone" class="delete">#delete-dropzone</div>
 		<!-- <div id="inner-dropzone" class="copy">#copy-dropzone</div> -->		
@@ -100,6 +122,7 @@
 		<input type="submit" id="zoomIn" value="zoom +">
 		<input type="submit" id="zoomOut" value="zoom -">
 		<input type="submit" id="zoomReset" value="zoom =">
+		<input type="submit" id="delete" value="delete" data-processing="false">
 		<input type="submit" id="clear" value="delete all">
 	</div>
 
@@ -110,12 +133,15 @@
 		var coefZoom = 1.0;
 
 		$('#drawing').css('zoom', coefZoom);
+		$('#select1').css('border', '3px dashed transparent');
+		$('#from1').css('border', '3px dashed transparent');
 
 		$('#zoomIn').click(function() {
 			if(coefZoom < 2.5) {
 				coefZoom += 0.2;
 				console.log(coefZoom);
 				$('#drawing').css('zoom', coefZoom);
+				$('#grille').css('zoom', coefZoom);
 			}
 			else {
 				alert('zoom + max atteint');
@@ -127,6 +153,7 @@
 				coefZoom -= 0.2;
 				console.log(coefZoom);
 				$('#drawing').css('zoom', coefZoom);
+				$('#grille').css('zoom', coefZoom);
 			}
 			else {
 				alert('zoom - max atteint');
@@ -143,6 +170,18 @@
 			$('#drawing').css('zoom', coefZoom);
 		});
 
+		$('#delete').click(function() {		
+			if($('#delete').attr('data-processing') == 'false')	{
+				$('#delete').attr('data-processing', 'true');
+				// interact('.click-target').on('tap', function (event) {
+				// 	console.log(event.currentTarget);
+				// });
+			}
+			else {
+				$('#delete').attr('data-processing', 'false');
+				console.log($('#delete').attr('data-processing'));
+			}
+		})
 
 		//----------------------------------------------------------------
 		//drop delete
@@ -315,27 +354,44 @@
 					+ (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
 					Math.pow(event.pageY - event.y0, 2) | 0))
 					.toFixed(2) + 'px');
-				}
-			});
-
-			function dragMoveListener (event) {
-				var target = event.target,
-				// keep the dragged position in the data-x/data-y attributes
-				x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-				y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-				// translate the element
-				target.style.webkitTransform =
-				target.style.transform =
-				'translate(' + (x/coefZoom) + 'px, ' + (y/coefZoom) + 'px)';
-
-				// update the posiion attributes
-				target.setAttribute('data-x', x);
-				target.setAttribute('data-y', y);
+				
+				console.log(event.target);
+				$(event.target).css('border', '3px dashed transparent');
+				event.target.setAttribute('data-click', 'true');
 			}
+		})
+		.on('click', function (event) {		
+			if(event.target.getAttribute('data-click') == 'true') {
+				$(event.target).css('border', '3px dashed transparent');
+				event.target.setAttribute('data-click', 'false');
+			}
+			else {
+				event.target.setAttribute('data-click', 'true');
+				$(event.target).css('border', '3px dashed red');
+			}
+		});
 
-			// this is used later in the resizing and gesture demos
-			window.dragMoveListener = dragMoveListener;
+		function dragMoveListener (event) {
+			var target = event.target,
+			// keep the dragged position in the data-x/data-y attributes
+			x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+			y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+			// translate the element
+			target.style.webkitTransform =
+			target.style.transform =
+			'translate(' + (x/coefZoom) + 'px, ' + (y/coefZoom) + 'px)';
+
+			// update the posiion attributes
+			target.setAttribute('data-x', x);
+			target.setAttribute('data-y', y);
+
+			//event.target.setAttribute('data-click', 'true');
+			$(event.target).css('border', '3px dashed red');			
+		}
+
+		// this is used later in the resizing and gesture demos
+		window.dragMoveListener = dragMoveListener;
 	});
 	</script>
 </body>
