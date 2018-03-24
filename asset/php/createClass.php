@@ -12,6 +12,12 @@ if (isset($_POST['fromInput'])) {
     $select = $help->columnsFromTable($fromSelect, $_SESSION['bdd']);
     $help->showResultsColumns($select);
 }
+if (isset($_POST['joinInput'])) {
+    $help = new HelpDataEntry();
+    $joinSelect= $_POST['joinInput'];
+    $join = $help->columnsFromTable($joinSelect, $_SESSION['bdd']);
+    $help->showResultsColumns($join);
+}
 
 if(isset($_POST['select'])){
     if($_POST['select']){
@@ -33,6 +39,20 @@ if(isset($_POST['from'])){
         echo false;
     }
 }
+if(isset($_POST['join'])){
+    if($_POST['join'] != null){
+        var_dump($_POST['join']);
+        $listJoin = explode(",", $_POST['join']);
+        var_dump($listJoin);
+        $join = new Join("".$listJoin[0]."","".$listJoin[1]."","".$_SESSION['from']."","".$listJoin[2]."","".$listJoin[3]."");
+        $_SESSION['join'] = serialize($join);
+
+        echo true;
+    }else{
+        echo false;
+    }
+}
+
 if(isset($_POST['where1']) && isset($_POST['where2']) && isset($_POST['where3'] )){
     if($_POST['where1']){
         if($_POST['where4'] == null){
@@ -76,8 +96,9 @@ if(isset($_POST['modal'])) {
         $myObj->from = $tabFrom;
 
 
-        $where = unserialize($_SESSION['where']);
-        if(isset($where)){
+
+        if(isset($_SESSION['where'])){
+            $where = unserialize($_SESSION['where']);
             $tabWhere = $where->convertToSQL();
             $myObj->where = $tabWhere;
         }
@@ -89,10 +110,10 @@ if(isset($_POST['modal'])) {
 }
 if(isset($_POST['result'])){
     if($_POST['result']){
-        $where = unserialize($_SESSION['where']);
-        $select = unserialize($_SESSION['select']);
-        $from = unserialize($_SESSION['from']);
-        if(isset($where)){
+        if(isset($_SESSION['where'])){
+            $select = unserialize($_SESSION['select']);
+            $from = unserialize($_SESSION['from']);
+            $where = unserialize($_SESSION['where']);
             $tabWhere = $where->convertToSQL();
             $tabSelect = $select->convertToSQL();
             $tabFrom = $from->convertToSQL();
@@ -102,6 +123,8 @@ if(isset($_POST['result'])){
             $column = $execution->searchNameColumn($from->getTable());
             $execution->showResults($execution->exec(), $column);
         }else{
+            $select = unserialize($_SESSION['select']);
+            $from = unserialize($_SESSION['from']);
             $select = unserialize($_SESSION['select']);
             $from = unserialize($_SESSION['from']);
 

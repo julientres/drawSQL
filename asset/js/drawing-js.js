@@ -3,6 +3,7 @@ $(document).ready(function () {
     var nb_select = 0;
     var nb_from = 0;
     var nb_where = 0;
+    var nb_join = 0;
     var nb_links = 0;
 
     var forms = new Array();
@@ -41,7 +42,21 @@ $(document).ready(function () {
     interact('[data-type="where"]').on('doubletap', function () {
         $('#modalWhere').modal('show');
     });
+    //Double clic sur la forme affiche la modal Where
+    interact('[data-type="join"]').on('doubletap', function () {
+        $('#modalJoin').modal('show');
+    });
 
+
+    $('#where2').on('change',function(){
+        if($(this).find(":selected").text() == "BETWEEN"){
+            $('#divBetween').show();
+        }else{
+            $('#divBetween').hide();
+            $('#where3').val(null);
+            $('#where4').val(null);
+        }
+    })
 
     //Bouton enregistrement de la modal du Where
     $('#btdModalWhere').on('click', function () {
@@ -95,9 +110,30 @@ $(document).ready(function () {
         });
     });
 
+    //Bouton enregistrement de la modal du Join
+    $('#btdModalJoin').on('click', function () {
+        var dataJoin = "join=";
+        dataJoin += $('#modalJoin #join1').find(':selected').text() + ",";
+        dataJoin += $('#join2').find(':selected').val() + ",";
+        dataJoin += $('#join3').find(':selected').val() + ",";
+        dataJoin += $('#join4').find(':selected').val();
+        $.ajax({
+            url: "../asset/php/createClass.php",
+            type: "POST",
+            data: dataJoin,
+            success: function (data) {
+                if (data) {
+                    $('#modalSelect').modal('hide');
+                }
+            },
+            error: function (data) {
+                alert("Erreur de création")
+            }
+        });
+    });
+
     //Bouton enregistrement de la modal du Select
     $('#btdModalSelect').on('click', function () {
-        console.log('click');
         var dataSelect = "select=";
         $("input[type='checkbox']:checked").each(
             function () {
@@ -120,12 +156,31 @@ $(document).ready(function () {
             }
         });
     });
-
+    //Au changement de la table de la jointure --> on affiche les colonnes
+    $('#join2').on('change',function () {
+        $('#join4').html('<option value="null"></option>');
+        var dataJoin = "joinInput=" + $('#join2').find(":selected").val();
+        $.ajax({
+            url: "../asset/php/createClass.php",
+            type: 'POST',
+            data: dataJoin,
+            success: function (data) {
+                data = JSON.parse(data);
+                for (var i = 0; i < data.length; i++) {
+                    $('#join4').append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                }
+            },
+            error: function (data) {
+                console.log("erreur");
+            }
+        });
+    })
     //Au changement du from récupére le nom des colonnes
     $('#from').on('change', function () {
         $('#modalWhere #where1').html('<option value="null"></option>');
         $('#divSelect').html('<input type="checkbox" value="*">*<br>');
-        var dataForm = "fromInput=" + $('#from').find(":selected").text();
+        $('#join3').html('<option value="null"></option>');
+        var dataForm = "fromInput=" + $('#from').find(":selected").val();
         $.ajax({
             url: "../asset/php/createClass.php",
             type: 'POST',
@@ -135,6 +190,7 @@ $(document).ready(function () {
                 for (var i = 0; i < data.length; i++) {
                     $('#modalWhere #where1').append('<option value="' + data[i] + '">' + data[i] + '</option>');
                     $('#divSelect').append('<input type="checkbox" name="select" value="' + data[i] + '">' + data[i] + '<br>');
+                    $('#join3').append('<option value="' + data[i] + '">' + data[i] + '</option>');
                 }
             },
             error: function (data) {
@@ -215,6 +271,18 @@ $(document).ready(function () {
         nb_where++;
         $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" id="where' + nb_where + '" class="draggable tap-target form">');
         forms['where' + nb_where] = {
+            'x': 0,
+            'y': 0,
+            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+        };
+    });
+
+    //Quand on click sur la forme --> affiche la forme sur le dessin
+    $('[data-form="4"]').on("click", function (event) {
+        nb_join++;
+        $('#drawing').append('<img src="../asset/img/svg/Join.svg" data-type="join" id="join' + nb_join + '" class="draggable tap-target form">');
+        forms['join' + nb_join] = {
             'x': 0,
             'y': 0,
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
