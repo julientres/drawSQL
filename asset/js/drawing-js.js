@@ -173,7 +173,6 @@ $(document).ready(function () {
             });
     });
 
-
     interact('.draggable')
         .draggable({
             onmove: dragMoveListener,
