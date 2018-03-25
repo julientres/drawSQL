@@ -5,30 +5,98 @@ $(document).ready(function () {
     var nb_where = 0;
     var nb_links = 0;
 
+    var coefZoom = 1.0;
+
     var forms = new Array();
     var links = new Array();
 
     $(".alert-success").show("slow").delay(2000).hide("slow");
 
-    $('#btnGenerate').on("click", function () {
-        window.open("display-results.php");
-    })
+    $('#grille').css('zoom', coefZoom);
+    $('.draggable').css('border', '3px dashed transparent');
+
+    $('#zoomIn').click(function() {
+        if(coefZoom < 2.5) {
+            coefZoom += 0.2;
+            $('.draggable').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('.line').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('#grille').css('zoom', coefZoom);
+        }
+        else {
+            alert('zoom + max atteint');
+        }           
+    });
+
+    $('#zoomOut').click(function() {
+        if(coefZoom > 0.5) {
+            coefZoom -= 0.2;
+            $('.draggable').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('.line').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('#grille').css('zoom', coefZoom);
+        }
+        else {
+            alert('zoom - max atteint');
+        }
+    });
+
+    $('#zoomReset').click(function() {
+        coefZoom = 1.0;
+        $('.draggable').each(function() {
+            $(this).css('zoom', coefZoom);
+        });
+        $('.line').each(function() {
+            $(this).css('zoom', coefZoom);
+        });
+        $('#grille').css('zoom', coefZoom);
+    });
+
+    $('#clear').click(function() {
+        $('.draggable').each(function() {
+            $(this).remove();
+        });
+
+        $('.line').each(function() {
+            $(this).remove();
+        });
+
+        nb_select = 0;
+        nb_from = 0;
+        nb_where = 0;
+        forms = [];
+        links = [];       
+    });
+
+    $('#delete').click(function(event) {                          
+        $('.draggable').each(function() {
+            if($(this).attr('data-click') == 'true') {
+                if(confirm('sure to delete ?')) {
+                    $(this).remove();
+                    //need : delete element form array "forms" & "links"
+
+                    if($(this).attr('data-type') == 'select')
+                        nb_select--;
+                    else if($(this).attr('data-type') == 'from')
+                        nb_from--;
+                    else if($(this).attr('data-type') == 'where')
+                        nb_where--;                  
+                }                  
+            }            
+        });            
+    });    
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })
 
-    //SVG JS
-    if (SVG.supported) {
-        // var draw = SVG('drawing').size('100%', '100%');
-        // var polySelect = draw.path('M10 30L40 80L120 80L150 30z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polyFrom = draw.circle(100).attr({fill: '#FFFFFF', stroke:'#000', 'stroke-width': 2});
-        // var polyWhere = draw.path('M10 30L10 120L110 90L110 60z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polyJoin = draw.path('M10 30L10 80L60 30L60 80z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polySubQuery = draw.path('M20 40L35 33L35 10L80 10L80 70L35 70L35 48z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polyLine = draw.polyline([[50,50], [100,50]]).attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-    }
-    else {
+    if (!SVG.supported) {
         alert('SVG not supported');
     }
 
@@ -53,7 +121,7 @@ $(document).ready(function () {
                 $('#test').html(data);
                 if (data) {
                     nb_select++;
-                    $('#drawing').append('<img src="../asset/img/svg/Select.svg" data-type="select" id="select' + nb_select + '" class="draggable tap-target form">');
+                    $('#drawing').append('<img src="../asset/img/svg/Select.svg" data-type="select" data-click="false" id="select' + nb_select + '" class="draggable tap-target form">');
                     forms['select' + nb_select] = {
                         'x': 0,
                         'y': 0,
@@ -80,7 +148,7 @@ $(document).ready(function () {
                 $('#test').html(data);
                 if (data) {
                     nb_from++;
-                    $('#drawing').append('<img src="../asset/img/svg/From.svg" data-type="from" id="from' + nb_from + '" class="draggable tap-target form">');
+                    $('#drawing').append('<img src="../asset/img/svg/From.svg" data-type="from" data-click="false" id="from' + nb_from + '" class="draggable tap-target form">');
                     forms['from' + nb_from] = {
                         'x': 0,
                         'y': 0,
@@ -106,7 +174,7 @@ $(document).ready(function () {
                 $('#test').html(data);
                 if (data) {
                     nb_where++;
-                    $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" id="where' + nb_where + '" class="draggable tap-target form">');
+                    $('#drawing').append('<img src="../asset/img/svg/Where.svg" data-type="where" data-click="false" id="where' + nb_where + '" class="draggable tap-target form">');
                     forms['where' + nb_where] = {
                         'x': 0,
                         'y': 0,
@@ -175,6 +243,14 @@ $(document).ready(function () {
 
     interact('.draggable')
         .draggable({
+            snap: {
+                targets: [
+                    interact.createSnapGrid({ x: 40, y: 40 })
+                ],
+                  range: Infinity,
+                  relativePoints: [ { x: 0, y: 0 } ]
+            },
+            inertia: true,
             onmove: dragMoveListener,
             restrict: {
                 restriction: 'parent',
@@ -201,6 +277,9 @@ $(document).ready(function () {
                         }
                     }
                 }
+
+                $(event.target).css('border', '3px dashed transparent');
+                event.target.setAttribute('data-click', 'true');
             }
         })
         .on('click', function (event) {
@@ -209,8 +288,51 @@ $(document).ready(function () {
                 y = (parseFloat(target.getAttribute('data-y')) || 0);
 
             target.style.webkitTransform = target.style.transform =
-                'translate(' + x + 'px,' + y + 'px)';});
+                'translate(' + x + 'px,' + y + 'px)';
 
+            if(event.target.getAttribute('data-click') == 'true') {
+                $(event.target).css('border', '3px dashed transparent');
+                event.target.setAttribute('data-click', 'false');
+            }
+            else {
+                $('.draggable').each(function() {
+                    if($(this).attr('data-click') == 'true') {
+                        $(this).css('border', '3px dashed transparent');
+                        $(this).attr('data-click', 'false');
+                    }
+                });
+
+                event.target.setAttribute('data-click', 'true');
+                $(event.target).css('border', '3px dashed red');
+            }
+        });
+        
+        $(document).keydown(function(e) {
+            $('.draggable').each(function() {
+                if($(this).attr('data-click') == 'true') {
+                    switch(e.which) {
+                        case 46:
+                            if(confirm('sure to delete ?')) {
+                                $(this).remove();
+                                //need : delete element form array "forms" & "links"
+
+                                if($(this).attr('data-type') == 'select')
+                                    nb_select--;
+                                else if($(this).attr('data-type') == 'from')
+                                    nb_from--;
+                                else if($(this).attr('data-type') == 'where')
+                                    nb_where--;                  
+                            } 
+                        break; 
+
+                        //add zoom +/- and reset ?               
+
+                        default: return; // exit this handler for other keys
+                    }
+                    e.preventDefault(); // prevent the default action (scroll / move caret)
+                }
+            });            
+        });
 
     function dragMoveListener(event) {
         var target = event.currentTarget,
@@ -226,6 +348,15 @@ $(document).ready(function () {
         // update the position attributes
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
+
+        $('.draggable').each(function() {
+            if($(this).attr('data-click') == 'true') {
+                $(this).css('border', '3px dashed transparent');
+                $(this).attr('data-click', 'false');
+            }
+        });
+
+        $(event.target).css('border', '3px dashed red');
     }
 
     // this is used later in the resizing and gesture demos
