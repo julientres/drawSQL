@@ -18,13 +18,14 @@ $table = $help->allTables($_SESSION['bdd']);
 	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">
 	
 	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
+
 	<script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
 	<script src="librairies/jquery-3.3.1.min.js"></script>
 	<script src="librairies/popper.min.js" type="text/javascript"></script>
 	<script src="librairies/svg.min.js" type="text/javascript"></script>
 	<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="librairies/interact.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="../asset/css/drawing.css" type="text/css">
+	<script src="librairies/interact.min.js" type="text/javascript"></script>	
 </head>
 <body>
 	<div id="menu">

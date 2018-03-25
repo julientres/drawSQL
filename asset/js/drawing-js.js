@@ -16,80 +16,23 @@ $(document).ready(function () {
     $('.draggable').css('border', '3px dashed transparent');
 
     $('#zoomIn').click(function() {
-        if(coefZoom < 2.5) {
-            coefZoom += 0.2;
-            $('.draggable').each(function() {
-                $(this).css('zoom', coefZoom);
-            });
-            $('.line').each(function() {
-                $(this).css('zoom', coefZoom);
-            });
-            $('#grille').css('zoom', coefZoom);
-        }
-        else {
-            alert('zoom + max atteint');
-        }           
+        zoomIn();          
     });
 
     $('#zoomOut').click(function() {
-        if(coefZoom > 0.5) {
-            coefZoom -= 0.2;
-            $('.draggable').each(function() {
-                $(this).css('zoom', coefZoom);
-            });
-            $('.line').each(function() {
-                $(this).css('zoom', coefZoom);
-            });
-            $('#grille').css('zoom', coefZoom);
-        }
-        else {
-            alert('zoom - max atteint');
-        }
+        zoomOut();
     });
 
     $('#zoomReset').click(function() {
-        coefZoom = 1.0;
-        $('.draggable').each(function() {
-            $(this).css('zoom', coefZoom);
-        });
-        $('.line').each(function() {
-            $(this).css('zoom', coefZoom);
-        });
-        $('#grille').css('zoom', coefZoom);
+        zoomReset();
     });
 
     $('#clear').click(function() {
-        $('.draggable').each(function() {
-            $(this).remove();
-        });
-
-        $('.line').each(function() {
-            $(this).remove();
-        });
-
-        nb_select = 0;
-        nb_from = 0;
-        nb_where = 0;
-        forms = [];
-        links = [];       
+        clearGrid();       
     });
 
     $('#delete').click(function(event) {                          
-        $('.draggable').each(function() {
-            if($(this).attr('data-click') == 'true') {
-                if(confirm('sure to delete ?')) {
-                    $(this).remove();
-                    //need : delete element form array "forms" & "links"
-
-                    if($(this).attr('data-type') == 'select')
-                        nb_select--;
-                    else if($(this).attr('data-type') == 'from')
-                        nb_from--;
-                    else if($(this).attr('data-type') == 'where')
-                        nb_where--;                  
-                }                  
-            }            
-        });            
+        deleteElement();            
     });    
 
     $(function () {
@@ -307,31 +250,27 @@ $(document).ready(function () {
             }
         });
         
-        $(document).keydown(function(e) {
-            $('.draggable').each(function() {
-                if($(this).attr('data-click') == 'true') {
-                    switch(e.which) {
-                        case 46:
-                            if(confirm('sure to delete ?')) {
-                                $(this).remove();
-                                //need : delete element form array "forms" & "links"
+        $(document).keydown(function(e) {            
+            switch(e.which) {
+                case 46://suppr => delete
+                    deleteElement();   
+                break; 
 
-                                if($(this).attr('data-type') == 'select')
-                                    nb_select--;
-                                else if($(this).attr('data-type') == 'from')
-                                    nb_from--;
-                                else if($(this).attr('data-type') == 'where')
-                                    nb_where--;                  
-                            } 
-                        break; 
+                case 32://space => clear
+                    zoomReset();
+                break;
 
-                        //add zoom +/- and reset ?               
+                case 107://numpad + => zoom +
+                   zoomIn();
+                break;
 
-                        default: return; // exit this handler for other keys
-                    }
-                    e.preventDefault(); // prevent the default action (scroll / move caret)
-                }
-            });            
+                case 109://numpad - => zoom -
+                    zoomOut();
+                break;             
+
+                default: return; // exit this handler for other keys
+            }
+            e.preventDefault(); // prevent the default action (scroll / move caret)                        
         });
 
     function dragMoveListener(event) {
@@ -362,4 +301,81 @@ $(document).ready(function () {
     // this is used later in the resizing and gesture demos
     window.dragMoveListener = dragMoveListener;
 
+    function zoomIn() {
+        if(coefZoom < 2.0) {
+            coefZoom += 0.2;
+            $('.draggable').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('.line').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('#grille').css('zoom', coefZoom);
+        }
+        else {
+            alert('zoom + max atteint');
+        } 
+    }
+
+    function zoomOut() {
+        if(coefZoom > 0.5) {
+            coefZoom -= 0.2;
+            $('.draggable').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('.line').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('#grille').css('zoom', coefZoom);
+        }
+        else {
+            alert('zoom - max atteint');
+        }
+    }
+
+    function zoomReset() {
+        coefZoom = 1.0;
+        $('.draggable').each(function() {
+            $(this).css('zoom', coefZoom);
+        });
+        $('.line').each(function() {
+            $(this).css('zoom', coefZoom);
+        });
+        $('#grille').css('zoom', coefZoom);
+    }
+
+    function clearGrid() {
+        $('.draggable').each(function() {
+            $(this).remove();
+        });
+
+        $('.line').each(function() {
+            $(this).remove();
+        });
+
+        nb_select = 0;
+        nb_from = 0;
+        nb_where = 0;
+        forms = [];
+        links = [];
+    }
+
+    function deleteElement() {
+        $('.draggable').each(function() {
+            if($(this).attr('data-click') == 'true') {
+                if(confirm('sure to delete ?')) {
+                    $(this).remove();                    
+                    delete forms[$(this).attr('id')];
+                    //need : delete element form array "links" & nb_links--
+
+                    if($(this).attr('data-type') == 'select')
+                        nb_select--;
+                    else if($(this).attr('data-type') == 'from')
+                        nb_from--;
+                    else if($(this).attr('data-type') == 'where')
+                        nb_where--;                  
+                }                  
+            }            
+        });
+    }
 });
