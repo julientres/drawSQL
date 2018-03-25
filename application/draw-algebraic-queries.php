@@ -9,6 +9,7 @@ $table = $help->allTables($_SESSION['bdd']);
 $_SESSION['select'] = null;
 $_SESSION['where'] = null;
 $_SESSION['from'] = null;
+$_SESSION['join'] = null;
 ?>
 
 <!DOCTYPE html>

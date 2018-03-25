@@ -6,9 +6,8 @@ class ExecutionQuery
     private $select;
     private $from;
     private $where;
-
+    private $join;
     /*
-    private $where;
     private $join;
     private $having;
     private $orderBy;
@@ -16,15 +15,25 @@ class ExecutionQuery
     private $subQuery;
     */
 
-    public function __construct($select, $from, $where = null)
+    public function __construct($select, $from, $where = null,$join = null)
     {
         if ($where != null) {
             $this->select = $select;
             $this->from = $from;
             $this->where = $where;
-        } else {
+        }elseif ($join != null) {
             $this->select = $select;
             $this->from = $from;
+            $this->join = $join;
+        }elseif ($join != null && $where != null){
+            $this->select = $select;
+            $this->from = $from;
+            $this->where = $where;
+            $this->join = $join;
+        }else {
+            $this->select = $select;
+            $this->from = $from;
+            $this->join = null;
             $this->where = null;
         }
     }
@@ -34,6 +43,10 @@ class ExecutionQuery
         $bdd = doConnexion();
         if (isset($this->where)) {
             $str = "" . $this->select . " " . $this->from . " " . $this->where . ";";
+        }elseif(isset($this->join)){
+            $str = "" . $this->select . " " . $this->from . " " . $this->join . ";";
+        }elseif(isset($this->join) && isset($this->where)){
+            $str = "" . $this->select . " " . $this->from . " " . $this->join . " " . $this->where . ";";
         } else {
             $str = "" . $this->select . " " . $this->from . ";";
         }
@@ -43,18 +56,6 @@ class ExecutionQuery
         return $result;
     }
 
-
-    public function showResults($resultat, $nameColumn)
-    {
-        foreach ($resultat as $r) {
-            echo '<p>';
-            foreach ($nameColumn as $nC) {
-                echo $r[$nC['COLUMN_NAME']];
-                echo " ";
-            }
-            echo '</p>';
-        }
-    }
     public function searchNameColumn($table)
     {
         $bdd = doConnexion();

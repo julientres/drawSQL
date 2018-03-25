@@ -122,8 +122,9 @@ $(document).ready(function () {
             type: "POST",
             data: dataJoin,
             success: function (data) {
+                $('#test').html(data);
                 if (data) {
-                    $('#modalSelect').modal('hide');
+                    $('#modalJoin').modal('hide');
                 }
             },
             error: function (data) {
@@ -168,6 +169,7 @@ $(document).ready(function () {
                 data = JSON.parse(data);
                 for (var i = 0; i < data.length; i++) {
                     $('#join4').append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                    $('#where1').append('<option value="' + data[i] + '">' + data[i] + '</option>');
                 }
             },
             error: function (data) {
@@ -214,6 +216,11 @@ $(document).ready(function () {
                 if (data.where != null) {
                     var whereText = data.where;
                     $('#codeWhere').html(whereText);
+                }
+                if(data.join != null){
+                    $('#divCodeJoin').show();
+                    var joinText = data.join;
+                    $('#codeJoin').html(joinText);
                 }
                 $('#codeSelect').html(selectText);
                 $('#codeFrom').html(fromText);

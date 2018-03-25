@@ -87,6 +87,6 @@ body {
 
 
 /* ----- MODAL ------ */
-#modalJoin{
-
+#divCodeJoin{
+    display: none;
 }

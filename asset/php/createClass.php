@@ -3,6 +3,7 @@ require_once('../../application/forms/From.php');
 require_once('../../application/forms/Where.php');
 require_once('../../application/forms/ExecutionQuery.php');
 require_once('../../application/forms/Select.php');
+require_once('../../application/forms/Join.php');
 require_once('../../application/forms/HelpDataEntry.php');
 
 
@@ -41,12 +42,12 @@ if(isset($_POST['from'])){
 }
 if(isset($_POST['join'])){
     if($_POST['join'] != null){
-        var_dump($_POST['join']);
         $listJoin = explode(",", $_POST['join']);
-        var_dump($listJoin);
-        $join = new Join("".$listJoin[0]."","".$listJoin[1]."","".$_SESSION['from']."","".$listJoin[2]."","".$listJoin[3]."");
+        $from = unserialize($_SESSION['from']);
+        $table = $from->getTable();
+        $join = new Join($listJoin[0],$listJoin[1],$table,$listJoin[2],$listJoin[3]);
         $_SESSION['join'] = serialize($join);
-
+        var_dump($join);
         echo true;
     }else{
         echo false;
@@ -72,9 +73,10 @@ if(isset($_POST['where1']) && isset($_POST['where2']) && isset($_POST['where3'] 
 }
 if(isset($_POST['generer'])){
     if($_POST['generer']){
-        if(isset($_SESSION['select']) && isset($_SESSION['from'])){
-            echo true;
-        }elseif (isset($_SESSION['select']) && isset($_SESSION['from']) && isset($_SESSION['where'])){
+        if (isset($_SESSION['select']) && isset($_SESSION['from']) && isset($_SESSION['where'])
+            && isset($_SESSION['join']) || isset($_SESSION['select']) && isset($_SESSION['from'])
+            && isset($_SESSION['where']) || isset($_SESSION['select']) && isset($_SESSION['from'])
+            && isset($_SESSION['join']) || isset($_SESSION['select']) && isset($_SESSION['from'])){
             echo true;
         }else{
             echo false;
@@ -95,7 +97,11 @@ if(isset($_POST['modal'])) {
 
         $myObj->from = $tabFrom;
 
-
+        if(isset($_SESSION['join'])){
+            $join = unserialize($_SESSION['join']);
+            $tabJoin = $join->convertToSQL();
+            $myObj->join = $tabJoin;
+        }
 
         if(isset($_SESSION['where'])){
             $where = unserialize($_SESSION['where']);
@@ -110,34 +116,39 @@ if(isset($_POST['modal'])) {
 }
 if(isset($_POST['result'])){
     if($_POST['result']){
+        $select = unserialize($_SESSION['select']);
+        $from = unserialize($_SESSION['from']);
+
+        $tabSelect = $select->convertToSQL();
+        $tabFrom = $from->convertToSQL();
+
         if(isset($_SESSION['where'])){
-            $select = unserialize($_SESSION['select']);
-            $from = unserialize($_SESSION['from']);
             $where = unserialize($_SESSION['where']);
             $tabWhere = $where->convertToSQL();
-            $tabSelect = $select->convertToSQL();
-            $tabFrom = $from->convertToSQL();
-
-
             $execution = new ExecutionQuery($tabSelect, $tabFrom,$tabWhere);
-            $column = $execution->searchNameColumn($from->getTable());
-            $execution->showResults($execution->exec(), $column);
-        }else{
-            $select = unserialize($_SESSION['select']);
-            $from = unserialize($_SESSION['from']);
-            $select = unserialize($_SESSION['select']);
-            $from = unserialize($_SESSION['from']);
-
+            $_SESSION['exec'] = "" . $tabSelect  . " " . $tabFrom  . " " .  $tabWhere . "";
+        }elseif (isset($_SESSION['join'])){
+            $join = unserialize($_SESSION['join']);
+            $tabJoin = $join->convertToSQL();
+            $execution = new ExecutionQuery($tabSelect,$tabFrom,$tabJoin);
+            $_SESSION['exec'] = "" . $tabSelect  . " " . $tabFrom  . " " . $tabJoin . "";
+        }elseif (isset($_SESSION['where']) && isset($_SESSION['join'])) {
+            $join = unserialize($_SESSION['join']);
+            $tabJoin = $join->convertToSQL();
             $where = unserialize($_SESSION['where']);
-            $tabSelect = $select->convertToSQL();
-            $tabFrom = $from->convertToSQL();
-
-
-            $execution = new ExecutionQuery($tabSelect, $tabFrom);
-            $column = $execution->searchNameColumn($from->getTable());
-            $execution->showResults($execution->exec(), $column);
+            $tabWhere = $where->convertToSQL();
+            $execution = new ExecutionQuery($tabSelect,$tabFrom,$tabJoin);
+            $_SESSION['exec'] = "" . $tabSelect . " ". $tabFrom . " " .$tabJoin . " " . $tabWhere . "";
         }
+        else{
+            $execution = new ExecutionQuery($tabSelect, $tabFrom);
+            $_SESSION['exec'] = "" . $tabSelect  . " " . $tabFrom ."";
+        }
+        $columnA = $execution->searchNameColumn($from->getTable());
+        $columnB = $execution->searchNameColumn($join->getTableJoin());
 
-
+        $result = $execution->exec();
+        $column = array($columnA,$columnB,$result);
+        echo json_encode(array($column));
     }
 }
