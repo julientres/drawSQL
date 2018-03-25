@@ -125,15 +125,21 @@ if(isset($_POST['result'])){
 
 if(isset($_POST['hover'])){
     if($_POST['hover'] == 'select'){
+        $from = unserialize($_SESSION['from']);
+        $tab->table = $from->getTable();
         $select = unserialize($_SESSION['select']);
-        $column = $select->getColumn();
-        echo $column;
-        echo $myJson;
+        $tab->column = $select->getColumn(); 
     }else if($_POST['hover'] == 'from'){
         $from = unserialize($_SESSION['from']);
-        $table = $from->getTable();
-        echo $table;
+        $tab->table = $from->getTable();
+    }else if($_POST['hover'] == 'where'){
+        $where = unserialize($_SESSION['where']);
+        $tab->column = $where->getColumn();
+        $tab->operate = $where->getOperate();
+        $tab->value = $where->getValue();
     }
+    $myJson = json_encode($tab);
+    echo $myJson;
 }
 
 
