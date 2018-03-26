@@ -23,16 +23,14 @@ $_SESSION['join'] = null;
 	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">	
 	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
+
+
 </head>
 <body>
 	<div id="menu">
 		<?php
 			if($returnBDD['success'] == true) {
 				require_once('modules/navbar/navbar-drawing.php');
-				echo "<div class='alert alert-success alert-dismissible' role='alert'>
-						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-						<i class='fas fa-check-circle'></i><strong> Connexion réussie avec la BDD [".$_SESSION['bdd']."] !</strong> Bienvenue dans l'assistant de requêtes albégrique.	
-					</div>";			
 			}
 			else {
 				require_once('modules/navbar/navbar-default.php');
@@ -84,22 +82,36 @@ $_SESSION['join'] = null;
 			    </button>
 			</ul>
 		</div>
-		<div id="options">
-			<ul class="list-group list-group-horizontal">
-				<button id="clone" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Cloner un objet"><i class="fas fa-clone"></i></button>
-			    <button id="delete" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
-			    <button id="zoomIn" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
-			    <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
-			    <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
-			    <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
-			</ul>
-		</div>
+        <div id="drawing">
+            <div id="grille">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="smallGrid" width="6" height="6" patternUnits="userSpaceOnUse">
+                            <path d="M 6 0 L 0 0 0 6" fill="none" stroke="gray" stroke-width="0.5"></path>
+                        </pattern>
+                        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <rect width="60" height="60" fill="url(#smallGrid)"></rect>
+                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="gray" stroke-width="1"></path>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)"></rect>
+                </svg>
+            </div>
 
-		<div id="drawing">	
-			<div id="line-container">
-			</div>
-		</div>
-	</div>
+            <div id="line-container">
+            </div>
+        </div>
+
+        <div id="options">
+            <ul class="list-group list-group-horizontal">
+                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
+                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
+                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
+                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
+                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
+            </ul>
+        </div>
+    </div>
         <div id="test">
 
         </div>
@@ -264,6 +276,7 @@ $_SESSION['join'] = null;
 	</div>
 
 	<?php endif; ?>
+
     <script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
     <script src="librairies/jquery-3.3.1.min.js"></script>
     <script src="librairies/popper.min.js" type="text/javascript"></script>

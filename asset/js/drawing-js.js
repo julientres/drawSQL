@@ -41,33 +41,11 @@ $(document).ready(function () {
         $('[data-toggle="popover"]').popover();
     });
 
-    $('#drawing').on("click", "img", function () {
-        console.log(this.clientWidth);
-    });
 
     //SVG JS
     if (!SVG.supported) {
         alert('SVG not supported');
     }
-
-    //Double clic sur la forme affiche la modal Select
-    /*interact('[data-type="select"]').on('doubletap', function () {
-        $('#modalSelect').modal('show');
-    });
-    //Double clic sur la forme affiche la modal From
-    interact('[data-type="from"]').on('doubletap', function () {
-        $('#modalFrom').modal('show');
-    });
-    //Double clic sur la forme affiche la modal Where
-    interact('[data-type="where"]').on('doubletap', function () {
-        $('#modalWhere').modal('show');
-    });
-    //Double clic sur la forme affiche la modal Where
-    interact('[data-type="join"]').on('doubletap', function () {
-        $('#modalJoin').modal('show');
-    });
-    */
-
 
     $('#where2').on('change', function () {
         if ($(this).find(":selected").text() == "BETWEEN") {
@@ -286,7 +264,7 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
         nb_select++;
-        $('#drawing').append('<div id="select' + nb_select + '" class="form draggable tap-target" data-type="select"><img class="img-form" src="../asset/img/svg/Select.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+        $('#drawing').append('<div id="select' + nb_select + '" data-click="false" class="form draggable tap-target" data-type="select"><img class="img-form" src="../asset/img/svg/Select.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['select' + nb_select] = {
             'x': 0,
             'y': 0,
@@ -298,7 +276,7 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {
         nb_from++;
-        $('#drawing').append('<div id="from' + nb_from + '" class="form draggable tap-target" data-type="from"><img class="img-form"src="../asset/img/svg/From.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+        $('#drawing').append('<div id="from' + nb_from + '" data-click="false" class="form draggable tap-target" data-type="from"><img class="img-form"src="../asset/img/svg/From.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['from' + nb_from] = {
             'x': 0,
             'y': 0,
@@ -310,7 +288,7 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="3"]').on("click", function (event) {
         nb_where++;
-        $('#drawing').append('<div id="where' + nb_where + '" class="form draggable tap-target" data-type="where"><img class="img-form" src="../asset/img/svg/Where.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+        $('#drawing').append('<div id="where' + nb_where + '" data-click="false" class="form draggable tap-target" data-type="where"><img class="img-form" src="../asset/img/svg/Where.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['where' + nb_where] = {
             'x': 0,
             'y': 0,
@@ -323,7 +301,7 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="4"]').on("click", function (event) {
         nb_join++;
-        $('#drawing').append('<img src="../asset/img/svg/Join.svg" data-type="join" id="join' + nb_join + '" class="draggable tap-target form">');
+        $('#drawing').append('<img src="../asset/img/svg/Join.svg" data-click="false" data-type="join" id="join' + nb_join + '" class="draggable tap-target form">');
         forms['join' + nb_join] = {
             'x': 0,
             'y': 0,
@@ -376,6 +354,11 @@ $(document).ready(function () {
     //Permettre le drag & drop de l'application
     interact('.draggable')
         .draggable({
+            inertia: true,
+            onend: function (event) {
+                $(event.target).css('border', '3px dashed transparent');
+                event.target.setAttribute('data-click', 'true');
+            },
             onmove: function (event) {
                 var target = event.currentTarget,
                     // keep the dragged position in the data-x/data-y attributes
@@ -412,12 +395,26 @@ $(document).ready(function () {
                         }
                     }
                 }
-                $(event.target).css('border', '3px dashed transparent');
-                event.target.setAttribute('data-click', 'true');
+
+                $('.draggable').each(function() {
+                    if($(this).attr('data-click') == 'true') {
+                        $(this).css('border', '3px dashed transparent');
+                        $(this).attr('data-click', 'false');
+                    }
+                });
+
+                $(event.target).css('border', '3px dashed red');
             },
             restrict: {
                 restriction: 'parent',
                 elementRect: {top: 0, left: 0, bottom: 1, right: 1}
+            },
+            snap: {
+                targets: [
+                    interact.createSnapGrid({ x: 40, y: 40 })
+                ],
+                range: Infinity,
+                relativePoints: [ { x: 0, y: 0 } ]
             }
         })
         .on('click', function (event) {
@@ -500,31 +497,6 @@ $(document).ready(function () {
             $(this).popover('hide');
         })
 
-
-    function dragMoveListener(event) {
-        var target = event.currentTarget,
-            // keep the dragged position in the data-x/data-y attributes
-            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-        // translate the element
-        target.style.webkitTransform =
-            target.style.transform =
-                'translate(' + x + 'px, ' + y + 'px)';
-
-        // update the position attributes
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-
-        $('.draggable').each(function() {
-            if($(this).attr('data-click') == 'true') {
-                $(this).css('border', '3px dashed transparent');
-                $(this).attr('data-click', 'false');
-            }
-        });
-
-        $(event.target).css('border', '3px dashed red');
-    }
     function zoomIn() {
         if(coefZoom < 2.0) {
             coefZoom += 0.2;
