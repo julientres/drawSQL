@@ -2,6 +2,8 @@
 	require_once('../fonctions.php');
 	require_once('modules/modal/modal-generate.php');
 	require_once('modules/modal/modal-help-drawing.php');
+    $_SESSION['from'] = null;
+    $_SESSION['select'] = null;
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -19,7 +21,8 @@
                   </div>
             </div>        
 	        <li class="nav-item">
-	        	<a class="nav-link" href="#generateCodeModal" data-toggle="modal" data-target="#generateCodeModal">Générer</a>
+	        	<!--<a class="nav-link" href="#generateCodeModal" id="btdGenerer" data-toggle="modal" data-target="#generateCodeModal">Générer</a>-->
+                <a class="nav-link" href="#" id="btdGenerer">Générer</a>
 	        </li>
 	    </ul>
 

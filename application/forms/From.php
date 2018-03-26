@@ -11,4 +11,8 @@
 
             return $queryFrom;
         }
+
+        public function getTable(){
+            return $this->table;
+        }
 	}

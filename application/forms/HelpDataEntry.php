@@ -4,7 +4,9 @@ require_once('/../../fonctions.php');
 class HelpDataEntry
 {
 
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
 
     public function allTables($nameBdd)
@@ -17,25 +19,23 @@ class HelpDataEntry
         return $result;
     }
 
-    public function columnsFromTable($table,$schema)
+    public function columnsFromTable($table, $schema)
     {
         $bdd = doConnexion();
-        $str = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$table."' AND TABLE_SCHEMA='".$schema."'";
+        $str = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . $table . "' AND TABLE_SCHEMA='" . $schema . "'";
         $query = $bdd['object']->prepare($str);
         $query->execute();
         $result = $query->fetchAll();
         return $result;
     }
 
-    public function showResultsColumns($resultat) {
-        echo '<input type="checkbox" id="subscribeNews" name="select" value="*">*<br>';
-        foreach($resultat as $r) {
-            echo '<input type="checkbox" name="select" value="'.$r['COLUMN_NAME'].'">'.$r['COLUMN_NAME'] .'<br>';
+
+    public function showResultsColumns($resultat)
+    {
+        $data = [];
+        foreach ($resultat as $r) {
+            array_push($data,$r['COLUMN_NAME']);
         }
-    }
-    public function showResultsColumnsOption($resultat) {
-        foreach($resultat as $r) {
-            echo '<option value="'.$r['COLUMN_NAME'].'">'.$r['COLUMN_NAME'] .'</option>';
-        }
+        echo json_encode($data);
     }
 }
