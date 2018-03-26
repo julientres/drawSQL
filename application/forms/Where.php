@@ -27,16 +27,4 @@ class Where{
         }
         return $queryFrom;
     }
-
-    public function getColumn(){
-        return $this->column;
-    }
-
-    public function getOperate(){
-        return $this->operate;
-    }
-
-    public function getValue(){
-        return $this->value;
-    }
 }

@@ -20,7 +20,8 @@ $_SESSION['join'] = null;
 	<meta content="" name="description">
 	<meta content="RTAI - ANGLES HIOT SOLE TRESCARTES" name="author">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">	
+	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">
+	
 	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
 </head>
@@ -261,7 +262,7 @@ $_SESSION['join'] = null;
 		<?php
 			require_once('modules/footer/footer.php');
 		?>
-	</div>
+	</div>	
 
 	<?php endif; ?>
     <script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
