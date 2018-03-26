@@ -6,8 +6,33 @@ $(document).ready(function () {
     var nb_join = 0;
     var nb_links = 0;
 
+    var coefZoom = 1.0;
     var forms = new Array();
     var links = new Array();
+
+    $('#grille').css('zoom', coefZoom);
+    $('.draggable').css('border', '3px dashed transparent');
+
+    $('#zoomIn').click(function() {
+        zoomIn();
+    });
+
+    $('#zoomOut').click(function() {
+        zoomOut();
+    });
+
+    $('#zoomReset').click(function() {
+        zoomReset();
+    });
+
+    $('#clear').click(function() {
+        clearGrid();
+    });
+
+    $('#delete').click(function(event) {
+        deleteElement();
+    });
+
 
     $(".alert-success").show("slow").delay(2000).hide("slow");
 
@@ -21,16 +46,7 @@ $(document).ready(function () {
     });
 
     //SVG JS
-    if (SVG.supported) {
-        // var draw = SVG('drawing').size('100%', '100%');
-        // var polySelect = draw.path('M10 30L40 80L120 80L150 30z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polyFrom = draw.circle(100).attr({fill: '#FFFFFF', stroke:'#000', 'stroke-width': 2});
-        // var polyWhere = draw.path('M10 30L10 120L110 90L110 60z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polyJoin = draw.path('M10 30L10 80L60 30L60 80z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polySubQuery = draw.path('M20 40L35 33L35 10L80 10L80 70L35 70L35 48z').attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-        // var polyLine = draw.polyline([[50,50], [100,50]]).attr({fill: '#FFFFFF', stroke: '#000', 'stroke-width': 2});
-    }
-    else {
+    if (!SVG.supported) {
         alert('SVG not supported');
     }
 
@@ -396,6 +412,8 @@ $(document).ready(function () {
                         }
                     }
                 }
+                $(event.target).css('border', '3px dashed transparent');
+                event.target.setAttribute('data-click', 'true');
             },
             restrict: {
                 restriction: 'parent',
@@ -410,8 +428,44 @@ $(document).ready(function () {
             target.style.webkitTransform = target.style.transform =
                 'translate(' + x + 'px,' + y + 'px)';
 
-        });
+            if(event.target.getAttribute('data-click') == 'true') {
+                $(event.target).css('border', '3px dashed transparent');
+                event.target.setAttribute('data-click', 'false');
+            }
+            else {
+                $('.draggable').each(function() {
+                    if($(this).attr('data-click') == 'true') {
+                        $(this).css('border', '3px dashed transparent');
+                        $(this).attr('data-click', 'false');
+                    }
+                });
 
+                event.target.setAttribute('data-click', 'true');
+                $(event.target).css('border', '3px dashed red');
+            }
+        });
+    $(document).keydown(function(e) {
+        switch(e.which) {
+            case 46://suppr => delete
+                deleteElement();
+                break;
+
+            case 32://space => clear
+                zoomReset();
+                break;
+
+            case 107://numpad + => zoom +
+                zoomIn();
+                break;
+
+            case 109://numpad - => zoom -
+                zoomOut();
+                break;
+
+            default: return; // exit this handler for other keys
+        }
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+    });
     // Informations sur la forme au passage de la souris
     $("#drawing")
         .on("mouseover", "img", function () {
@@ -461,6 +515,91 @@ $(document).ready(function () {
         // update the position attributes
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
+
+        $('.draggable').each(function() {
+            if($(this).attr('data-click') == 'true') {
+                $(this).css('border', '3px dashed transparent');
+                $(this).attr('data-click', 'false');
+            }
+        });
+
+        $(event.target).css('border', '3px dashed red');
+    }
+    function zoomIn() {
+        if(coefZoom < 2.0) {
+            coefZoom += 0.2;
+            $('.draggable').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('.line').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('#grille').css('zoom', coefZoom);
+        }
+        else {
+            alert('zoom + max atteint');
+        }
     }
 
+    function zoomOut() {
+        if(coefZoom > 0.5) {
+            coefZoom -= 0.2;
+            $('.draggable').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('.line').each(function() {
+                $(this).css('zoom', coefZoom);
+            });
+            $('#grille').css('zoom', coefZoom);
+        }
+        else {
+            alert('zoom - max atteint');
+        }
+    }
+
+    function zoomReset() {
+        coefZoom = 1.0;
+        $('.draggable').each(function() {
+            $(this).css('zoom', coefZoom);
+        });
+        $('.line').each(function() {
+            $(this).css('zoom', coefZoom);
+        });
+        $('#grille').css('zoom', coefZoom);
+    }
+
+    function clearGrid() {
+        $('.draggable').each(function() {
+            $(this).remove();
+        });
+
+        $('.line').each(function() {
+            $(this).remove();
+        });
+
+        nb_select = 0;
+        nb_from = 0;
+        nb_where = 0;
+        forms = [];
+        links = [];
+    }
+
+    function deleteElement() {
+        $('.draggable').each(function() {
+            if($(this).attr('data-click') == 'true') {
+                if(confirm('sure to delete ?')) {
+                    $(this).remove();
+                    delete forms[$(this).attr('id')];
+                    //need : delete element form array "links" & nb_links--
+
+                    if($(this).attr('data-type') == 'select')
+                        nb_select--;
+                    else if($(this).attr('data-type') == 'from')
+                        nb_from--;
+                    else if($(this).attr('data-type') == 'where')
+                        nb_where--;
+                }
+            }
+        });
+    }
 });
