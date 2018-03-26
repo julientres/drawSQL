@@ -30,6 +30,7 @@ if(isset($_POST['select'])){
         echo false;
     }
 }
+
 if(isset($_POST['from'])){
     if($_POST['from']){
         $from = new From("".$_POST['from']."");
@@ -54,6 +55,7 @@ if(isset($_POST['join'])){
     }
 }
 
+
 if(isset($_POST['where1']) && isset($_POST['where2']) && isset($_POST['where3'] )){
     if($_POST['where1']){
         if($_POST['where4'] == null){
@@ -71,6 +73,7 @@ if(isset($_POST['where1']) && isset($_POST['where2']) && isset($_POST['where3'] 
         echo false;
     }
 }
+
 if(isset($_POST['generer'])){
     if($_POST['generer']){
         if (isset($_SESSION['select']) && isset($_SESSION['from']) && isset($_SESSION['where'])
@@ -83,6 +86,7 @@ if(isset($_POST['generer'])){
         }
     }
 }
+
 if(isset($_POST['modal'])) {
     if ($_POST['modal']) {
         $myObj = new stdClass();
@@ -114,6 +118,7 @@ if(isset($_POST['modal'])) {
         echo $myJson;
     }
 }
+
 if(isset($_POST['result'])){
     if($_POST['result']){
         $select = unserialize($_SESSION['select']);
@@ -152,3 +157,24 @@ if(isset($_POST['result'])){
         echo json_encode(array($column));
     }
 }
+
+if(isset($_POST['hover'])){
+    if($_POST['hover'] == 'select'){
+        $from = unserialize($_SESSION['from']);
+        $tab->table = $from->getTable();
+        $select = unserialize($_SESSION['select']);
+        $tab->column = $select->getColumn(); 
+    }else if($_POST['hover'] == 'from'){
+        $from = unserialize($_SESSION['from']);
+        $tab->table = $from->getTable();
+    }else if($_POST['hover'] == 'where'){
+        $where = unserialize($_SESSION['where']);
+        $tab->column = $where->getColumn();
+        $tab->operate = $where->getOperate();
+        $tab->value = $where->getValue();
+    }
+    $myJson = json_encode($tab);
+    echo $myJson;
+}
+
+
