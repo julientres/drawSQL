@@ -5,6 +5,11 @@ $returnBDD = doConnexion();
 
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
+
+$_SESSION['select'] = null;
+$_SESSION['where'] = null;
+$_SESSION['from'] = null;
+$_SESSION['join'] = null;
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +64,7 @@ $table = $help->allTables($_SESSION['bdd']);
 						<path id="polyWhere" d="M10 5L10 45L90 32L90 18z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>
 				</button>
-			    <button id="joinObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="JOIN">
+			    <button id="joinObject" class="list-group-item list-group-item-action" data-form="4" data-toggle="tooltip" data-placement="right" title="JOIN">
 			    	<svg height="50" width="100">
 						<path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>
@@ -198,6 +203,53 @@ $table = $help->allTables($_SESSION['bdd']);
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Join -->
+        <div class="modal fade" id="modalJoin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Join</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="textModal">
+                        <select id="join1">
+                            <option value="null"></option>
+                            <option value="INNER JOIN">INNER JOIN</option>
+                            <option value="LEFT JOIN">LEFT JOIN</option>
+                            <option value="RIGHT JOIN">RIGHT JOIN</option>
+                            <option value="FULL JOIN">FULL JOIN</option>
+                        </select>
+                        <select id="join2">
+                            <option value="null"></option>
+                            <?php
+                            foreach ($table as $t) {
+                                echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        ON
+                        <select id="join3">
+
+                        </select>
+                        =
+                        <select id="join4">
+
+                        </select>
+                    </div>
+                    <div id="console">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="button" id="btdModalJoin" class="btn btn-primary">Sauvegarder</button>
                     </div>
                 </div>
             </div>
