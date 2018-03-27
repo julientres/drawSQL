@@ -59,7 +59,8 @@ $(document).ready(function () {
 
     //Clic sur le bouton Ajout '+' d'une forme
     interact('.add-button').on('tap', function (event) {
-        var type = $(event.target).parent().attr("data-type");
+        var type = $(event.target).parent().closest('div').attr('data-type');
+        //var type = $(event.target).parent().attr("data-type");//renvoie l'objet svg
         if (type == 'select') {
             $('#modalSelect').modal('show');
         } else if (type == 'from') {
@@ -356,8 +357,8 @@ $(document).ready(function () {
         .draggable({
             inertia: true,
             onend: function (event) {
-                $(event.target).css('border', '3px dashed transparent');
-                event.target.setAttribute('data-click', 'true');
+                $(event.currentTarget).css('border', '3px dashed transparent');
+                event.currentTarget.setAttribute('data-click', 'true');
             },
             onmove: function (event) {
                 var target = event.currentTarget,
@@ -403,7 +404,7 @@ $(document).ready(function () {
                     }
                 });
 
-                $(event.target).css('border', '3px dashed red');
+                $(target).css('border', '3px dashed red');
             },
             restrict: {
                 restriction: 'parent',
@@ -418,16 +419,16 @@ $(document).ready(function () {
             }
         })
         .on('click', function (event) {
-            var target = event.target,
+            var target = event.currentTarget,
                 x = (parseFloat(target.getAttribute('data-x')) || 0),
                 y = (parseFloat(target.getAttribute('data-y')) || 0);
 
             target.style.webkitTransform = target.style.transform =
                 'translate(' + x + 'px,' + y + 'px)';
 
-            if(event.target.getAttribute('data-click') == 'true') {
-                $(event.target).css('border', '3px dashed transparent');
-                event.target.setAttribute('data-click', 'false');
+            if(target.getAttribute('data-click') == 'true') {
+                $(target).css('border', '3px dashed transparent');
+                target.setAttribute('data-click', 'false');
             }
             else {
                 $('.draggable').each(function() {
@@ -437,8 +438,8 @@ $(document).ready(function () {
                     }
                 });
 
-                event.target.setAttribute('data-click', 'true');
-                $(event.target).css('border', '3px dashed red');
+                target.setAttribute('data-click', 'true');
+                $(target).css('border', '3px dashed red');
             }
         });
     $(document).keydown(function(e) {
