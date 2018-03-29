@@ -62,9 +62,9 @@ require_once('forms/HelpDataEntry.php');
             success: function (data) {
                 data = JSON.parse(data);
                 console.log(data);
-                console.log(data[0][0]);
-                for (var i = 0; i < data[0].length; i++) {
-                    $('#nameColumns').append('<td>'+ data[0][i].COLUMN_NAME + '</td>');
+                console.log(data[0]);
+                for (var i = 0; i < data.length; i++) {
+                    $('#valueColumns').append('<td>'+ data[i].CODEACTIVITE + '</td>');
                 }
 
             },
