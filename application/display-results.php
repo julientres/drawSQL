@@ -27,6 +27,7 @@ require_once('forms/HelpDataEntry.php');
     <script src="librairies/jquery-3.3.1.min.js"></script>
     <script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../asset/css/result-style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
 <div id="menu">
