@@ -149,12 +149,9 @@ if(isset($_POST['result'])){
             $execution = new ExecutionQuery($tabSelect, $tabFrom);
             $_SESSION['exec'] = "" . $tabSelect  . " " . $tabFrom ."";
         }
-        $columnA = $execution->searchNameColumn($from->getTable());
-        $columnB = $execution->searchNameColumn($join->getTableJoin());
 
         $result = $execution->exec();
-        $column = array($columnA,$columnB,$result);
-        echo json_encode(array($column));
+        echo json_encode($result);
     }
 }
 
