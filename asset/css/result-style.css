@@ -1,3 +1,20 @@
-body {
+html,body {
     font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+#req_SQL.form-group{
+    display: block;
+    margin:60px 40px auto 40px;
+}
+#results{
+    display: block;
+    margin: auto;
+    margin:145px 40px auto 40px;
+}
+h3{
+    padding: 7px;
+}
+th{
+    background: #212529;
+    color:#fff;
 }

@@ -40,49 +40,28 @@ require_once('forms/HelpDataEntry.php');
     }
     ?>
 </div>
-
+<div id="req_SQL" class="form-group">
+    <h3>Requête SQL</h3>
+    <?php
+    $req = $_SESSION['sql'];
+    $req = json_decode($req);
+    echo "<code>" .$req->select . "</code><br>";
+    echo "<code>" . $req->from . "</code><br>";
+    echo "<div id='divCodeJoin'><code>" . $req->join . "</code><br>";
+    echo "<code>" .$req->where . "</code>";
+    ?>
+</div>
 <div id="results">
-    <table>
-        <tr id="nameColumns">
-
-        </tr>
-        <tr id="valueColumns">
-
-        </tr>
+    <table class="table table-bordered">
+        <thead>
+            <tr id="nameColumns">
+            </tr>
+        </thead>
+        <tbody id="valueColumns">
+        </tbody>
     </table>
 </div>
 
-<script type="application/javascript">
-    $(document).ready(function () {
-        var str = 'result=true';
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: str,
-            success: function (data) {
-                data = JSON.parse(data);
-                console.log(data);
-                console.log(data[0]);
-                for (var i = 0; i < data.length; i++) {
-                    $('#valueColumns').append('<td>'+ data[i].CODEACTIVITE + '</td>');
-                }
-
-            },
-            error: function (data) {
-                console.log(data);
-                alert("Erreur de création")
-            }
-        });
-    });
-
-</script>
-<?php
-/*var_dump(unserialize($_SESSION['select']));
-var_dump(unserialize($_SESSION['from']));
-var_dump(unserialize($_SESSION['where']));
-var_dump(unserialize($_SESSION['join']));
-var_dump($_SESSION['exec']);*/
-?>
 <div id="footer">
     <?php
     require_once('modules/footer/footer.php');

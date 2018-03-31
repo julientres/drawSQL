@@ -33,8 +33,6 @@ class ExecutionQuery
         }else {
             $this->select = $select;
             $this->from = $from;
-            $this->join = null;
-            $this->where = null;
         }
     }
 
@@ -43,23 +41,13 @@ class ExecutionQuery
         $bdd = doConnexion();
         if (isset($this->where)) {
             $str = "" . $this->select . " " . $this->from . " " . $this->where . ";";
-        }elseif(isset($this->join)){
+        } elseif (isset($this->join)) {
             $str = "" . $this->select . " " . $this->from . " " . $this->join . ";";
-        }elseif(isset($this->join) && isset($this->where)){
+        } elseif (isset($this->join) && isset($this->where)) {
             $str = "" . $this->select . " " . $this->from . " " . $this->join . " " . $this->where . ";";
         } else {
             $str = "" . $this->select . " " . $this->from . ";";
         }
-        $query = $bdd['object']->prepare($str);
-        $query->execute();
-        $result = $query->fetchAll();
-        return $result;
-    }
-
-    public function searchNameColumn($table)
-    {
-        $bdd = doConnexion();
-        $str = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" . $table . "';";
         $query = $bdd['object']->prepare($str);
         $query->execute();
         $result = $query->fetchAll();

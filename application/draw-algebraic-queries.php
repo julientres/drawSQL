@@ -6,14 +6,16 @@ $returnBDD = doConnexion();
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
 
-$_SESSION['select'] = null;
-$_SESSION['where'] = null;
-$_SESSION['from'] = null;
-$_SESSION['join'] = null;
+unset($_SESSION['name']);
+unset( $_SESSION['sql']);
+unset( $_SESSION['select']);
+unset( $_SESSION['where']);
+unset( $_SESSION['join']);
+unset( $_SESSION['select']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<title>Algebraic Queries - drawing</title>
@@ -285,5 +287,7 @@ $_SESSION['join'] = null;
     <script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="librairies/interact.min.js" type="text/javascript"></script>
 	<script src="../asset/js/drawing-js.js" type="text/javascript"></script>
+    <script src="../asset/js/ajaxPost.js" type="text/javascript"></script>
+    <script src="../asset/js/ajaxGet.js" type="text/javascript"></script>
 </body>
 </html>
