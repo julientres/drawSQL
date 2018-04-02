@@ -10,6 +10,10 @@
 			return $this->column;
 		}
 
+		public function getColumnName(){
+
+        }
+
 		public function convertToSQL() {
 		    if(is_array($this->column)){
                 $strC = implode(",", $this->column);

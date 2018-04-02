@@ -6,43 +6,45 @@ $returnBDD = doConnexion();
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
 
-$_SESSION['select'] = null;
-$_SESSION['where'] = null;
-$_SESSION['from'] = null;
-$_SESSION['join'] = null;
+unset($_SESSION['name']);
+unset($_SESSION['sql']);
+unset($_SESSION['select']);
+unset($_SESSION['where']);
+unset($_SESSION['join']);
+unset($_SESSION['select']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<title>Algebraic Queries - drawing</title>
-	<meta content="" name="description">
-	<meta content="RTAI - ANGLES HIOT SOLE TRESCARTES" name="author">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">	
-	<link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
-	<link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
+    <meta charset="UTF-8">
+    <title>Algebraic Queries - drawing</title>
+    <meta content="" name="description">
+    <meta content="RTAI - ANGLES HIOT SOLE TRESCARTES" name="author">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="html, css, js, bootstrap, fabric.js, intreract.js, requêtes algébriques" name="keywords">
+    <link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 
 </head>
 <body>
-	<div id="menu">
-		<?php
-			if($returnBDD['success'] == true) {
-				require_once('modules/navbar/navbar-drawing.php');
-			}
-			else {
-				require_once('modules/navbar/navbar-default.php');
-				echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+<div id="menu">
+    <?php
+    if ($returnBDD['success'] == true) {
+        require_once('modules/navbar/navbar-drawing.php');
+    } else {
+        require_once('modules/navbar/navbar-default.php');
+        echo "<div class='alert alert-danger alert-dismissible' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 						<i class='fas fa-ban'></i><strong> Erreur !</strong> Vous devez être connecté pour accéder à ce contenu. <a href='home.php' class='alert-link'>Se connecter</a>
 					</div>";
-			}
-		?>		
-	</div>	
+    }
+    ?>
+</div>
 
-	<?php if($returnBDD['success'] == true) : ?>
+<?php if ($returnBDD['success'] == true) : ?>
 
 	<div id="main">
         <div id="options">
@@ -112,79 +114,89 @@ $_SESSION['join'] = null;
             </div>
         </div>
     </div>
-        <div id="test">
 
-        </div>
-        <!-- Modal Select -->
-        <div class="modal fade" id="modalSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Select</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="textModal">
-                        <div id="divSelect">
+    <!-- Modal Select -->
+    <div class="modal fade" id="modalSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="textModal">
+                    <div id="divSelect">
+                        <!--<div id="boxSelect">
+                            <p>*</p>
+                            <div>
+                                <div><input id="checkboxSelect" type="checkbox" name="select" value="*">
+                                <button class="btn btn-primary">MIN</button></div>
+                                <div><button class="btn btn-primary">MAX</button>
+                                <button class="btn btn-primary">COUNT</button></div>
+                            </div>
                         </div>
+                        -->
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                        <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal From -->
-        <div class="modal fade" id="modalFrom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">From</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="textModal">
-                        <select id="from">
+    <!-- Modal From -->
+    <div class="modal fade" id="modalFrom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">From</h5>
+                </div>
+                <div class="modal-body" id="textModal">
+                    <select class="custom-select" id="from">
+                        <optgroup label="Choisir une table">
                             <option value="null"></option>
                             <?php
                             foreach ($table as $t) {
                                 echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
                             }
                             ?>
-                        </select>
-                    </div>
-                    <div id="console">
+                        </optgroup>
+                    </select>
+                </div>
+                <div id="console">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                        <button type="button" id="btdModalFrom" class="btn btn-primary">Sauvegarder</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="btdModalFrom" class="btn btn-primary">Sauvegarder</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal Where -->
-        <div class="modal fade" id="modalWhere" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Where</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="textModal">
-                        <select id="where1">
+    <!-- Modal Where -->
+    <div class="modal fade" id="modalWhere" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Where</h5>
+                </div>
+                <div class="modal-body" id="textModal">
+                    <select class="custom-select" id="where1">
+                        <optgroup id="optGroup" label="Choisir une colonne">
 
-                        </select>
-                        <br>
-                        <br>
-                        <select id="where2">
+                        </optgroup>
+                    </select>
+                    <br>
+                    <br>
+                    <select class="custom-select" id="where2">
+                        <optgroup label="Choisir une condition">
                             <option value=""></option>
                             <option value="=">=</option>
                             <option value="<>"><></option>
@@ -198,91 +210,91 @@ $_SESSION['join'] = null;
                             <option value="LIKE">LIKE</option>
                             <option value="IS NULL">IS NULL</option>
                             <option value="IS NOT NULL">IS NOT NULL</option>
-                        </select>
-                        <br>
-                        <br>
-                        <input type="text" id="where3" value="">
-                        <br>
-                        <div id="divBetween">
-                            <p>And</p>
-                            <input type="text" id="where4" value="">
-                        </div>
+                        </optgroup>
+                    </select>
+                    <br>
+                    <br>
+                    <input type="text" class="input-group" id="where3" value="">
+                    <br>
+                    <div id="divBetween">
+                        <p>And</p>
+                        <input type="text" class="input-group" id="where4" value="">
+                    </div>
 
-                    </div>
-                    <div id="console">
+                </div>
+                <div id="console">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                        <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!-- Modal Join -->
-        <div class="modal fade" id="modalJoin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Join</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="textModal">
-                        <select id="join1">
-                            <option value="null"></option>
-                            <option value="INNER JOIN">INNER JOIN</option>
-                            <option value="LEFT JOIN">LEFT JOIN</option>
-                            <option value="RIGHT JOIN">RIGHT JOIN</option>
-                            <option value="FULL JOIN">FULL JOIN</option>
-                        </select>
-                        <select id="join2">
-                            <option value="null"></option>
-                            <?php
-                            foreach ($table as $t) {
-                                echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
-                            }
-                            ?>
-                        </select>
-                        ON
-                        <select id="join3">
+    <!-- Modal Join -->
+    <div class="modal fade" id="modalJoin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Join</h5>
+                </div>
+                <div class="modal-body" id="textModal">
+                    <select class="custom-select" id="join1">
+                        <option value="null"></option>
+                        <option value="INNER JOIN">INNER JOIN</option>
+                        <option value="LEFT JOIN">LEFT JOIN</option>
+                        <option value="RIGHT JOIN">RIGHT JOIN</option>
+                        <option value="FULL JOIN">FULL JOIN</option>
+                    </select>
+                    <select class="custom-select" id="join2">
+                        <option value="null"></option>
+                        <?php
+                        foreach ($table as $t) {
+                            echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
+                        }
+                        ?>
+                    </select>
+                    ON
+                    <select class="custom-select" id="join3">
 
-                        </select>
-                        =
-                        <select id="join4">
+                    </select>
+                    =
+                    <select class="custom-select" id="join4">
 
-                        </select>
-                    </div>
-                    <div id="console">
+                    </select>
+                </div>
+                <div id="console">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                        <button type="button" id="btdModalJoin" class="btn btn-primary">Sauvegarder</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="btdModalJoin" class="btn btn-primary">Sauvegarder</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
+    <div id="footer">
+        <?php
+        require_once('modules/footer/footer.php');
+        ?>
+    </div>
 
-	<div id="footer">
-		<?php
-			require_once('modules/footer/footer.php');
-		?>
-	</div>
+<?php endif; ?>
 
-	<?php endif; ?>
-
-    <script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
-    <script src="librairies/jquery-3.3.1.min.js"></script>
-    <script src="librairies/popper.min.js" type="text/javascript"></script>
-    <script src="librairies/svg.min.js" type="text/javascript"></script>
-    <script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="librairies/interact.min.js" type="text/javascript"></script>
-	<script src="../asset/js/drawing-js.js" type="text/javascript"></script>
+<script defer src="librairies/fontawesome-free-5.0.6/on-server/js/fontawesome-all.min.js"></script>
+<script src="librairies/jquery-3.3.1.min.js"></script>
+<script src="librairies/popper.min.js" type="text/javascript"></script>
+<script src="librairies/svg.min.js" type="text/javascript"></script>
+<script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="librairies/interact.min.js" type="text/javascript"></script>
+<script src="../asset/js/drawing-js.js" type="text/javascript"></script>
+<script src="../asset/js/ajaxPost.js" type="text/javascript"></script>
+<script src="../asset/js/ajaxGet.js" type="text/javascript"></script>
 </body>
 </html>

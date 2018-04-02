@@ -1,24 +1,25 @@
 body {
-	margin:auto;
-	width:100%;
-		background-color: #34495e;
+    margin: auto;
+    width: 100%;
+    background-color: #34495e;
+    font-family: 'Roboto', sans-serif;
 }
 
 #connexion_bloc {
-	width:30%;
-	margin:auto;
-	margin-top:15%;
-	border:2px solid #444;
-	padding:50px;
-	border-radius:10px;
-	box-shadow: 10px 10px 0px 2px #222;
-	background-color:#ecf0f1;
+    width: 30%;
+    margin: auto;
+    margin-top: 15%;
+    border: 2px solid #444;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 0px 2px #222;
+    background-color: #ecf0f1;
 }
 
 #connexion_form {
-	text-align: center;
+    text-align: center;
 }
 
 h3 {
-	margin:0;
+    margin: 0;
 }

@@ -27,6 +27,7 @@ require_once('forms/HelpDataEntry.php');
     <script src="librairies/jquery-3.3.1.min.js"></script>
     <script src="librairies/bootstrap-4.0.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../asset/css/result-style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
 <div id="menu">
@@ -39,49 +40,32 @@ require_once('forms/HelpDataEntry.php');
     }
     ?>
 </div>
-
+<div id="req_SQL" class="form-group">
+    <h3>Requête SQL</h3>
+    <?php
+    $req = $_SESSION['sql'];
+    $req = json_decode($req);
+    echo "<code>" .$req->select . "</code><br>";
+    echo "<code>" . $req->from . "</code><br>";
+    if($req->join != null){
+        echo "<div id='divCodeJoin'><code>" . $req->join . "</code><br>";
+    }
+    if($req->where != null) {
+        echo "<code>" . $req->where . "</code>";
+    }
+    ?>
+</div>
 <div id="results">
-    <table>
-        <tr id="nameColumns">
-
-        </tr>
-        <tr id="valueColumns">
-
-        </tr>
+    <table class="table table-bordered">
+        <thead>
+            <tr id="nameColumns">
+            </tr>
+        </thead>
+        <tbody id="valueColumns">
+        </tbody>
     </table>
 </div>
 
-<script type="application/javascript">
-    $(document).ready(function () {
-        var str = 'result=true';
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: str,
-            success: function (data) {
-                data = JSON.parse(data);
-                console.log(data);
-                console.log(data[0][0]);
-                for (var i = 0; i < data[0].length; i++) {
-                    $('#nameColumns').append('<td>'+ data[0][i].COLUMN_NAME + '</td>');
-                }
-
-            },
-            error: function (data) {
-                console.log(data);
-                alert("Erreur de création")
-            }
-        });
-    });
-
-</script>
-<?php
-/*var_dump(unserialize($_SESSION['select']));
-var_dump(unserialize($_SESSION['from']));
-var_dump(unserialize($_SESSION['where']));
-var_dump(unserialize($_SESSION['join']));
-var_dump($_SESSION['exec']);*/
-?>
 <div id="footer">
     <?php
     require_once('modules/footer/footer.php');
