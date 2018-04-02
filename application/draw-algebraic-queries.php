@@ -45,6 +45,16 @@ $_SESSION['join'] = null;
 	<?php if($returnBDD['success'] == true) : ?>
 
 	<div id="main">
+        <div id="options">
+            <ul class="list-group list-group-horizontal">
+                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
+                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
+                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
+                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
+                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
+            </ul>
+        </div>
+        
 		<div id="forms">
 			<ul class="list-group">
 				<button id="selectObject" class="list-group-item list-group-item-action" data-form="1" data-toggle="tooltip" data-placement="right" title="SELECT">
@@ -100,16 +110,6 @@ $_SESSION['join'] = null;
 
             <div id="line-container">
             </div>
-        </div>
-
-        <div id="options">
-            <ul class="list-group list-group-horizontal">
-                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
-                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
-                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
-                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
-                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
-            </ul>
         </div>
     </div>
         <div id="test">
