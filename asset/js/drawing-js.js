@@ -66,6 +66,8 @@ $(document).ready(function () {
             $('#modalFrom').modal('show');
         } else if (type == 'where') {
             $('#modalWhere').modal('show');
+        } else if (type == 'join') {
+            $('#modalJoin').modal('show');
         }
     });
 
@@ -301,13 +303,14 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="4"]').on("click", function (event) {
         nb_join++;
-        $('#drawing').append('<img src="../asset/img/svg/Join.svg" data-click="false" data-type="join" id="join' + nb_join + '" class="draggable tap-target form">');
+        $('#drawing').append('<div id="join' + nb_join + '" data-click="false" class="form draggable tap-target" data-type="join"><img class="img-form" src="../asset/img/svg/Join.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['join' + nb_join] = {
             'x': 0,
             'y': 0,
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
+        $('#join' + nb_join).append('<button class="add-button" style="left:6px; top:17px"><span class="fas fa-plus add-icon"></span></button>');
     });
 
     //Créer les liens entre formes
@@ -379,8 +382,8 @@ $(document).ready(function () {
                 // On modifie les coordonnées de la forme qui a été bougée
                 forms[id_forms].x = x;
                 forms[id_forms].y = y;
-                forms[id_forms].x_center = x + ((parseFloat(event.target.offsetWidth)) / 2) - 5;
-                forms[id_forms].y_center = y + ((parseFloat(event.target.offsetHeight)) / 2) - 5;
+                forms[id_forms].x_center = x + ((parseFloat(event.target.offsetWidth)) / 2) + 3; // 3 sert à décaler à droite pour le JOIN
+                forms[id_forms].y_center = y + ((parseFloat(event.target.offsetHeight)) / 2);
 
                 if (links.length != 0) {
                     // On fait suivre les liens
@@ -408,14 +411,14 @@ $(document).ready(function () {
             restrict: {
                 restriction: 'parent',
                 elementRect: {top: 0, left: 0, bottom: 1, right: 1}
-            },
-            snap: {
+            }
+            /*snap: {
                 targets: [
                     interact.createSnapGrid({ x: 40, y: 40 })
                 ],
                 range: Infinity,
                 relativePoints: [ { x: 0, y: 0 } ]
-            }
+            }*/
         })
         .on('click', function (event) {
             var target = event.target,
