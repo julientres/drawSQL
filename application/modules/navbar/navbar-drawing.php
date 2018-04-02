@@ -13,13 +13,14 @@
 	</button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
-	    	<div class="dropdown">
+	    	<!--<div class="dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Fichier</a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#">Export algébrique</a>
                     <a class="dropdown-item" href="#">Import algébrique</a>
                   </div>
-            </div>        
+            </div>
+            -->
 	        <li class="nav-item">
 	        	<!--<a class="nav-link" href="#generateCodeModal" id="btdGenerer" data-toggle="modal" data-target="#generateCodeModal">Générer</a>-->
                 <a class="nav-link" href="#" id="btdGenerer">Générer</a>
