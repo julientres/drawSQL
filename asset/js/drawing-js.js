@@ -157,11 +157,11 @@ $(document).ready(function () {
         });
     })
     //Au changement du from récupére le nom des colonnes
-    $('#from').on('change', function () {
+    /*$('#from').on('change', function () {
         $('#modalWhere #optGroup').html('<option value="null"></option>');
         $('#divSelect').html('<div class="form-check">' +
             '<label class="form-check-label">' +
-            '<input class="form-check-input" type="checkbox" name="select" value="*">'+
+            '<input class="form-check-input" type="checkbox" name="select" value="*">' +
             '*</label></div>');
         $('#join3').html('<option value="null"></option>');
         var dataForm = "fromInput=" + $('#from').find(":selected").val();
@@ -176,6 +176,7 @@ $(document).ready(function () {
             }
         });
     });
+    */
 
     if ($('#divSelect input[type="checkbox"]').is(':checked')) {
         console.log("checked");
@@ -273,9 +274,12 @@ $(document).ready(function () {
         var y_2 = 0;
         var id_premier;
         var id_second;
+        var form1;
+        var form2;
         $('#link').data('processing', true);
         interact('.tap-target')
             .on('tap', function (event) {
+
                 if ($('#link').data('processing') == true) {
                     if (x_1 == 0 & y_1 == 0) {
                         var target = event.currentTarget,
@@ -286,11 +290,9 @@ $(document).ready(function () {
                         id_premier = $(target).attr('id');
                         console.log('premier click');
                         console.log(id_premier);
-                        console.log(target);
-                        var form1 = target.getAttribute('data-type');
+                        //form1 = target.getAttribute('data-type');
                         //$('#drawing').append('<div class="point" style="left:'+x_1+'px; top:'+y_1+'px"></div>');
                     } else {
-
                         target = event.currentTarget,
                             x = (parseFloat(target.getAttribute('data-x')) || 0),
                             y = (parseFloat(target.getAttribute('data-y')) || 0);
@@ -299,14 +301,83 @@ $(document).ready(function () {
                         id_second = $(target).attr('id');
                         console.log('second click');
                         console.log(id_second);
-                        console.log(target);
-                        var form2 = target.getAttribute('data-type');
+                        //form2 = target.getAttribute('data-type');
                         //$('#drawing').append('<div class="point" style="left:'+x_2+'px; top:'+y_2+'px"></div>');
                         $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
                         nb_links++;
                         links[nb_links] = {
                             forme1: id_premier,
                             forme2: id_second
+                        };
+
+                        //console.log(form1);
+                        //console.log(form2);
+
+                        if (id_premier.includes("from") && id_second.includes("select")) {
+                            console.log('1 : from -- 2 : select');
+                            $('#modalWhere #optGroup').html('<option value="null"></option>');
+                            $('#divSelect').html('<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input class="form-check-input" type="checkbox" name="select" value="*">' +
+                                '*</label></div>');
+                            $('#join3').html('<option value="null"></option>');
+                            var dataForm = "fromInput=" + $('#from').find(":selected").val();
+                            ajaxPost(dataForm, function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    //$('#modalWhere #optGroup').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                                    $('#divSelect').append('<div class="form-check">' +
+                                        '<label class="form-check-label">' +
+                                        '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
+                                        data[i].name + '</label></div>');
+                                    //$('#join3').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                                }
+                            });
+                            $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                            nb_links++;
+                            links[nb_links] = {
+                                forme1: id_premier,
+                                forme2: id_second
+                            };
+                        }
+                        if (id_premier.includes("from") && id_premier.includes("where")) {
+                            console.log('1 : from -- 2 : select');
+                            $('#modalWhere #optGroup').html('<option value="null"></option>');
+                            $('#divSelect').html('<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input class="form-check-input" type="checkbox" name="select" value="*">' +
+                                '*</label></div>');
+                            $('#join3').html('<option value="null"></option>');
+                            var dataForm = "fromInput=" + $('#from').find(":selected").val();
+                            ajaxPost(dataForm, function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    $('#modalWhere #optGroup').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                                    /*$('#divSelect').append('<div class="form-check">' +
+                                        '<label class="form-check-label">' +
+                                        '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
+                                        data[i].name + '</label></div>');*/
+                                    //$('#join3').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                                }
+                            });
+                        }
+                        if (id_premier.includes("where") && id_premier.includes("select")) {
+                            console.log('1 : from -- 2 : select');
+                            $('#modalWhere #optGroup').html('<option value="null"></option>');
+                            $('#divSelect').html('<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input class="form-check-input" type="checkbox" name="select" value="*">' +
+                                '*</label></div>');
+                            $('#join3').html('<option value="null"></option>');
+                            var dataForm = "fromInput=" + $('#from').find(":selected").val();
+                            ajaxPost(dataForm, function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    $('#modalWhere #optGroup').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                                    /*$('#divSelect').append('<div class="form-check">' +
+                                        '<label class="form-check-label">' +
+                                        '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
+                                        data[i].name + '</label></div>');*/
+                                    //$('#join3').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                                }
+                            });
                         }
                         $('#link').data('processing', false);
                         interact('.tap-target').off("tap");
@@ -428,7 +499,7 @@ $(document).ready(function () {
         }
         e.preventDefault(); // prevent the default action (scroll / move caret)
     });
-    // Informations sur la forme au passage de la souris
+// Informations sur la forme au passage de la souris
     $("#drawing")
         .on("mouseover", "img", function () {
             var hover = $(this).parent().attr("data-type");
@@ -536,4 +607,5 @@ $(document).ready(function () {
             }
         });
     }
-});
+})
+;
