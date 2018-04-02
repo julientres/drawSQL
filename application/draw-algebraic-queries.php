@@ -46,59 +46,57 @@ unset($_SESSION['select']);
 
 <?php if ($returnBDD['success'] == true) : ?>
 
-    <div id="main">
-        <div id="forms">
-            <ul class="list-group">
-                <button id="fromObject" class="list-group-item list-group-item-action" data-form="2"
-                        data-toggle="tooltip" data-placement="right" title="FROM">
-                    <svg height="50" width="100">
-                        <circle id="polyFrom" r="20" cx="50" cy="25" fill="#FFFFFF" stroke="#000"
-                                stroke-width="2"></circle>
-                    </svg>
-                </button>
-
-                <button id="selectObject" class="list-group-item list-group-item-action" data-form="1"
-                        data-toggle="tooltip" data-placement="right" title="SELECT">
-                    <svg width="100" height="50">
-                        <path id="polySelect" d="M10 10L30 40L70 40L90 10z" fill="#FFFFFF" stroke="#000"
-                              stroke-width="2"></path>
-                    </svg>
-                </button>
-
-                <button id="whereObject" class="list-group-item list-group-item-action" data-form="3"
-                        data-toggle="tooltip" data-placement="right" title="WHERE">
-                    <svg height="50" width="100">
-                        <path id="polyWhere" d="M10 5L10 45L90 32L90 18z" fill="#FFFFFF" stroke="#000"
-                              stroke-width="2"></path>
-                    </svg>
-                </button>
-                <button id="joinObject" class="list-group-item list-group-item-action" data-form="4"
-                        data-toggle="tooltip" data-placement="right" title="JOIN">
-                    <svg height="50" width="100">
-                        <path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000"
-                              stroke-width="2"></path>
-                    </svg>
-                </button>
-                <!--
-                <button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
-                    <svg height="80" width="100">
-                        <path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
-                    </svg>
-                </button>
-
-                <button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
-                <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
-                <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
-                -->
-                <button id="link" class="list-group-item list-group-item-action" data-toggle="tooltip"
-                        data-placement="right" data-processing="false" title="LINE">
-                    <svg height="50" width="100">
-                        <polyline id="polyLine" points="10,40 90,10" fill="none" stroke="#000"
-                                  stroke-width="2"></polyline>
-                    </svg>
-                </button>
+	<div id="main">
+        <div id="options">
+            <ul class="list-group list-group-horizontal">
+                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
+                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
+                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
+                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
+                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
             </ul>
         </div>
+        
+		<div id="forms">
+			<ul class="list-group">
+                <button id="fromObject" class="list-group-item list-group-item-action" data-form="2" data-toggle="tooltip" data-placement="right" title="FROM">
+                    <svg height="50" width="100">
+                        <circle id="polyFrom" r="20" cx="50" cy="25" fill="#FFFFFF" stroke="#000" stroke-width="2"></circle>
+                    </svg>
+                </button>
+
+				<button id="selectObject" class="list-group-item list-group-item-action" data-form="1" data-toggle="tooltip" data-placement="right" title="SELECT">
+					<svg width="100" height="50">
+						<path id="polySelect" d="M10 10L30 40L70 40L90 10z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
+					</svg> 
+				</button>
+
+				<button id="whereObject" class="list-group-item list-group-item-action" data-form="3" data-toggle="tooltip" data-placement="right" title="WHERE">
+					<svg height="50" width="100">
+						<path id="polyWhere" d="M10 5L10 45L90 32L90 18z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
+					</svg>
+				</button>
+			    <button id="joinObject" class="list-group-item list-group-item-action" data-form="4" data-toggle="tooltip" data-placement="right" title="JOIN">
+			    	<svg height="50" width="100">
+						<path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
+					</svg>
+			    </button>
+			    <!--<button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
+			    	<svg height="80" width="100">
+			    		<path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
+			    	</svg>
+			    </button>
+			    <button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
+			    <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
+			    <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
+			    -->
+			    <button id="link" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right"  data-processing="false" title="LINE">
+			    	<svg height="50" width="100">
+			    		<polyline id="polyLine" points="10,40 90,10" fill="none" stroke="#000" stroke-width="2"></polyline>
+			    	</svg>
+			    </button>
+			</ul>
+		</div>
         <div id="drawing">
             <div id="grille">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -117,22 +115,6 @@ unset($_SESSION['select']);
 
             <div id="line-container">
             </div>
-        </div>
-
-        <div id="options">
-            <ul class="list-group list-group-horizontal">
-                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip"
-                        data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
-                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip"
-                        data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
-                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip"
-                        data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
-                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip"
-                        data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
-                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip"
-                        data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i
-                            class="fas fa-eraser"></i></button>
-            </ul>
         </div>
     </div>
 
