@@ -32,10 +32,10 @@ class HelpDataEntry
 
     public function showResultsColumns($resultat)
     {
-        $data = [];
+        $data = array();
         foreach ($resultat as $r) {
-            array_push($data,$r['COLUMN_NAME']);
+            array_push($data,array("name"=>$r['COLUMN_NAME']));
         }
-        echo json_encode($data);
+        return json_encode($data);
     }
 }

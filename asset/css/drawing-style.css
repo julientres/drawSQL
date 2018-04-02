@@ -2,6 +2,7 @@ body {
     margin:0;
     padding:0;
     min-width: 800px;
+    font-family: 'Roboto', sans-serif;
 }
 
 #main {
@@ -106,6 +107,28 @@ body {
 #divCodeJoin{
     display: none;
 }
-
+/*
+#boxSelect{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 35%;
+    background: #5a6268;
+    padding: 5px 5px;
+}
+#checkboxSelect{
+    display: none;
+}
+#boxSelect button{
+    min-width: 45px;
+    height: 40px;
+    margin: 10px 5px;
+    font-size: 11px;
+}
+#boxSelect p{
+    margin: 0;
+    font-size: 23px;
+}
+*/
 
 

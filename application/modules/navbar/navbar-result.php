@@ -10,13 +10,14 @@
 	</button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
-	    	<div class="dropdown">
+	    	<!--<div class="dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Exports</a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#">Requête SQL (.sql)</a>
                     <a class="dropdown-item" href="#">Résultats (.csv)</a>
                   </div>
             </div>
+            -->
 	    </ul>
 	    <ul class="navbar-nav ml-auto">
 	    	<li class="nav-item">
