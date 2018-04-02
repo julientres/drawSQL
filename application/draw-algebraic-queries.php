@@ -59,16 +59,18 @@ unset($_SESSION['select']);
         
 		<div id="forms">
 			<ul class="list-group">
+                <button id="fromObject" class="list-group-item list-group-item-action" data-form="2" data-toggle="tooltip" data-placement="right" title="FROM">
+                    <svg height="50" width="100">
+                        <circle id="polyFrom" r="20" cx="50" cy="25" fill="#FFFFFF" stroke="#000" stroke-width="2"></circle>
+                    </svg>
+                </button>
+
 				<button id="selectObject" class="list-group-item list-group-item-action" data-form="1" data-toggle="tooltip" data-placement="right" title="SELECT">
 					<svg width="100" height="50">
 						<path id="polySelect" d="M10 10L30 40L70 40L90 10z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg> 
 				</button>
-			    <button id="fromObject" class="list-group-item list-group-item-action" data-form="2" data-toggle="tooltip" data-placement="right" title="FROM">
-			    	<svg height="50" width="100">
-						<circle id="polyFrom" r="20" cx="50" cy="25" fill="#FFFFFF" stroke="#000" stroke-width="2"></circle>
-					</svg>
-			    </button>
+
 				<button id="whereObject" class="list-group-item list-group-item-action" data-form="3" data-toggle="tooltip" data-placement="right" title="WHERE">
 					<svg height="50" width="100">
 						<path id="polyWhere" d="M10 5L10 45L90 32L90 18z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
@@ -79,7 +81,7 @@ unset($_SESSION['select']);
 						<path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>
 			    </button>
-			    <button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
+			    <!--<button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
 			    	<svg height="80" width="100">
 			    		<path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 			    	</svg>
@@ -87,6 +89,7 @@ unset($_SESSION['select']);
 			    <button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
 			    <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
 			    <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
+			    -->
 			    <button id="link" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right"  data-processing="false" title="LINE">
 			    	<svg height="50" width="100">
 			    		<polyline id="polyLine" points="10,40 90,10" fill="none" stroke="#000" stroke-width="2"></polyline>
