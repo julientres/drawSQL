@@ -13,23 +13,23 @@ $(document).ready(function () {
     $('#grille').css('zoom', coefZoom);
     $('.draggable').css('border', '3px dashed transparent');
 
-    $('#zoomIn').click(function() {
+    $('#zoomIn').click(function () {
         zoomIn();
     });
 
-    $('#zoomOut').click(function() {
+    $('#zoomOut').click(function () {
         zoomOut();
     });
 
-    $('#zoomReset').click(function() {
+    $('#zoomReset').click(function () {
         zoomReset();
     });
 
-    $('#clear').click(function() {
+    $('#clear').click(function () {
         clearGrid();
     });
 
-    $('#delete').click(function(event) {
+    $('#delete').click(function (event) {
         deleteElement();
     });
 
@@ -47,11 +47,21 @@ $(document).ready(function () {
         alert('SVG not supported');
     }
 
+
     $('#where2').on('change', function () {
         if ($(this).find(":selected").text() == "BETWEEN") {
             $('#divBetween').show();
+            $('#where3').show();
+            $('#where3').val(null);
+            $('#where4').val(null);
+        } else if ($(this).find(":selected").text() == "IS NULL" || $(this).find(":selected").text() == "IS NOT NULL") {
+            $('#divBetween').hide();
+            $('#where3').hide();
+            $('#where3').val(null);
+            $('#where4').val(null);
         } else {
             $('#divBetween').hide();
+            $('#where3').show();
             $('#where3').val(null);
             $('#where4').val(null);
         }
@@ -59,14 +69,32 @@ $(document).ready(function () {
 
     //Clic sur le bouton Ajout '+' d'une forme
     interact('.add-button').on('tap', function (event) {
-        var type = $(event.target).parent().attr("data-type");
+        var type = $(event.target).parent().closest('div').attr('data-type');
+        //var type = $(event.target).parent().attr("data-type");//renvoie l'objet svg
         if (type == 'select') {
             $('#modalSelect').modal('show');
         } else if (type == 'from') {
             $('#modalFrom').modal('show');
         } else if (type == 'where') {
             $('#modalWhere').modal('show');
+        } else if (type == 'join') {
+            $('#modalJoin').modal('show');
         }
+        else if (type == 'join') {
+            $('#modalJoin').modal('show');
+        }
+    });
+
+    //Bouton enregistrement de la modal du Select
+    $('#btdModalSelect').on('click', function () {
+        var dataSelect = "select=";
+        $("input[type='checkbox']:checked").each(
+            function () {
+                dataSelect += $(this).val();
+                dataSelect += "%2C";
+            });
+        var str = dataSelect.substring(0, dataSelect.length - 3);
+        ajaxGet(str, $('#modalSelect').modal('hide'));
     });
 
     //Bouton enregistrement de la modal du Where
@@ -83,41 +111,19 @@ $(document).ready(function () {
         if ($('#where4').val() != "") {
             dataWhere += "&where4=" + $('#where4').val();
         }
+        if ($('#where2').val() == "IS NULL" || $('#where2').val() == "IS NOT NULL") {
+            dataWhere += "where1=" + $('#modalWhere #where1').find(":checked").text();
+            dataWhere += "&where2=" + $('#where2').find(":checked").text();
+        }
         console.log(dataWhere);
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: dataWhere,
-            success: function (data) {
-                $('#test').html(data);
-                if (data) {
-                    $('#modalWhere').modal('hide');
-                }
-            },
-            error: function (data) {
-                alert("Erreur de création")
-            }
-        });
+        ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
     });
 
     //Bouton enregistrement de la modal du From
     $('#btdModalFrom').on('click', function () {
         var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
         console.log(dataFromTable);
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: dataFromTable,
-            success: function (data) {
-                $('#test').html(data);
-                if (data) {
-                    $('#modalFrom').modal('hide');
-                }
-            },
-            error: function (data) {
-                alert("Erreur de création")
-            }
-        });
+        ajaxGet(dataFromTable, $('#modalFrom').modal('hide'));
     });
 
     //Bouton enregistrement de la modal du Join
@@ -127,46 +133,9 @@ $(document).ready(function () {
         dataJoin += $('#join2').find(':selected').val() + ",";
         dataJoin += $('#join3').find(':selected').val() + ",";
         dataJoin += $('#join4').find(':selected').val();
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: dataJoin,
-            success: function (data) {
-                $('#test').html(data);
-                if (data) {
-                    $('#modalJoin').modal('hide');
-                }
-            },
-            error: function (data) {
-                alert("Erreur de création")
-            }
-        });
+        ajaxGet(dataJoin, $('#modalJoin').modal('hide'));
     });
 
-    //Bouton enregistrement de la modal du Select
-    $('#btdModalSelect').on('click', function () {
-        var dataSelect = "select=";
-        $("input[type='checkbox']:checked").each(
-            function () {
-                dataSelect += $(this).val();
-                dataSelect += "%2C";
-            });
-        var str = dataSelect.substring(0, dataSelect.length - 3);
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: str,
-            success: function (data) {
-                $('#test').html(data);
-                if (data) {
-                    $('#modalSelect').modal('hide');
-                }
-            },
-            error: function (data) {
-                alert("Erreur de création")
-            }
-        });
-    });
     //Au changement de la table de la jointure --> on affiche les colonnes
     $('#join2').on('change', function () {
         $('#join4').html('<option value="null"></option>');
@@ -189,77 +158,62 @@ $(document).ready(function () {
     })
     //Au changement du from récupére le nom des colonnes
     $('#from').on('change', function () {
-        $('#modalWhere #where1').html('<option value="null"></option>');
-        $('#divSelect').html('<input type="checkbox" value="*">*<br>');
+        $('#modalWhere #optGroup').html('<option value="null"></option>');
+        $('#divSelect').html('<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input class="form-check-input" type="checkbox" name="select" value="*">'+
+            '*</label></div>');
         $('#join3').html('<option value="null"></option>');
         var dataForm = "fromInput=" + $('#from').find(":selected").val();
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: 'POST',
-            data: dataForm,
-            success: function (data) {
-                data = JSON.parse(data);
-                for (var i = 0; i < data.length; i++) {
-                    $('#modalWhere #where1').append('<option value="' + data[i] + '">' + data[i] + '</option>');
-                    $('#divSelect').append('<input type="checkbox" name="select" value="' + data[i] + '">' + data[i] + '<br>');
-                    $('#join3').append('<option value="' + data[i] + '">' + data[i] + '</option>');
-                }
-            },
-            error: function (data) {
-                console.log("erreur");
+        ajaxPost(dataForm, function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $('#modalWhere #optGroup').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                $('#divSelect').append('<div class="form-check">' +
+                    '<label class="form-check-label">' +
+                    '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
+                    data[i].name + '</label></div>');
+                $('#join3').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
             }
         });
     });
 
+    if ($('#divSelect input[type="checkbox"]').is(':checked')) {
+        console.log("checked");
+        if (this.checked.val() == "*") {
+            $('#divSelect #checkboxSelect').prop('disabled', false);
+            $('#divSelect .checkboxSelectAll').prop('disabled', true);
+        }
+    }
+    ;
+
+
     //Bouton pour afficher la requête SQL
     $('#btdGenerer').on('click', function () {
         var dataModal = "modal=true";
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: dataModal,
-            success: function (data) {
-                console.log(data);
-                data = JSON.parse(data);
-                var selectText = data.select;
-                var fromText = data.from;
-                if (data.where != null) {
-                    var whereText = data.where;
-                    $('#codeWhere').html(whereText);
-                }
-                if (data.join != null) {
-                    $('#divCodeJoin').show();
-                    var joinText = data.join;
-                    $('#codeJoin').html(joinText);
-                }
-                $('#codeSelect').html(selectText);
-                $('#codeFrom').html(fromText);
-                $('#generateCodeModal').modal('show');
-
-            },
-            error: function (data) {
-                console.log("erreur");
+        ajaxPost(dataModal, function (data) {
+            var selectText = data.select;
+            var fromText = data.from;
+            if (data.where != null) {
+                var whereText = data.where;
+                $('#codeWhere').html(whereText);
             }
+            if (data.join != null) {
+                $('#divCodeJoin').show();
+                var joinText = data.join;
+                $('#codeJoin').html(joinText);
+            }
+            $('#codeSelect').html(selectText);
+            $('#codeFrom').html(fromText);
+            $('#generateCodeModal').modal('show');
         });
     });
 
     //Bouton qui va envoyé l'execution de la requete pour nous rediriger vers la page de résultat
     $('#btdSql').on('click', function () {
         var dataGenerer = "generer=true";
-        $.ajax({
-            url: "../asset/php/createClass.php",
-            type: "POST",
-            data: dataGenerer,
-            success: function (data) {
-                if (data) {
-                    window.location.replace("./display-results.php");
-                }
-            },
-            error: function (data) {
-                console.log("erreur");
-            }
-        });
+        ajaxGet(dataGenerer, window.location.replace("./display-results.php"));
     });
+
 
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
@@ -301,13 +255,14 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="4"]').on("click", function (event) {
         nb_join++;
-        $('#drawing').append('<img src="../asset/img/svg/Join.svg" data-click="false" data-type="join" id="join' + nb_join + '" class="draggable tap-target form">');
+        $('#drawing').append('<div id="join' + nb_join + '" data-click="false" class="form draggable tap-target" data-type="join"><img class="img-form" src="../asset/img/svg/Join.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['join' + nb_join] = {
             'x': 0,
             'y': 0,
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
+        $('#join' + nb_join).append('<button class="add-button" style="left:6px; top:17px"><span class="fas fa-plus add-icon"></span></button>');
     });
 
     //Créer les liens entre formes
@@ -329,14 +284,23 @@ $(document).ready(function () {
                         x_1 = x + ((parseFloat(target.offsetWidth)) / 2);
                         y_1 = y + ((parseFloat(target.offsetHeight)) / 2);
                         id_premier = $(target).attr('id');
+                        console.log('premier click');
+                        console.log(id_premier);
+                        console.log(target);
+                        var form1 = target.getAttribute('data-type');
                         //$('#drawing').append('<div class="point" style="left:'+x_1+'px; top:'+y_1+'px"></div>');
                     } else {
+
                         target = event.currentTarget,
                             x = (parseFloat(target.getAttribute('data-x')) || 0),
                             y = (parseFloat(target.getAttribute('data-y')) || 0);
                         x_2 = x + ((parseFloat(target.offsetWidth)) / 2) - 5;
                         y_2 = y + ((parseFloat(target.offsetHeight)) / 2) - 5;
                         id_second = $(target).attr('id');
+                        console.log('second click');
+                        console.log(id_second);
+                        console.log(target);
+                        var form2 = target.getAttribute('data-type');
                         //$('#drawing').append('<div class="point" style="left:'+x_2+'px; top:'+y_2+'px"></div>');
                         $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
                         nb_links++;
@@ -356,8 +320,8 @@ $(document).ready(function () {
         .draggable({
             inertia: true,
             onend: function (event) {
-                $(event.target).css('border', '3px dashed transparent');
-                event.target.setAttribute('data-click', 'true');
+                $(event.currentTarget).css('border', '3px dashed transparent');
+                event.currentTarget.setAttribute('data-click', 'true');
             },
             onmove: function (event) {
                 var target = event.currentTarget,
@@ -379,8 +343,8 @@ $(document).ready(function () {
                 // On modifie les coordonnées de la forme qui a été bougée
                 forms[id_forms].x = x;
                 forms[id_forms].y = y;
-                forms[id_forms].x_center = x + ((parseFloat(event.target.offsetWidth)) / 2) - 5;
-                forms[id_forms].y_center = y + ((parseFloat(event.target.offsetHeight)) / 2) - 5;
+                forms[id_forms].x_center = x + ((parseFloat(event.target.offsetWidth)) / 2) + 3; // 3 sert à décaler à droite pour le JOIN
+                forms[id_forms].y_center = y + ((parseFloat(event.target.offsetHeight)) / 2);
 
                 if (links.length != 0) {
                     // On fait suivre les liens
@@ -396,53 +360,53 @@ $(document).ready(function () {
                     }
                 }
 
-                $('.draggable').each(function() {
-                    if($(this).attr('data-click') == 'true') {
+                $('.draggable').each(function () {
+                    if ($(this).attr('data-click') == 'true') {
                         $(this).css('border', '3px dashed transparent');
                         $(this).attr('data-click', 'false');
                     }
                 });
 
-                $(event.target).css('border', '3px dashed red');
+                $(target).css('border', '3px dashed red');
             },
             restrict: {
                 restriction: 'parent',
                 elementRect: {top: 0, left: 0, bottom: 1, right: 1}
-            },
-            snap: {
+            }
+            /*snap: {
                 targets: [
-                    interact.createSnapGrid({ x: 40, y: 40 })
+                    interact.createSnapGrid({x: 40, y: 40})
                 ],
                 range: Infinity,
-                relativePoints: [ { x: 0, y: 0 } ]
-            }
+                relativePoints: [{x: 0, y: 0}]
+            }*/
         })
         .on('click', function (event) {
-            var target = event.target,
+            var target = event.currentTarget,
                 x = (parseFloat(target.getAttribute('data-x')) || 0),
                 y = (parseFloat(target.getAttribute('data-y')) || 0);
 
             target.style.webkitTransform = target.style.transform =
                 'translate(' + x + 'px,' + y + 'px)';
 
-            if(event.target.getAttribute('data-click') == 'true') {
-                $(event.target).css('border', '3px dashed transparent');
-                event.target.setAttribute('data-click', 'false');
+            if (target.getAttribute('data-click') == 'true') {
+                $(target).css('border', '3px dashed transparent');
+                target.setAttribute('data-click', 'false');
             }
             else {
-                $('.draggable').each(function() {
-                    if($(this).attr('data-click') == 'true') {
+                $('.draggable').each(function () {
+                    if ($(this).attr('data-click') == 'true') {
                         $(this).css('border', '3px dashed transparent');
                         $(this).attr('data-click', 'false');
                     }
                 });
 
-                event.target.setAttribute('data-click', 'true');
-                $(event.target).css('border', '3px dashed red');
+                target.setAttribute('data-click', 'true');
+                $(target).css('border', '3px dashed red');
             }
         });
-    $(document).keydown(function(e) {
-        switch(e.which) {
+    $(document).keydown(function (e) {
+        switch (e.which) {
             case 46://suppr => delete
                 deleteElement();
                 break;
@@ -459,7 +423,8 @@ $(document).ready(function () {
                 zoomOut();
                 break;
 
-            default: return; // exit this handler for other keys
+            default:
+                return; // exit this handler for other keys
         }
         e.preventDefault(); // prevent the default action (scroll / move caret)
     });
@@ -474,15 +439,12 @@ $(document).ready(function () {
                 data: "hover=" + hover,
                 success: function (data) {
                     if (data !== "") {
-                        console.log(hover);
                         var local_data = JSON.parse(data);
-                        console.log(local_data);
                         if (hover == 'select') {
                             $(current_element).attr("data-content", '<b>SELECT</b><br>Colonne : ' + local_data.column + '<br>Table : ' + local_data.table);
                         } else if (hover == 'from') {
                             $(current_element).attr("data-content", '<b>FROM</b><br>Table : ' + local_data.table);
                         } else if (hover == 'where') {
-                            console.log('OK')
                             $(current_element).attr("data-content", '<b>WHERE</b><br>' + local_data.column + ' ' + local_data.operate + ' ' + local_data.value);
                         }
                         $(current_element).popover('show');
@@ -495,15 +457,15 @@ $(document).ready(function () {
         })
         .on("mouseleave", "img", function () {
             $(this).popover('hide');
-        })
+        });
 
     function zoomIn() {
-        if(coefZoom < 2.0) {
+        if (coefZoom < 2.0) {
             coefZoom += 0.2;
-            $('.draggable').each(function() {
+            $('.draggable').each(function () {
                 $(this).css('zoom', coefZoom);
             });
-            $('.line').each(function() {
+            $('.line').each(function () {
                 $(this).css('zoom', coefZoom);
             });
             $('#grille').css('zoom', coefZoom);
@@ -514,12 +476,12 @@ $(document).ready(function () {
     }
 
     function zoomOut() {
-        if(coefZoom > 0.5) {
+        if (coefZoom > 0.5) {
             coefZoom -= 0.2;
-            $('.draggable').each(function() {
+            $('.draggable').each(function () {
                 $(this).css('zoom', coefZoom);
             });
-            $('.line').each(function() {
+            $('.line').each(function () {
                 $(this).css('zoom', coefZoom);
             });
             $('#grille').css('zoom', coefZoom);
@@ -531,21 +493,21 @@ $(document).ready(function () {
 
     function zoomReset() {
         coefZoom = 1.0;
-        $('.draggable').each(function() {
+        $('.draggable').each(function () {
             $(this).css('zoom', coefZoom);
         });
-        $('.line').each(function() {
+        $('.line').each(function () {
             $(this).css('zoom', coefZoom);
         });
         $('#grille').css('zoom', coefZoom);
     }
 
     function clearGrid() {
-        $('.draggable').each(function() {
+        $('.draggable').each(function () {
             $(this).remove();
         });
 
-        $('.line').each(function() {
+        $('.line').each(function () {
             $(this).remove();
         });
 
@@ -557,18 +519,18 @@ $(document).ready(function () {
     }
 
     function deleteElement() {
-        $('.draggable').each(function() {
-            if($(this).attr('data-click') == 'true') {
-                if(confirm('sure to delete ?')) {
+        $('.draggable').each(function () {
+            if ($(this).attr('data-click') == 'true') {
+                if (confirm('sure to delete ?')) {
                     $(this).remove();
                     delete forms[$(this).attr('id')];
                     //need : delete element form array "links" & nb_links--
 
-                    if($(this).attr('data-type') == 'select')
+                    if ($(this).attr('data-type') == 'select')
                         nb_select--;
-                    else if($(this).attr('data-type') == 'from')
+                    else if ($(this).attr('data-type') == 'from')
                         nb_from--;
-                    else if($(this).attr('data-type') == 'where')
+                    else if ($(this).attr('data-type') == 'where')
                         nb_where--;
                 }
             }
