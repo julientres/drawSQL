@@ -47,8 +47,12 @@ require_once('forms/HelpDataEntry.php');
     $req = json_decode($req);
     echo "<code>" .$req->select . "</code><br>";
     echo "<code>" . $req->from . "</code><br>";
-    echo "<div id='divCodeJoin'><code>" . $req->join . "</code><br>";
-    echo "<code>" .$req->where . "</code>";
+    if($req->join != null){
+        echo "<div id='divCodeJoin'><code>" . $req->join . "</code><br>";
+    }
+    if($req->where != null) {
+        echo "<code>" . $req->where . "</code>";
+    }
     ?>
 </div>
 <div id="results">

@@ -1,4 +1,4 @@
-function ajaxPost(data,handleData) {
+function ajaxPost(data, handleData) {
     return $.ajax({
         url: "../asset/php/createClass.php",
         type: "POST",

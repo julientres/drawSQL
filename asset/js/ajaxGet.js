@@ -1,4 +1,4 @@
-function ajaxGet(data,condition) {
+function ajaxGet(data, condition) {
     $.ajax({
         url: "../asset/php/createClass.php",
         type: "GET",

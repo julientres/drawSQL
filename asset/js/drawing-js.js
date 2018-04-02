@@ -47,11 +47,21 @@ $(document).ready(function () {
         alert('SVG not supported');
     }
 
+
     $('#where2').on('change', function () {
         if ($(this).find(":selected").text() == "BETWEEN") {
             $('#divBetween').show();
+            $('#where3').show();
+            $('#where3').val(null);
+            $('#where4').val(null);
+        } else if ($(this).find(":selected").text() == "IS NULL" || $(this).find(":selected").text() == "IS NOT NULL") {
+            $('#divBetween').hide();
+            $('#where3').hide();
+            $('#where3').val(null);
+            $('#where4').val(null);
         } else {
             $('#divBetween').hide();
+            $('#where3').show();
             $('#where3').val(null);
             $('#where4').val(null);
         }
@@ -73,6 +83,18 @@ $(document).ready(function () {
         }
     });
 
+    //Bouton enregistrement de la modal du Select
+    $('#btdModalSelect').on('click', function () {
+        var dataSelect = "select=";
+        $("input[type='checkbox']:checked").each(
+            function () {
+                dataSelect += $(this).val();
+                dataSelect += "%2C";
+            });
+        var str = dataSelect.substring(0, dataSelect.length - 3);
+        ajaxGet(str, $('#modalSelect').modal('hide'));
+    });
+
     //Bouton enregistrement de la modal du Where
     $('#btdModalWhere').on('click', function () {
         dataWhere = "";
@@ -86,6 +108,10 @@ $(document).ready(function () {
         }
         if ($('#where4').val() != "") {
             dataWhere += "&where4=" + $('#where4').val();
+        }
+        if ($('#where2').val() == "IS NULL" || $('#where2').val() == "IS NOT NULL") {
+            dataWhere += "where1=" + $('#modalWhere #where1').find(":checked").text();
+            dataWhere += "&where2=" + $('#where2').find(":checked").text();
         }
         console.log(dataWhere);
         ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
@@ -108,17 +134,6 @@ $(document).ready(function () {
         ajaxGet(dataJoin, $('#modalJoin').modal('hide'));
     });
 
-    //Bouton enregistrement de la modal du Select
-    $('#btdModalSelect').on('click', function () {
-        var dataSelect = "select=";
-        $("input[type='checkbox']:checked").each(
-            function () {
-                dataSelect += $(this).val();
-                dataSelect += "%2C";
-            });
-        var str = dataSelect.substring(0, dataSelect.length - 3);
-        ajaxGet(str, $('#modalSelect').modal('hide'));
-    });
     //Au changement de la table de la jointure --> on affiche les colonnes
     $('#join2').on('change', function () {
         $('#join4').html('<option value="null"></option>');
@@ -141,18 +156,34 @@ $(document).ready(function () {
     })
     //Au changement du from récupére le nom des colonnes
     $('#from').on('change', function () {
-        $('#modalWhere #where1').html('<option value="null"></option>');
-        $('#divSelect').html('<input type="checkbox" value="*">*<br>');
+        $('#modalWhere #optGroup').html('<option value="null"></option>');
+        $('#divSelect').html('<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input class="form-check-input" type="checkbox" name="select" value="*">'+
+            '*</label></div>');
         $('#join3').html('<option value="null"></option>');
         var dataForm = "fromInput=" + $('#from').find(":selected").val();
         ajaxPost(dataForm, function (data) {
             for (var i = 0; i < data.length; i++) {
-                $('#modalWhere #where1').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
-                $('#divSelect').append('<input type="checkbox" name="select" value="' + data[i].name + '">' + data[i].name + '<br>');
+                $('#modalWhere #optGroup').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+                $('#divSelect').append('<div class="form-check">' +
+                    '<label class="form-check-label">' +
+                    '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
+                    data[i].name + '</label></div>');
                 $('#join3').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
             }
         });
     });
+
+    if ($('#divSelect input[type="checkbox"]').is(':checked')) {
+        console.log("checked");
+        if (this.checked.val() == "*") {
+            $('#divSelect #checkboxSelect').prop('disabled', false);
+            $('#divSelect .checkboxSelectAll').prop('disabled', true);
+        }
+    }
+    ;
+
 
     //Bouton pour afficher la requête SQL
     $('#btdGenerer').on('click', function () {
@@ -180,6 +211,7 @@ $(document).ready(function () {
         var dataGenerer = "generer=true";
         ajaxGet(dataGenerer, window.location.replace("./display-results.php"));
     });
+
 
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
@@ -251,14 +283,23 @@ $(document).ready(function () {
                         x_1 = x + ((parseFloat(target.offsetWidth)) / 2);
                         y_1 = y + ((parseFloat(target.offsetHeight)) / 2);
                         id_premier = $(target).attr('id');
+                        console.log('premier click');
+                        console.log(id_premier);
+                        console.log(target);
+                        var form1 = target.getAttribute('data-type');
                         //$('#drawing').append('<div class="point" style="left:'+x_1+'px; top:'+y_1+'px"></div>');
                     } else {
+
                         target = event.currentTarget,
                             x = (parseFloat(target.getAttribute('data-x')) || 0),
                             y = (parseFloat(target.getAttribute('data-y')) || 0);
                         x_2 = x + ((parseFloat(target.offsetWidth)) / 2) - 5;
                         y_2 = y + ((parseFloat(target.offsetHeight)) / 2) - 5;
                         id_second = $(target).attr('id');
+                        console.log('second click');
+                        console.log(id_second);
+                        console.log(target);
+                        var form2 = target.getAttribute('data-type');
                         //$('#drawing').append('<div class="point" style="left:'+x_2+'px; top:'+y_2+'px"></div>');
                         $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
                         nb_links++;
@@ -415,7 +456,7 @@ $(document).ready(function () {
         })
         .on("mouseleave", "img", function () {
             $(this).popover('hide');
-        })
+        });
 
     function zoomIn() {
         if (coefZoom < 2.0) {
