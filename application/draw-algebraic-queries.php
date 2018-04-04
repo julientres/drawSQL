@@ -130,17 +130,19 @@ unset($_SESSION['select']);
                     </button>
                 </div>
                 <div class="modal-body" id="textModal">
-                    <div id="divSelect">
-                        <!--<div id="boxSelect">
-                            <p>*</p>
-                            <div>
-                                <div><input id="checkboxSelect" type="checkbox" name="select" value="*">
-                                <button class="btn btn-primary">MIN</button></div>
-                                <div><button class="btn btn-primary">MAX</button>
-                                <button class="btn btn-primary">COUNT</button></div>
-                            </div>
+                    <div id="divSelect"></div>
+                    <div id="boxSelect">
+                        <div>
+                            <button id="min" class="btn btn-outline-secondary">MIN</button>
+                            <button id="max" class="btn btn-outline-secondary">MAX</button>
+                            <button id="count" class="btn btn-outline-secondary">COUNT</button>
+                            <button id="avg" class="btn btn-outline-secondary">AVG</button>
+                            <button id="sum" class="btn btn-outline-secondary">SUM</button>
+                            <button id="having" class="btn btn-outline-secondary">HAVING</button>
+                            <button id="groupby" class="btn btn-outline-secondary">GROUP BY</button>
                         </div>
-                        -->
+                    </div>
+                    <div id="function_select">
                     </div>
                 </div>
                 <div class="modal-footer">

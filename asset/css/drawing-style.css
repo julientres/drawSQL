@@ -107,6 +107,24 @@ body {
 #divCodeJoin{
     display: none;
 }
+
+.btn-outline-secondary{
+    margin-top: 10px;
+}
+
+#function_select{
+    margin-top: 20px;
+}
+
+#function_select label{
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.function-form{
+    display: inline;
+    width: 300px;
+}
 /*
 #boxSelect{
     display: flex;

@@ -88,13 +88,44 @@ $(document).ready(function () {
     //Bouton enregistrement de la modal du Select
     $('#btdModalSelect').on('click', function () {
         var dataSelect = "select=";
+        var column= "";
         $("input[type='checkbox']:checked").each(
             function () {
                 dataSelect += $(this).val();
                 dataSelect += "%2C";
             });
+        $("input[type='checkbox']:checked").each(
+            function () {
+                column += $(this).val();
+                column += ",";
+            });
         var str = dataSelect.substring(0, dataSelect.length - 3);
         ajaxGet(str, $('#modalSelect').modal('hide'));
+        $('#select1').append('<p class="column">'+column+'</p>');
+        console.log($("#function_select > input").length);
+        switch($("#function_select > input").length){
+            case 1:
+                $("#select1 > .img-form").remove();
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_1.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                $(".form").css("width", "1000px");
+                break;
+            case 2:
+                $("#select1 > .img-form").remove();
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_2.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                break;
+            case 3:
+                $("#select1 > .img-form").remove();
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_3.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                break;
+            case 4:
+                $("#select1 > .img-form").remove();
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_4.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                break;
+            case 5:
+                $("#select1 > .img-form").remove();
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_5.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                break;
+        }
     });
 
     //Bouton enregistrement de la modal du Where
@@ -156,6 +187,8 @@ $(document).ready(function () {
             }
         });
     })
+
+
     //Au changement du from récupére le nom des colonnes
     $('#from').on('change', function () {
         $('#modalWhere #optGroup').html('<option value="null"></option>');
@@ -183,8 +216,56 @@ $(document).ready(function () {
             $('#divSelect #checkboxSelect').prop('disabled', false);
             $('#divSelect .checkboxSelectAll').prop('disabled', true);
         }
-    }
-    ;
+    };
+
+    $('#min').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>MIN : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#max').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>MAX : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#count').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>COUNT : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#avg').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>AVG : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#sum').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>SUM : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#having').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>HAVING : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#groupby').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label>GROUPBY : </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
 
 
     //Bouton pour afficher la requête SQL
@@ -225,7 +306,7 @@ $(document).ready(function () {
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
-        $('#select' + nb_select).append('<button class="add-button" style="left:53px; top:18px"><span class="fas fa-plus add-icon"></span></button>');
+        $('#select' + nb_select).append('<button class="add-button" style="left:'+(parseFloat(event.currentTarget.offsetWidth)+24)+'px; top:0px"><span class="fas fa-plus add-icon"></span></button>');
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {
@@ -237,7 +318,7 @@ $(document).ready(function () {
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
-        $('#from' + nb_from).append('<button class="add-button" style="left:53px; top: 53px"><span class="fas fa-plus add-icon"></span></button>');
+        $('#from' + nb_from).append('<button class="add-button" style="left:'+(parseFloat(event.currentTarget.offsetWidth)+24)+'px; top:0px"><span class="fas fa-plus add-icon"></span></button>');
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="3"]').on("click", function (event) {
@@ -249,7 +330,7 @@ $(document).ready(function () {
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
-        $('#where' + nb_where).append('<button class="add-button" style="left:53px; top:18px"><span class="fas fa-plus add-icon"></span></button>');
+        $('#where' + nb_where).append('<button class="add-button" style="left:'+(parseFloat(event.currentTarget.offsetWidth)+24)+'px; top:0px"><span class="fas fa-plus add-icon"></span></button>');
     });
 
     //Quand on click sur la forme --> affiche la forme sur le dessin
@@ -262,7 +343,7 @@ $(document).ready(function () {
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
-        $('#join' + nb_join).append('<button class="add-button" style="left:6px; top:17px"><span class="fas fa-plus add-icon"></span></button>');
+        $('#join' + nb_join).append('<button class="add-button" style="left:'+(parseFloat(event.currentTarget.offsetWidth)+24)+'px; top:0px"><span class="fas fa-plus add-icon"></span></button>');
     });
 
     //Créer les liens entre formes
