@@ -137,9 +137,10 @@ unset($_SESSION['select']);
                             <button id="max" class="btn btn-outline-secondary">MAX</button>
                             <button id="count" class="btn btn-outline-secondary">COUNT</button>
                             <button id="avg" class="btn btn-outline-secondary">AVG</button>
-                            <button id="sum" class="btn btn-outline-secondary">SUM</button>
+                            <button id="sum" class="btn btn-outline-secondary">SUM</button><br>
                             <button id="having" class="btn btn-outline-secondary">HAVING</button>
                             <button id="groupby" class="btn btn-outline-secondary">GROUP BY</button>
+                            <button id="orderby" class="btn btn-outline-secondary">ORDER BY</button>
                         </div>
                     </div>
                     <div id="function_select">

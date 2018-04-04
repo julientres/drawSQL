@@ -93,37 +93,59 @@ $(document).ready(function () {
             function () {
                 dataSelect += $(this).val();
                 dataSelect += "%2C";
+                if(column == ""){
+                    column += $(this).val();
+                }else{
+                    column += ','+'&nbsp'+$(this).val();
+                }
             });
-        $("input[type='checkbox']:checked").each(
-            function () {
-                column += $(this).val();
-                column += ",";
-            });
+
         var str = dataSelect.substring(0, dataSelect.length - 3);
         ajaxGet(str, $('#modalSelect').modal('hide'));
+        
+        $('#select1 > .column').remove(); 
         $('#select1').append('<p class="column">'+column+'</p>');
-        console.log($("#function_select > input").length);
+
+        for(i = 0; i < $("#function_select > input").length; i++){
+            label = $('#function_select label:eq('+i+')').text();
+            input = $('#function_select input:eq('+i+')').val();
+            console.log(label);
+            console.log(input);
+            $('#select1').append('<div class="function_'+i+'"></div>');
+            $('#function_'+i+'').append('<span class="function-name">'+label+'</span>');
+            $('#function_'+i+'').append('<span class="function-value">'+input+'</spanp>');
+        }
+
         switch($("#function_select > input").length){
             case 1:
                 $("#select1 > .img-form").remove();
-                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_1.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(".form").css("width", "1000px");
+                $("#select1").css('background-image', 'url("../asset/img/svg/Select_1.svg")');
+                $("#select1").css("width", "300px");
+                $("#select1 > .add-button").css('left', '300px');
                 break;
             case 2:
                 $("#select1 > .img-form").remove();
                 $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_2.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                $("#select1 > .img-form").css("width", "300px");
+                $("#select1 > .add-button").css('left', '300px');
                 break;
             case 3:
                 $("#select1 > .img-form").remove();
                 $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_3.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                $("#select1 > .img-form").css("width", "300px");
+                $("#select1 > .add-button").css('left', '300px');
                 break;
             case 4:
                 $("#select1 > .img-form").remove();
                 $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_4.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                $("#select1 > .img-form").css("width", "300px");
+                $("#select1 > .add-button").css('left', '300px');
                 break;
             case 5:
                 $("#select1 > .img-form").remove();
                 $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_5.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                $("#select1 > .img-form").css("width", "300px");
+                $("#select1 > .add-button").css('left', '300px');
                 break;
         }
     });
@@ -220,49 +242,56 @@ $(document).ready(function () {
 
     $('#min').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>MIN : </label>'+
+            $("#function_select").append('<label for="min">MIN </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
 
     $('#max').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>MAX : </label>'+
+            $("#function_select").append('<label for="max">MAX </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
 
     $('#count').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>COUNT : </label>'+
+            $("#function_select").append('<label  for="count">COUNT </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
 
     $('#avg').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>AVG : </label>'+
+            $("#function_select").append('<label for="avg">AVG </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
 
     $('#sum').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>SUM : </label>'+
+            $("#function_select").append('<label for="sum">SUM </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
 
     $('#having').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>HAVING : </label>'+
+            $("#function_select").append('<label for="having">HAVING </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
 
     $('#groupby').on("click", function(){
         if($("#function_select > input").length < 5){
-            $("#function_select").append('<label>GROUPBY : </label>'+
+            $("#function_select").append('<label for="groupby">GROUPBY </label>'+
+            '<input class="form-control function-form" type="text"></input>');
+        }
+    });
+
+    $('#orderby').on("click", function(){
+        if($("#function_select > input").length < 5){
+            $("#function_select").append('<label  for="orderby">ORDERBY </label>'+
             '<input class="form-control function-form" type="text"></input>');
         }
     });
@@ -509,36 +538,6 @@ $(document).ready(function () {
         }
         e.preventDefault(); // prevent the default action (scroll / move caret)
     });
-    // Informations sur la forme au passage de la souris
-    $("#drawing")
-        .on("mouseover", "img", function () {
-            var hover = $(this).parent().attr("data-type");
-            var current_element = $(this);
-            $.ajax({
-                url: "../asset/php/createClass.php",
-                type: "POST",
-                data: "hover=" + hover,
-                success: function (data) {
-                    if (data !== "") {
-                        var local_data = JSON.parse(data);
-                        if (hover == 'select') {
-                            $(current_element).attr("data-content", '<b>SELECT</b><br>Colonne : ' + local_data.column + '<br>Table : ' + local_data.table);
-                        } else if (hover == 'from') {
-                            $(current_element).attr("data-content", '<b>FROM</b><br>Table : ' + local_data.table);
-                        } else if (hover == 'where') {
-                            $(current_element).attr("data-content", '<b>WHERE</b><br>' + local_data.column + ' ' + local_data.operate + ' ' + local_data.value);
-                        }
-                        $(current_element).popover('show');
-                    }
-                },
-                error: function (data) {
-                    alert("Erreur de création")
-                }
-            });
-        })
-        .on("mouseleave", "img", function () {
-            $(this).popover('hide');
-        });
 
     function zoomIn() {
         if (coefZoom < 2.0) {

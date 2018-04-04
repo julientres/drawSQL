@@ -45,7 +45,8 @@ body {
 
 .form{
     border-radius: 8px;
-    width: 130px;
+    min-width: 130px;
+    visibility: hidden;
     box-sizing: border-box;
     position: absolute;
 }
@@ -124,6 +125,24 @@ body {
 .function-form{
     display: inline;
     width: 300px;
+}
+
+.column{
+    position: absolute;
+    height: 60px;
+    left: 30px;
+}
+
+.function-name{
+    position: absolute;
+    height: 30px;
+    right: 160px;
+}
+
+.function-value{
+    position: absolute;
+    height: 30px;
+    left: 160px;
 }
 /*
 #boxSelect{
