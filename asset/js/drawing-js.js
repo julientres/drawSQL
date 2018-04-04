@@ -96,7 +96,7 @@ $(document).ready(function () {
                 if(column == ""){
                     column += $(this).val();
                 }else{
-                    column += ','+'&nbsp'+$(this).val();
+                    column += ', '+$(this).val();
                 }
             });
 
@@ -104,6 +104,7 @@ $(document).ready(function () {
         ajaxGet(str, $('#modalSelect').modal('hide'));
         
         $('#select1 > .column').remove(); 
+        $('#select1 > .function').remove(); 
         $('#select1').append('<p class="column">'+column+'</p>');
 
         for(i = 0; i < $("#function_select > input").length; i++){
@@ -111,15 +112,35 @@ $(document).ready(function () {
             input = $('#function_select input:eq('+i+')').val();
             console.log(label);
             console.log(input);
-            $('#select1').append('<div class="function_'+i+'"></div>');
-            $('#function_'+i+'').append('<span class="function-name">'+label+'</span>');
-            $('#function_'+i+'').append('<span class="function-value">'+input+'</spanp>');
+            $('#select1').append('<div class="function function_'+i+'"></div>');
+            if(i == 0){
+                $('.function_'+i+'').append('<span class="function-name first">'+label+'</span>');
+                $('.function_'+i+'').append('<span class="function-value first">'+input+'</span>');
+            }else if(i == 1){
+                $('.function_'+i+'').append('<span class="function-name second">'+label+'</span>');
+                $('.function_'+i+'').append('<span class="function-value second">'+input+'</span>');
+            }else if(i == 2){
+                $('.function_'+i+'').append('<span class="function-name third">'+label+'</span>');
+                $('.function_'+i+'').append('<span class="function-value third">'+input+'</span>');
+            }else if(i == 3){
+                $('.function_'+i+'').append('<span class="function-name fourth">'+label+'</span>');
+                $('.function_'+i+'').append('<span class="function-value fourth">'+input+'</span>');
+            }else if(i == 4){
+                $('.function_'+i+'').append('<span class="function-name fifth">'+label+'</span>');
+                $('.function_'+i+'').append('<span class="function-value fifth">'+input+'</span>');
+            }
         }
 
         switch($("#function_select > input").length){
+            case 0:
+                $("#select1 > .img-form").remove();
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_0.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                $("#select1").css("width", "300px");
+                $("#select1 > .add-button").css('left', '300px');
+                break;
             case 1:
                 $("#select1 > .img-form").remove();
-                $("#select1").css('background-image', 'url("../asset/img/svg/Select_1.svg")');
+                $("#select1").append('<img class="img-form"src="../asset/img/svg/Select_1.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
                 $("#select1").css("width", "300px");
                 $("#select1 > .add-button").css('left', '300px');
                 break;
@@ -335,7 +356,8 @@ $(document).ready(function () {
             'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
-        $('#select' + nb_select).append('<button class="add-button" style="left:'+(parseFloat(event.currentTarget.offsetWidth)+24)+'px; top:0px"><span class="fas fa-plus add-icon"></span></button>');
+        console.log(parseFloat(event.currentTarget.offsetWidth));
+        $('#select' + nb_select).append('<button class="add-button" style="left:'+(parseFloat(event.currentTarget.offsetWidth)+24)+'px top:0px"><span class="fas fa-plus add-icon"></span></button>');
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {

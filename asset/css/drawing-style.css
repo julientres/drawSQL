@@ -40,13 +40,12 @@ body {
 #options {
     float:right;
     width:50px;
-    margin-right: 10px;
+    margin-right: 13px;
 }
 
 .form{
     border-radius: 8px;
     min-width: 130px;
-    visibility: hidden;
     box-sizing: border-box;
     position: absolute;
 }
@@ -129,20 +128,57 @@ body {
 
 .column{
     position: absolute;
-    height: 60px;
     left: 30px;
+    right: 30px;
+    height: 50px;
+}
+
+[data-type="select"] p{
+    padding-top: 10px;
+    margin: 0;
+}
+
+
+[data-type="select"] p, [data-type="select"] span{
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .function-name{
     position: absolute;
+    font-weight: bold;
     height: 30px;
-    right: 160px;
+    right: 170px;
 }
 
 .function-value{
     position: absolute;
     height: 30px;
-    left: 160px;
+    width: 90px;
+    left: 155px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.first{
+    top: 59px;
+}
+
+.second{
+    top: 80px;
+}
+
+.third{
+    top: 100px;
+}
+
+.fourth{
+    top: 122px;
+}
+
+.fifth{
+    top: 141px;
 }
 /*
 #boxSelect{
