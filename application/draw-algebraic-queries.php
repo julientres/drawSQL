@@ -6,12 +6,6 @@ $returnBDD = doConnexion();
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
 
-unset($_SESSION['name']);
-unset($_SESSION['sql']);
-unset($_SESSION['select']);
-unset($_SESSION['where']);
-unset($_SESSION['join']);
-unset($_SESSION['select']);
 ?>
 
 <!DOCTYPE html>
@@ -81,11 +75,12 @@ unset($_SESSION['select']);
 						<path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>
 			    </button>
-			    <!--<button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
+			    <button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
 			    	<svg height="80" width="100">
 			    		<path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 			    	</svg>
 			    </button>
+                <!--
 			    <button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
 			    <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
 			    <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
@@ -130,19 +125,16 @@ unset($_SESSION['select']);
                     </button>
                 </div>
                 <div class="modal-body" id="textModal">
+                    <select class="custom-select" id="table">
+                        <optgroup label="Choisir une table">
+                            <option value="null"></option>
+
+                        </optgroup>
+                    </select>
                     <div id="divSelect">
-                        <!--<div id="boxSelect">
-                            <p>*</p>
-                            <div>
-                                <div><input id="checkboxSelect" type="checkbox" name="select" value="*">
-                                <button class="btn btn-primary">MIN</button></div>
-                                <div><button class="btn btn-primary">MAX</button>
-                                <button class="btn btn-primary">COUNT</button></div>
-                            </div>
-                        </div>
-                        -->
                     </div>
                 </div>
+                <input type="hidden" id="inputSelectId" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
@@ -170,6 +162,7 @@ unset($_SESSION['select']);
                             ?>
                         </optgroup>
                     </select>
+                    <input type="hidden" id="inputFromId" value="">
                 </div>
                 <div id="console">
 
@@ -191,6 +184,12 @@ unset($_SESSION['select']);
                     <h5 class="modal-title" id="exampleModalLabel">Where</h5>
                 </div>
                 <div class="modal-body" id="textModal">
+                    <select class="custom-select" id="where1">
+                        <optgroup id="optGroupTable" label="Choisir une table">
+
+                        </optgroup>
+                    </select>
+
                     <select class="custom-select" id="where1">
                         <optgroup id="optGroup" label="Choisir une colonne">
 
@@ -225,9 +224,7 @@ unset($_SESSION['select']);
                     </div>
 
                 </div>
-                <div id="console">
-
-                </div>
+                <input id="" type="hidden" name="id" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>

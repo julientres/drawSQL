@@ -70,11 +70,54 @@ $(document).ready(function () {
     //Clic sur le bouton Ajout '+' d'une forme
     interact('.add-button').on('tap', function (event) {
         var type = $(event.target).parent().closest('div').attr('data-type');
+        var id = $(event.target).parent().closest('div').attr('id');
         //var type = $(event.target).parent().attr("data-type");//renvoie l'objet svg
         if (type == 'select') {
-            $('#modalSelect').modal('show');
+            var dataSelect = "select=" + id;
+            ajaxPost(dataSelect, function (data) {
+                console.log(data);
+                if (data.table == null) {
+                    $('#inputSelectId').val(data.id);
+                    $("#divSelect input:checkbox").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                } else {
+                    $("#divSelect input:checkbox").each(function () {
+                        $('#inputSelectId').val(data.id);
+                        if (data.table == $(this).val()) {
+                            $(this).prop("checked", true);
+                        }
+                    });
+                }
+                $('#modalSelect').modal('show');
+            });
+            var table = "table=true";
+            var html = ""
+            ajaxPost(table,function (data) {
+                for(var i=0;i<data.length;i++){
+                    html += '<option value="' + data[i] + '">' + data[i] + '</option>';
+                }
+                $('#table').html(html);
+            });
         } else if (type == 'from') {
-            $('#modalFrom').modal('show');
+            var dataFrom = "from=" + id;
+            ajaxPost(dataFrom, function (data) {
+                console.log(data);
+                if (data.table == null) {
+                    $('#inputFromId').val(data.id);
+                    $("#from option").each(function () {
+                        $(this).prop("selected", false);
+                    });
+                } else {
+                    $("#from option").each(function () {
+                        $('#inputFromId').val(data.id);
+                        if (data.table == $(this).val()) {
+                            $(this).prop("selected", true);
+                        }
+                    });
+                }
+                $('#modalFrom').modal('show');
+            });
         } else if (type == 'where') {
             $('#modalWhere').modal('show');
         } else if (type == 'join') {
@@ -93,8 +136,21 @@ $(document).ready(function () {
                 dataSelect += $(this).val();
                 dataSelect += "%2C";
             });
-        var str = dataSelect.substring(0, dataSelect.length - 3);
-        ajaxGet(str, $('#modalSelect').modal('hide'));
+        var column = dataSelect.substring(0, dataSelect.length - 3);
+        var id = $('#inputSelectId').val();
+        var dataSelectColumn = { "selectGenerer" : column, "id" : id};
+        ajaxGet(dataSelectColumn, $('#modalSelect').modal('hide'));
+    });
+
+
+
+    //Bouton enregistrement de la modal du From
+    $('#btdModalFrom').on('click', function () {
+        var table = $('#from').find(":selected").text();
+        var id = $('#inputFromId').val();
+        var dataFromTable = { "fromGenerer" : table, "id" : id };
+
+        ajaxGet(dataFromTable, $('#modalFrom').modal('hide'));
     });
 
     //Bouton enregistrement de la modal du Where
@@ -115,16 +171,9 @@ $(document).ready(function () {
             dataWhere += "where1=" + $('#modalWhere #where1').find(":checked").text();
             dataWhere += "&where2=" + $('#where2').find(":checked").text();
         }
-        console.log(dataWhere);
         ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
     });
 
-    //Bouton enregistrement de la modal du From
-    $('#btdModalFrom').on('click', function () {
-        var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
-        console.log(dataFromTable);
-        ajaxGet(dataFromTable, $('#modalFrom').modal('hide'));
-    });
 
     //Bouton enregistrement de la modal du Join
     $('#btdModalJoin').on('click', function () {
@@ -178,16 +227,6 @@ $(document).ready(function () {
     });
     */
 
-    if ($('#divSelect input[type="checkbox"]').is(':checked')) {
-        console.log("checked");
-        if (this.checked.val() == "*") {
-            $('#divSelect #checkboxSelect').prop('disabled', false);
-            $('#divSelect .checkboxSelectAll').prop('disabled', true);
-        }
-    }
-    ;
-
-
     //Bouton pour afficher la requête SQL
     $('#btdGenerer').on('click', function () {
         var dataModal = "modal=true";
@@ -219,26 +258,32 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
         nb_select++;
-        $('#drawing').append('<div id="select' + nb_select + '" data-click="false" class="form draggable tap-target" data-type="select"><img class="img-form" src="../asset/img/svg/Select.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
-        forms['select' + nb_select] = {
-            'x': 0,
-            'y': 0,
-            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
-            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
-        };
-        $('#select' + nb_select).append('<button class="add-button" style="left:53px; top:18px"><span class="fas fa-plus add-icon"></span></button>');
+        var dataSelect = "select=select" + nb_select;
+        ajaxGet(dataSelect,
+            $('#drawing').append('<div id="select' + nb_select + '" data-click="false" class="form draggable tap-target" data-type="select"><img class="img-form" src="../asset/img/svg/Select.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>'),
+            forms['select' + nb_select] = {
+                'x': 0,
+                'y': 0,
+                'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+                'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+            },
+            $('#select' + nb_select).append('<button class="add-button" style="left:53px; top:18px"><span class="fas fa-plus add-icon"></span></button>')
+        );
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {
         nb_from++;
-        $('#drawing').append('<div id="from' + nb_from + '" data-click="false" class="form draggable tap-target" data-type="from"><img class="img-form"src="../asset/img/svg/From.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
-        forms['from' + nb_from] = {
-            'x': 0,
-            'y': 0,
-            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
-            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
-        };
-        $('#from' + nb_from).append('<button class="add-button" style="left:53px; top: 53px"><span class="fas fa-plus add-icon"></span></button>');
+        var dataFrom = "from=from" + nb_from;
+        ajaxGet(dataFrom,
+            $('#drawing').append('<div id="from' + nb_from + '" data-click="false" class="form draggable tap-target" data-type="from"><img class="img-form"src="../asset/img/svg/From.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>'),
+            forms['from' + nb_from] = {
+                'x': 0,
+                'y': 0,
+                'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+                'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+            },
+            $('#from' + nb_from).append('<button class="add-button" style="left:53px; top: 53px"><span class="fas fa-plus add-icon"></span></button>')
+        );
     });
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="3"]').on("click", function (event) {
@@ -500,36 +545,36 @@ $(document).ready(function () {
         e.preventDefault(); // prevent the default action (scroll / move caret)
     });
 // Informations sur la forme au passage de la souris
-    $("#drawing")
-        .on("mouseover", "img", function () {
-            var hover = $(this).parent().attr("data-type");
-            var current_element = $(this);
-            $.ajax({
-                url: "../asset/php/createClass.php",
-                type: "POST",
-                data: "hover=" + hover,
-                success: function (data) {
-                    if (data !== "") {
-                        var local_data = JSON.parse(data);
-                        if (hover == 'select') {
-                            $(current_element).attr("data-content", '<b>SELECT</b><br>Colonne : ' + local_data.column + '<br>Table : ' + local_data.table);
-                        } else if (hover == 'from') {
-                            $(current_element).attr("data-content", '<b>FROM</b><br>Table : ' + local_data.table);
-                        } else if (hover == 'where') {
-                            $(current_element).attr("data-content", '<b>WHERE</b><br>' + local_data.column + ' ' + local_data.operate + ' ' + local_data.value);
+    /*    $("#drawing")
+            .on("mouseover", "img", function () {
+                var hover = $(this).parent().attr("data-type");
+                var current_element = $(this);
+                $.ajax({
+                    url: "../asset/php/createClass.php",
+                    type: "POST",
+                    data: "hover=" + hover,
+                    success: function (data) {
+                        if (data !== "") {
+                            var local_data = JSON.parse(data);
+                            if (hover == 'select') {
+                                $(current_element).attr("data-content", '<b>SELECT</b><br>Colonne : ' + local_data.column + '<br>Table : ' + local_data.table);
+                            } else if (hover == 'from') {
+                                $(current_element).attr("data-content", '<b>FROM</b><br>Table : ' + local_data.table);
+                            } else if (hover == 'where') {
+                                $(current_element).attr("data-content", '<b>WHERE</b><br>' + local_data.column + ' ' + local_data.operate + ' ' + local_data.value);
+                            }
+                            $(current_element).popover('show');
                         }
-                        $(current_element).popover('show');
+                    },
+                    error: function (data) {
+                        alert("Erreur de création")
                     }
-                },
-                error: function (data) {
-                    alert("Erreur de création")
-                }
+                });
+            })
+            .on("mouseleave", "img", function () {
+                $(this).popover('hide');
             });
-        })
-        .on("mouseleave", "img", function () {
-            $(this).popover('hide');
-        });
-
+    */
     function zoomIn() {
         if (coefZoom < 2.0) {
             coefZoom += 0.2;
