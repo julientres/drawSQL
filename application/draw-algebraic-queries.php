@@ -126,11 +126,11 @@ $table = $help->allTables($_SESSION['bdd']);
                 </div>
                 <div class="modal-body" id="textModal">
                     <select class="custom-select" id="table">
-                        <optgroup label="Choisir une table">
-                            <option value="null"></option>
+                        <optgroup id="optGroupSelect" label="Choisir une table">
 
                         </optgroup>
                     </select>
+                    <br>
                     <div id="divSelect">
                     </div>
                 </div>
@@ -184,21 +184,23 @@ $table = $help->allTables($_SESSION['bdd']);
                     <h5 class="modal-title" id="exampleModalLabel">Where</h5>
                 </div>
                 <div class="modal-body" id="textModal">
-                    <select class="custom-select" id="where1">
+                    <select class="custom-select" id="table2">
                         <optgroup id="optGroupTable" label="Choisir une table">
 
                         </optgroup>
                     </select>
-
+                    <br>
+                    <br>
                     <select class="custom-select" id="where1">
-                        <optgroup id="optGroup" label="Choisir une colonne">
+                        <optgroup id="optGroupColonne" label="Choisir une colonne">
 
                         </optgroup>
                     </select>
                     <br>
                     <br>
+
                     <select class="custom-select" id="where2">
-                        <optgroup label="Choisir une condition">
+                        <optgroup id="optGroupOper" label="Choisir une propri">
                             <option value=""></option>
                             <option value="=">=</option>
                             <option value="<>"><></option>
@@ -224,7 +226,7 @@ $table = $help->allTables($_SESSION['bdd']);
                     </div>
 
                 </div>
-                <input id="" type="hidden" name="id" value="">
+                <input id="inputWhereId" type="hidden" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>

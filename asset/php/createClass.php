@@ -29,15 +29,16 @@ if (isset($_POST['joinInput'])) {
 // DEBUT SELECT //
 if (isset($_GET['select'])) {
     $id = $_GET['select'];
-    $_SESSION[$id] = ['id'=>$id, 'object'=>null];
+    $_SESSION[$id] = ['id'=>$id, 'object'=>null, 'table'=>null];
     echo true;
 }
 if (isset($_POST['select'])) {
     $id = $_POST['select'];
     if($_SESSION[$id]['object'] != null){
         $object = unserialize($_SESSION[$id]['object']);
+        $table = $_SESSION[$id]['table'];
         $column = $object->getColumn();
-        $res = ['column' => $column, 'res' => true, 'id' => $id];
+        $res = ['column' => $column, 'res' => true, 'id' => $id, 'table' =>$table];
         echo json_encode($res);
     }else{
         $res = ['column' => null, 'res' => false, 'id' => $id];
@@ -48,10 +49,12 @@ if (isset($_GET['selectGenerer'])) {
     if ($_GET['selectGenerer']) {
         $column = $_GET['selectGenerer'];
         $id = $_GET['id'];
+        $table = $_GET['table'];
         $_SESSION['nbSelect'] += 1;
         $select = new Select("" . $column . "");
 
         $_SESSION[$id]['object'] = serialize($select);
+        $_SESSION[$id]['table'] = $table;
         echo true;
     } else {
         echo false;
@@ -60,7 +63,7 @@ if (isset($_GET['selectGenerer'])) {
 if(isset($_POST['table'])){
     $nb = $_SESSION['nbFrom'];
     $table = array();
-    for($i=1; $i<$nb;$i++){
+    for($i=1; $i<=$nb;$i++){
         $id = "from".$i;
         if($_SESSION[$id]['object'] != null){
             $object =  unserialize($_SESSION[$id]['object']);
@@ -104,6 +107,53 @@ if (isset($_GET['fromGenerer'])) {
 }
 // FIN FROM //
 
+// DEBUT WHERE //
+if (isset($_GET['where'])) {
+    $id = $_GET['where'];
+    $_SESSION[$id] = ['id'=>$id, 'object'=>null];
+    echo true;
+}
+if (isset($_POST['where'])) {
+    $id = $_POST['where'];
+    if($_SESSION[$id]['object'] != null){
+        $object = unserialize($_SESSION[$id]['object']);
+        $table = $object->getTable();
+        $column = $object->getColumn();
+        $operate = $object->getOperate();
+        $value1 = $object->getValue();
+        $value2 = $object->getValue2();
+        $res = ['table' => $table, 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2, 'res' => true, 'id' => $id];
+        echo json_encode($res);
+    }else{
+        $res = ['table' => null, 'res' => false, 'id' => $id];
+        echo json_encode($res);
+    }
+}
+if (isset($_GET['whereGenerer'])) {
+    if ($_GET['whereGenerer']) {
+        $table = $_GET['whereGenerer'];
+        $column = $_GET['columnWhere'];
+        $id = $_GET['id'];
+        $operate = $_GET['operate'];
+        $value1 = $_GET['value1'];
+        $value2 = $_GET['value2'];
+        if($operate == "IS NULL" || $operate == "IS NOT NULL"){
+            $where = new Where("" . $column . "", "" . $operate . "");
+        }else if($operate == "BETWEEN"){
+            $where = new Where("" . $column . "", "" . $operate . "", "" . $value1 . "","" . $value2 . "");
+        }else{
+            $where = new Where("" . $column . "", "" . $operate . "", "" . $value1 . "");
+        }
+        $_SESSION['nbWhere'] += 1;
+        $_SESSION[$id]['object'] = serialize($where);
+        echo true;
+    } else {
+        echo false;
+    }
+}
+// FIN WHERE //
+
+// DEBUT JOIN //
 if (isset($_GET['join'])) {
     if ($_GET['join'] != null) {
         $listJoin = explode(",", $_GET['join']);
@@ -117,33 +167,7 @@ if (isset($_GET['join'])) {
         echo false;
     }
 }
-
-
-if (isset($_GET['where1']) && isset($_GET['where2'])) {
-    if ($_GET['where1']) {
-        if ($_GET['where2'] == "BETWEEN" ) {
-            echo "condition 1";
-            $where = new Where("" . $_GET['where1'] . "", "" . $_GET['where2'] . "", "" . $_GET['where3'] . "");
-            $_SESSION['where'] = serialize($where);
-            var_dump($where);
-            echo true;
-        } else if($_GET['where2'] == "IS NULL" || $_GET['where2'] == "IS NOT NULL"){
-            echo "condition 2";
-            $where = new Where("" . $_GET['where1'] . "", "" . $_GET['where2'] . "");
-            $_SESSION['where'] = serialize($where);
-            var_dump($where);
-            echo true;
-        }else {
-            echo "condition 3";
-            $where = new Where("" . $_GET['where1'] . "", "" . $_GET['where2'] . "", "" . $_GET['where3'] . "", "" . $_GET['where4'] . "");
-            $_SESSION['where'] = serialize($where);
-            var_dump($where);
-            echo true;
-        }
-    } else {
-        echo false;
-    }
-}
+// FIN JOIN //
 
 if (isset($_GET['generer'])) {
     if ($_GET['generer']) {
