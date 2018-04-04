@@ -92,9 +92,10 @@ $(document).ready(function () {
                 $('#modalSelect').modal('show');
             });
             var table = "table=true";
-            var html = ""
+            var html = "";
             ajaxPost(table,function (data) {
-                for(var i=0;i<data.length;i++){
+                html = '<option value="null"></option>';
+                for(var i=0;i<=data.length;i++){
                     html += '<option value="' + data[i] + '">' + data[i] + '</option>';
                 }
                 $('#table').html(html);
