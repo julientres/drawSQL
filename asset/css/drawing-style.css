@@ -3,6 +3,7 @@ body {
     padding:0;
     min-width: 800px;
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
 #main {
@@ -44,10 +45,10 @@ body {
 }
 
 .form{
+    position: absolute;
     border-radius: 8px;
     min-width: 130px;
     box-sizing: border-box;
-    position: absolute;
 }
 
 .point{
@@ -126,11 +127,40 @@ body {
     width: 300px;
 }
 
-.column{
+.select-column{
     position: absolute;
     left: 30px;
     right: 30px;
     height: 50px;
+}
+
+.from-table{
+    position: absolute;
+    width: 124px;
+    top: 51px;
+    left: 0px;
+    text-align: center;
+}
+
+.where-condition{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+    width: 180px;
+    top: 10px;
+    left: 10px;
+}
+
+.first-join{
+    position: absolute;
+    top: 18px;
+    right: 150px;
+}
+
+.second-join{
+    position: absolute;
+    top: 18px;
+    left: 150px;
 }
 
 [data-type="select"] p{
@@ -144,6 +174,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 .function-name{
     position: absolute;

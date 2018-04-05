@@ -103,9 +103,9 @@ $(document).ready(function () {
         var str = dataSelect.substring(0, dataSelect.length - 3);
         ajaxGet(str, $('#modalSelect').modal('hide'));
         
-        $('#select1 > .column').remove(); 
+        $('#select1 > .select-column').remove(); 
         $('#select1 > .function').remove(); 
-        $('#select1').append('<p class="column">'+column+'</p>');
+        $('#select1').append('<p class="select-column">'+column+'</p>');
 
         for(i = 0; i < $("#function_select > input").length; i++){
             label = $('#function_select label:eq('+i+')').text();
@@ -174,6 +174,7 @@ $(document).ready(function () {
     //Bouton enregistrement de la modal du Where
     $('#btdModalWhere').on('click', function () {
         dataWhere = "";
+        condition = "";
         where1 = $('#modalWhere #where1').find(":selected").text();
         where2 = $('#where2').find(":selected").text();
         where3 = $('#where3').val();
@@ -181,6 +182,13 @@ $(document).ready(function () {
             dataWhere += "where1=" + $('#modalWhere #where1').find(":checked").text();
             dataWhere += "&where2=" + $('#where2').find(":checked").text();
             dataWhere += "&where3=" + $('#where3').val();
+            condition = $('#modalWhere #where1').find(":checked").text()+' '+
+                $('#where2').find(":checked").text()+' '+$('#where3').val();
+            $("#where1 > .img-form").remove();
+            $("#where1").append('<img class="img-form"src="../asset/img/svg/Where_b.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+            $("#where1").css("width", "250px");
+            $("#where1").css("height", "100px");
+            $("#where1 > .add-button").css('left', '250px');
         }
         if ($('#where4').val() != "") {
             dataWhere += "&where4=" + $('#where4').val();
@@ -191,13 +199,16 @@ $(document).ready(function () {
         }
         console.log(dataWhere);
         ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
+        $('#where1 > .where-condition').remove(); 
+        $('#where1').append('<p class="where-condition">'+condition+'</p>');
     });
 
     //Bouton enregistrement de la modal du From
     $('#btdModalFrom').on('click', function () {
         var dataFromTable = "from=" + $('#from').find(":selected").text() + "";
-        console.log(dataFromTable);
         ajaxGet(dataFromTable, $('#modalFrom').modal('hide'));
+        $('#from1 > .from-table').remove(); 
+        $('#from1').append('<span class="from-table">'+$('#from').find(":selected").text()+'</span>');
     });
 
     //Bouton enregistrement de la modal du Join
@@ -208,6 +219,11 @@ $(document).ready(function () {
         dataJoin += $('#join3').find(':selected').val() + ",";
         dataJoin += $('#join4').find(':selected').val();
         ajaxGet(dataJoin, $('#modalJoin').modal('hide'));
+        console.log(dataJoin);
+        $('#join1 > .join-tables').remove(); 
+        $('#join1').append('<div class="join-tables"></div>'); 
+        $('#join1 > .join-tables').append('<span class="first-join">'+$('#join3').find(':selected').val()+'</span>');
+        $('#join1 > .join-tables').append('<span class="second-join">'+$('#join4').find(':selected').val()+'</span>');
     });
 
     //Au changement de la table de la jointure --> on affiche les colonnes
@@ -543,66 +559,11 @@ $(document).ready(function () {
                 deleteElement();
                 break;
 
-            case 32://space => clear
-                zoomReset();
-                break;
-
-            case 107://numpad + => zoom +
-                zoomIn();
-                break;
-
-            case 109://numpad - => zoom -
-                zoomOut();
-                break;
-
             default:
                 return; // exit this handler for other keys
         }
         e.preventDefault(); // prevent the default action (scroll / move caret)
     });
-
-    function zoomIn() {
-        if (coefZoom < 2.0) {
-            coefZoom += 0.2;
-            $('.draggable').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('.line').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('#grille').css('zoom', coefZoom);
-        }
-        else {
-            alert('zoom + max atteint');
-        }
-    }
-
-    function zoomOut() {
-        if (coefZoom > 0.5) {
-            coefZoom -= 0.2;
-            $('.draggable').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('.line').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('#grille').css('zoom', coefZoom);
-        }
-        else {
-            alert('zoom - max atteint');
-        }
-    }
-
-    function zoomReset() {
-        coefZoom = 1.0;
-        $('.draggable').each(function () {
-            $(this).css('zoom', coefZoom);
-        });
-        $('.line').each(function () {
-            $(this).css('zoom', coefZoom);
-        });
-        $('#grille').css('zoom', coefZoom);
-    }
 
     function clearGrid() {
         $('.draggable').each(function () {

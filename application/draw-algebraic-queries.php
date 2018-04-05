@@ -220,11 +220,11 @@ unset($_SESSION['select']);
                     </select>
                     <br>
                     <br>
-                    <input type="text" class="input-group" id="where3" value="">
+                    <input type="text" class="form-control input-group" id="where3" maxlength="100">
                     <br>
                     <div id="divBetween">
                         <p>And</p>
-                        <input type="text" class="input-group" id="where4" value="">
+                        <input type="text" class="input-group" id="where4">
                     </div>
 
                 </div>
