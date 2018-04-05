@@ -4,26 +4,14 @@ $(document).ready(function () {
     var nb_from = 0;
     var nb_where = 0;
     var nb_join = 0;
+    var nb_subQuery = 0;
     var nb_links = 0;
 
-    var coefZoom = 1.0;
     var forms = new Array();
     var links = new Array();
 
-    $('#grille').css('zoom', coefZoom);
     $('.draggable').css('border', '3px dashed transparent');
-
-    $('#zoomIn').click(function () {
-        zoomIn();
-    });
-
-    $('#zoomOut').click(function () {
-        zoomOut();
-    });
-
-    $('#zoomReset').click(function () {
-        zoomReset();
-    });
+    $('.drop-form').css('border', '3px dashed transparent');
 
     $('#clear').click(function () {
         clearGrid();
@@ -33,7 +21,6 @@ $(document).ready(function () {
         deleteElement();
     });
 
-
     $(".alert-success").show("slow").delay(2000).hide("slow");
 
     $(function () {
@@ -41,12 +28,10 @@ $(document).ready(function () {
         $('[data-toggle="popover"]').popover();
     });
 
-
     //SVG JS
     if (!SVG.supported) {
         alert('SVG not supported');
     }
-
 
     $('#where2').on('change', function () {
         if ($(this).find(":selected").text() == "BETWEEN") {
@@ -218,7 +203,15 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="1"]').on("click", function (event) {
         nb_select++;
-        $('#drawing').append('<div id="select' + nb_select + '" data-click="false" class="form draggable tap-target" data-type="select"><img class="img-form" src="../asset/img/svg/Select.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+
+        var id = "select"+nb_select;
+        $("div[data-type='select']").each(function() {
+            if($(this).attr('id') == id) {
+                nb_select++;
+            }
+        });
+
+        $('#drawing').append('<div id="select' + nb_select + '" data-click="false" class="form draggable tap-target accept-drop" data-type="select"><img class="img-form" src="../asset/img/svg/Select.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['select' + nb_select] = {
             'x': 0,
             'y': 0,
@@ -230,7 +223,15 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="2"]').on("click", function (event) {
         nb_from++;
-        $('#drawing').append('<div id="from' + nb_from + '" data-click="false" class="form draggable tap-target" data-type="from"><img class="img-form"src="../asset/img/svg/From.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+
+        var id = "from"+nb_from;
+        $("div[data-type='from']").each(function() {
+            if($(this).attr('id') == id) {
+                nb_from++;
+            }
+        });
+
+        $('#drawing').append('<div id="from' + nb_from + '" data-click="false" class="form draggable tap-target accept-drop" data-type="from"><img class="img-form"src="../asset/img/svg/From.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['from' + nb_from] = {
             'x': 0,
             'y': 0,
@@ -242,7 +243,15 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="3"]').on("click", function (event) {
         nb_where++;
-        $('#drawing').append('<div id="where' + nb_where + '" data-click="false" class="form draggable tap-target" data-type="where"><img class="img-form" src="../asset/img/svg/Where.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+        
+        var id = "where"+nb_where;
+        $("div[data-type='where']").each(function() {
+            if($(this).attr('id') == id) {
+                nb_where++;
+            }
+        });
+
+        $('#drawing').append('<div id="where' + nb_where + '" data-click="false" class="form draggable tap-target accept-drop" data-type="where"><img class="img-form" src="../asset/img/svg/Where.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['where' + nb_where] = {
             'x': 0,
             'y': 0,
@@ -255,7 +264,15 @@ $(document).ready(function () {
     //Quand on click sur la forme --> affiche la forme sur le dessin
     $('[data-form="4"]').on("click", function (event) {
         nb_join++;
-        $('#drawing').append('<div id="join' + nb_join + '" data-click="false" class="form draggable tap-target" data-type="join"><img class="img-form" src="../asset/img/svg/Join.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+        
+        var id = "join"+nb_join;
+        $("div[data-type='join']").each(function() {
+            if($(this).attr('id') == id) {
+                nb_join++;
+            }
+        });
+
+        $('#drawing').append('<div id="join' + nb_join + '" data-click="false" class="form draggable tap-target accept-drop" data-type="join"><img class="img-form" src="../asset/img/svg/Join.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
         forms['join' + nb_join] = {
             'x': 0,
             'y': 0,
@@ -263,6 +280,66 @@ $(document).ready(function () {
             'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
         };
         $('#join' + nb_join).append('<button class="add-button" style="left:6px; top:17px"><span class="fas fa-plus add-icon"></span></button>');
+    });
+
+    //Quand on click sur la forme --> affiche la forme sur le dessin
+    $('[data-form="5"]').on("click", function (event) {
+        nb_subQuery++;
+
+        var id = "subQuery"+nb_subQuery;
+        $("div[data-type='subQuery']").each(function() {
+            if($(this).attr('id') == id) {
+                nb_subQuery++;
+            }
+        });
+
+        $('#drawing').append('<div id="subQuery' + nb_subQuery + '" data-click="false" class="form draggable tap-target drop-form drop-form" data-type="subQuery" style="width:450px"><img class="img-form" src="../asset/img/svg/SubQuery.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true"></div>');
+        forms['subQuery' + nb_subQuery] = {
+            'x': 0,
+            'y': 0,
+            'x_center': 0 + ((parseFloat(event.currentTarget.offsetWidth)) / 2),
+            'y_center': 0 + ((parseFloat(event.currentTarget.offsetHeight)) / 2)
+        };
+    });
+
+    interact('.drop-form').dropzone({
+      // only accept elements matching this CSS selector
+      accept: '.accept-drop',
+      // Require a 75% element overlap for a drop to be possible
+      overlap: 0.75,
+
+      // listen for drop related events:
+
+      ondropactivate: function (event) {
+        $(event.target).addClass('drop-active');
+      },
+      ondragenter: function (event) {
+        $(event.relatedTarget).addClass('can-drop');
+      },
+      ondragleave: function (event) {
+        $(event.relatedTarget).removeClass('can-drop');
+      },
+      ondrop: function (event) {
+        $(event.target).append($(event.relatedTarget));
+        if($(event.relatedTarget).attr('is-child') == undefined) {
+            $(event.relatedTarget).css({
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transform: 'none'
+            });
+            $(event.relatedTarget).attr('data-x', '0');
+            $(event.relatedTarget).attr('data-y', '0');
+            $(event.relatedTarget).attr('is-child', true);
+            $(event.relatedTarget).attr('data-click', "false");
+        } else {
+            $(event.relatedTarget).attr('data-click', "false");
+        }
+      },
+      ondropdeactivate: function (event) {
+        $(event.target).removeClass('drop-active');
+        $(event.relatedTarget).removeClass('can-drop');
+      }
     });
 
     //Créer les liens entre formes
@@ -373,61 +450,46 @@ $(document).ready(function () {
                 restriction: 'parent',
                 elementRect: {top: 0, left: 0, bottom: 1, right: 1}
             }
-            /*snap: {
-                targets: [
-                    interact.createSnapGrid({x: 40, y: 40})
-                ],
-                range: Infinity,
-                relativePoints: [{x: 0, y: 0}]
-            }*/
         })
-        .on('click', function (event) {
-            var target = event.currentTarget,
-                x = (parseFloat(target.getAttribute('data-x')) || 0),
-                y = (parseFloat(target.getAttribute('data-y')) || 0);
 
-            target.style.webkitTransform = target.style.transform =
-                'translate(' + x + 'px,' + y + 'px)';
+    $(document).on('click', '.draggable', function(event){
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        var target = event.currentTarget,
+            x = (parseFloat(target.getAttribute('data-x')) || 0),
+            y = (parseFloat(target.getAttribute('data-y')) || 0);
 
-            if (target.getAttribute('data-click') == 'true') {
-                $(target).css('border', '3px dashed transparent');
-                target.setAttribute('data-click', 'false');
-            }
-            else {
-                $('.draggable').each(function () {
-                    if ($(this).attr('data-click') == 'true') {
-                        $(this).css('border', '3px dashed transparent');
-                        $(this).attr('data-click', 'false');
-                    }
-                });
+        target.style.webkitTransform = target.style.transform =
+            'translate(' + x + 'px,' + y + 'px)';
 
-                target.setAttribute('data-click', 'true');
-                $(target).css('border', '3px dashed red');
-            }
-        });
-    $(document).keydown(function (e) {
-        switch (e.which) {
+        if(target.getAttribute('data-click') == 'true') {
+            $(target).css('border', '3px dashed transparent');
+            target.setAttribute('data-click', 'false');
+        }
+        else {
+            $('.draggable').each(function() {
+                if($(this).attr('data-click') == 'true') {
+                    $(this).css('border', '3px dashed transparent');
+                    $(this).attr('data-click', 'false');
+                }
+            });
+
+            target.setAttribute('data-click', 'true');
+            $(target).css('border', '3px dashed red');
+        }
+    });
+
+    $(document).keydown(function (event) {
+        switch (event.which) {
             case 46://suppr => delete
                 deleteElement();
                 break;
 
-            case 32://space => clear
-                zoomReset();
-                break;
-
-            case 107://numpad + => zoom +
-                zoomIn();
-                break;
-
-            case 109://numpad - => zoom -
-                zoomOut();
-                break;
-
-            default:
-                return; // exit this handler for other keys
+            default: return; // exit this handler for other keys
         }
-        e.preventDefault(); // prevent the default action (scroll / move caret)
+        event.preventDefault(); // prevent the default action (scroll / move caret)
     });
+
     // Informations sur la forme au passage de la souris
     $("#drawing")
         .on("mouseover", "img", function () {
@@ -459,81 +521,163 @@ $(document).ready(function () {
             $(this).popover('hide');
         });
 
-    function zoomIn() {
-        if (coefZoom < 2.0) {
-            coefZoom += 0.2;
-            $('.draggable').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('.line').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('#grille').css('zoom', coefZoom);
-        }
-        else {
-            alert('zoom + max atteint');
-        }
-    }
+    //drag grid
+    var el = $('#drawing');
+    interact('#drawing')
+        .draggable({
+            // enable inertial throwing
+            inertia: true,
+            // keep the element within the area of it's parent
+            restrict: {
+              restriction: el,
+              endOnly: true,
+              elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+            },
+            // enable autoScroll
+            autoScroll: true,
 
-    function zoomOut() {
-        if (coefZoom > 0.5) {
-            coefZoom -= 0.2;
-            $('.draggable').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('.line').each(function () {
-                $(this).css('zoom', coefZoom);
-            });
-            $('#grille').css('zoom', coefZoom);
-        }
-        else {
-            alert('zoom - max atteint');
-        }
-    }
+            // call this function on every dragmove event
+            onmove: function(event) {                  
+                if(event.clientX <= $("#drawing").width() - 10 && event.clientY <= $("#drawing").height() - 10) {
+                    $('.form').each(function(){
+                        if($(this).attr('is-child') == undefined) { 
+                            var x = (parseFloat($(this).attr('data-x')) || 0) + event.dx,
+                            y = (parseFloat($(this).attr('data-y')) || 0) + event.dy;
 
-    function zoomReset() {
-        coefZoom = 1.0;
-        $('.draggable').each(function () {
-            $(this).css('zoom', coefZoom);
-        });
-        $('.line').each(function () {
-            $(this).css('zoom', coefZoom);
-        });
-        $('#grille').css('zoom', coefZoom);
-    }
+                            if(x > 0 && y > 0) {
+                                $(this).css('transform', 'translate(' + x + 'px, ' + y + 'px)');
+
+                                $(this).attr('data-x', x);
+                                $(this).attr('data-y', y);
+                            }
+                        }      
+                    });
+                }
+            }
+        })
+        .on('click', function() {
+            $('.draggable').each(function() {
+                if($(this).attr('data-click') == 'true') {
+                    $(this).css('border', '3px dashed transparent');
+                    $(this).attr('data-click', 'false');
+                }
+            })
+        })
 
     function clearGrid() {
-        $('.draggable').each(function () {
-            $(this).remove();
-        });
+        if(jQuery.isEmptyObject(forms)) {                      
+            alert('Aucune formes détectées...');
+        }
+        else {
+            if(confirm('Voulez vous supprimer toutes les formes présentes dans la zone de dessin ?')) {
+                var arrayToDelete = {};
+                $('.draggable').each(function(index) {
+                    arrayToDelete[index] = $(this).attr('id');
+                })
 
-        $('.line').each(function () {
-            $(this).remove();
-        });
+                var idDeleteForm = {'idDeleteForm':arrayToDelete}
+                ajaxGet(idDeleteForm, function() {
+                    $('.draggable').each(function() {
+                        $(this).remove();
+                    });
 
-        nb_select = 0;
-        nb_from = 0;
-        nb_where = 0;
-        forms = [];
-        links = [];
+                    $('.line').each(function() {
+                        $(this).remove();
+                    });
+
+                    nb_select = 0;
+                    nb_from = 0;
+                    nb_where = 0;
+                    nb_join = 0;
+                    nb_subQuery = 0;
+                    nb_links = 0;
+                    forms = [];
+                    links = [];
+                })                
+            }  
+        }        
     }
 
     function deleteElement() {
-        $('.draggable').each(function () {
-            if ($(this).attr('data-click') == 'true') {
-                if (confirm('sure to delete ?')) {
-                    $(this).remove();
-                    delete forms[$(this).attr('id')];
-                    //need : delete element form array "links" & nb_links--
-
-                    if ($(this).attr('data-type') == 'select')
-                        nb_select--;
-                    else if ($(this).attr('data-type') == 'from')
-                        nb_from--;
-                    else if ($(this).attr('data-type') == 'where')
-                        nb_where--;
-                }
+        var selectedForm = false;
+        $('.draggable').each(function() {
+            if($(this).attr('data-click') == 'true') {
+                selectedForm = true;
             }
-        });
+        })
+
+        if(jQuery.isEmptyObject(forms)) {
+            alert('Aucune forme sur la zone de dessin...');
+        }  
+        else if(!selectedForm) {
+            alert('Aucune forme sélectionnée...');
+        }   
+        else {  
+            $('.draggable').each(function() {
+                if($(this).attr('data-click') == 'true') {
+                    if($(this).attr('data-type') == 'subQuery') {
+                        if(confirm('Voulez vous supprimer cette forme de la zone de dessin ? Cela supprimera aussi toutes les formes associées')) {                            
+                            var id = $(this).attr('id');
+                            var idDeleteForm = "idDeleteForm=" + id;
+                            ajaxGet(idDeleteForm, function() {
+                                $('.accept-drop').each(function() { 
+                                    if($(this).parent(id)) {
+                                        if($(this).attr('data-type') == 'select') {
+                                            delete forms[$(this).attr('id')];
+                                            nb_select--;
+                                        }
+                                        else if($(this).attr('data-type') == 'from') {
+                                            delete forms[$(this).attr('id')];
+                                            nb_from--;
+                                        }
+                                        else if($(this).attr('data-type') == 'where') {
+                                            delete forms[$(this).attr('id')];
+                                            nb_where--;
+                                        }
+                                        else if($(this).attr('data-type') == 'join') {
+                                            delete forms[$(this).attr('id')];
+                                            nb_join--;
+                                        }
+                                    }
+                                })
+
+                                nb_subQuery--;
+                                delete forms[id];                
+                                $(this).remove();
+
+                                //delete links ?
+                            })
+                        }
+                    }
+                    else {
+                        if(confirm('Voulez vous supprimer cette forme de la zone de dessin ?')) {
+                            var idDeleteForm = "idDeleteForm=" + $(this).attr('id');
+                            ajaxGet(idDeleteForm, function() {
+                                if($(this).attr('data-type') == 'select')
+                                    nb_select--;
+                                else if($(this).attr('data-type') == 'from')
+                                    nb_from--;
+                                else if($(this).attr('data-type') == 'where')
+                                    nb_where--;
+                                else if($(this).attr('data-type') == 'join')
+                                    nb_join--;
+
+                                delete forms[$(this).attr('id')];
+                                $(this).remove();
+
+                                if (links.length != 0) {
+                                    for (var i = 1; i < links.length; i++) {
+                                        if (links[i].forme1 == $(this).attr('id') || links[i].forme2 == $(this).attr('id')) {
+                                            $('#' + links[i].forme1 + '-' + links[i].forme2 + '').remove();
+                                            nb_links--;
+                                        }
+                                    }                        
+                                }
+                            })                            
+                        }
+                    }
+                }
+            });
+        }
     }
 });
