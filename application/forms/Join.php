@@ -1,10 +1,10 @@
 <?php
 class Join{
-    private $table;
-    private $join;
-    private $value1;
-    private $value2;
-    private $tableJoint;
+    public $table;
+    public $join;
+    public $value1;
+    public $value2;
+    public $tableJoint;
 
     public function __construct($join,$tableJoint,$table,$value1,$value2) {
         $this->table = $table;
@@ -20,5 +20,17 @@ class Join{
     }
     public function getTableJoin(){
         return $this->tableJoint;
+    }
+    public function getJoin(){
+        return $this->join;
+    }
+    public function getValue1(){
+        return $this->value1;
+    }
+    public function getValue2(){
+        return $this->value2;
+    }
+    public function getTableJ(){
+        return $this->table;
     }
 }
