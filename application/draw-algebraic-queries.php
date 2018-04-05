@@ -18,7 +18,7 @@ unset($_SESSION['select']);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Algebraic Queries - drawing</title>
+    <title>DrawSQL - drawing</title>
     <meta content="" name="description">
     <meta content="RTAI - ANGLES HIOT SOLE TRESCARTES" name="author">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,10 +49,7 @@ unset($_SESSION['select']);
 	<div id="main">
         <div id="options">
             <ul class="list-group list-group-horizontal">
-                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
-                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
-                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
-                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
+                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>                
                 <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
             </ul>
         </div>
@@ -81,12 +78,12 @@ unset($_SESSION['select']);
 						<path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
 					</svg>
 			    </button>
-			    <!--<button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
-			    	<svg height="80" width="100">
-			    		<path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
-			    	</svg>
-			    </button>
-			    <button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
+                <button id="subQueryObject" class="list-group-item list-group-item-action" data-form="5" data-toggle="tooltip" data-placement="right" title="SOUS-REQUÊTE">
+                    <svg height="80" width="100">
+                        <path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
+                    </svg>
+                </button>
+			    <!--<button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
 			    <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
 			    <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
 			    -->
@@ -98,19 +95,7 @@ unset($_SESSION['select']);
 			</ul>
 		</div>
         <div id="drawing">
-            <div id="grille">
-                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <pattern id="smallGrid" width="6" height="6" patternUnits="userSpaceOnUse">
-                            <path d="M 6 0 L 0 0 0 6" fill="none" stroke="gray" stroke-width="0.5"></path>
-                        </pattern>
-                        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <rect width="60" height="60" fill="url(#smallGrid)"></rect>
-                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="gray" stroke-width="1"></path>
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#grid)"></rect>
-                </svg>
+            <div id="grille">                
             </div>
 
             <div id="line-container">
