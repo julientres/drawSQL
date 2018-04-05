@@ -42,9 +42,9 @@ class ExecutionQuery
         if (isset($this->where)) {
             $str = "" . $this->select . " " . $this->from . " " . $this->where . ";";
         } elseif (isset($this->join)) {
-            $str = "" . $this->select . " " . $this->from . " " . $this->join . ";";
+            $str = "" . $this->select . " " . $this->from . " WHERE " . $this->join . ";";
         } elseif (isset($this->join) && isset($this->where)) {
-            $str = "" . $this->select . " " . $this->from . " " . $this->join . " " . $this->where . ";";
+            $str = "" . $this->select . " " . $this->from . " WHERE " . $this->join . " AND " . $this->where . ";";
         } else {
             $str = "" . $this->select . " " . $this->from . ";";
         }

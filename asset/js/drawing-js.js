@@ -93,11 +93,11 @@ $(document).ready(function () {
             var table = "table=true";
             var html = "";
             ajaxPost(table, function (data) {
-                if(data == null){
+                if (data == null) {
 
-                }else{
+                } else {
                     html = '<option value="null"></option>';
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data[0].length; i++) {
                         html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
                     }
                     $('#optGroupSelect').html(html);
@@ -126,6 +126,7 @@ $(document).ready(function () {
         } else if (type == 'where') {
             var dataWhere = "where=" + id;
             ajaxPost(dataWhere, function (data) {
+                console.log(data);
                 if (data.table == null) {
                     $('#inputWhereId').val(data.id);
                     $('#inputFromForm').val(data.idFrom);
@@ -142,18 +143,20 @@ $(document).ready(function () {
                     $('#where4').val("");
                 } else {
                     $('#inputWhereId').val(data.id);
+                    $('#inputFromForm').val(data.idFrom);
                     $('#table2 #optGroupTable option').each(function () {
                         if (data.table == $(this).text()) {
                             $(this).prop("selected", true);
+                            $("#where1 #optGroupColonne option").each(function () {
+                                if (data.column == $(this).val()) {
+                                    $(this).prop("selected", true);
+                                } else {
+                                    $(this).prop("selected", false);
+                                }
+                            });
                         }
                     });
-                    $("#where1 #optGroupColonne option").each(function () {
-                        if (data.column == $(this).val()) {
-                            $(this).prop("selected", true);
-                        } else {
-                            $(this).prop("selected", false);
-                        }
-                    });
+
                     $('#where2 #optGroupOper option').each(function () {
                         if (data.operate == $(this).val()) {
                             $(this).prop("selected", true);
@@ -169,11 +172,11 @@ $(document).ready(function () {
             var table = "table2=true";
             var html = "";
             ajaxPost(table, function (data) {
-                if(data[0][0] == null){
-                }else{
+                if (data[0][0] == null) {
+                } else {
                     html = '<option value="null"></option>';
                     for (var i = 0; i < data.length; i++) {
-                        html += '<option value="' +  data[1][i] + '">' +  data[0][i] + '</option>';
+                        html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
                     }
                     $('#optGroupTable').html(html);
                 }
@@ -189,9 +192,6 @@ $(document).ready(function () {
                         $(this).prop("selected", false);
                     });
                     $('#tableJoin2 #optGroupJoinTab2 option').each(function () {
-                        $(this).prop("selected", false);
-                    });
-                    $("#join #optGroupTypeJoin  option").each(function () {
                         $(this).prop("selected", false);
                     });
                     $("#value1 #optGroupJoin1 option").each(function () {
@@ -215,11 +215,6 @@ $(document).ready(function () {
                             $(this).prop("selected", true);
                         }
                     });
-                    $("#join #optGroupTypeJoin  option").each(function () {
-                        if (data.join == $(this).val()) {
-                            $(this).prop("selected", true);
-                        }
-                    });
                     $("#value1 #optGroupJoin1 option").each(function () {
                         if (data.value1 == $(this).val()) {
                             $(this).prop("selected", true);
@@ -237,8 +232,8 @@ $(document).ready(function () {
             var html = "";
             ajaxPost(table, function (data) {
                 console.log(data);
-                if(data[0][0] == null ){
-                }else{
+                if (data[0][0] == null) {
+                } else {
                     html = '<option value="null"></option>';
                     for (var i = 0; i < data.length; i++) {
                         html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
@@ -265,7 +260,15 @@ $(document).ready(function () {
         var column = dataSelect.substring(0, dataSelect.length - 3);
         var id = $('#inputSelectId').val();
         var table = $('#table').find(":selected").val();
-        var dataSelectColumn = {"selectGenerer": column, "id": id, "table": table};
+        var min = $('#selectMin').val();
+        var max = $('#selectMax').val();
+        var count = $('#selectCount').val();
+        var avg = $('#selectAvg').val();
+        var sum = $('#selectSum').val();
+        var having =$('#selectHaving').val();
+        var group = $('#selectGroup').val();
+        var order = $('#selectOrdre').val();
+        var dataSelectColumn = {"selectGenerer": column, "id": id, "table": table, "min":min,"max":max,"count":count,"avg":avg,"sum":sum,"having":having,"group":group,"order":order};
 
         ajaxGet(dataSelectColumn, $('#modalSelect').modal('hide'));
 
@@ -388,7 +391,8 @@ $(document).ready(function () {
             var table = $('#table2').find(":selected").text();
             var idTable = $('#table2').find(":selected").val()
             var column = $('#modalWhere #where1').find(":selected").text();
-            var operate = $('#where2').find(":selected").text();
+            var operate = $('#modalWhere #where2').find(":selected").text();
+            console.log(operate);
             var value1 = $('#where3').val();
             var value2 = $('#where4').val();
             var id = $('#inputWhereId').val();
@@ -404,6 +408,7 @@ $(document).ready(function () {
                     "idFrom": idTable
                 };
                 ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
+                console.log(dataWhere);
                 var where = '#' + id;
                 $(where + " > .img-form").remove();
                 $(where).append('<img class="img-form"src="../asset/img/svg/Where_b.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
@@ -425,9 +430,7 @@ $(document).ready(function () {
 
             if (x_1 == 0 && y_1 == 0) {
                 var join = "#" + id;
-                console.log(join);
                 var target1 = $(join);
-                console.log(target1);
                 x = (parseFloat(target1.attr("data-x")) || 0);
                 y = (parseFloat(target1.attr('data-y')) || 0);
                 x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
@@ -435,9 +438,7 @@ $(document).ready(function () {
                 id_premier = $(target1).attr('id');
 
                 var forme = '#' + idTable;
-                console.log(forme);
                 target2 = $(forme);
-                console.log(target2);
                 x2 = (parseFloat(target2.attr('data-x')) || 0);
                 y2 = (parseFloat(target2.attr('data-y')) || 0);
                 x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
@@ -465,24 +466,41 @@ $(document).ready(function () {
 
 
     $('#table').on('change', function () {
-        //$('#modalWhere #optGroup').html('<option value="null"></option>');
+        var table = $('#table').find(":selected").text();
+        if (table == null) {
+            $('#boxCheckbox').html("");
+        } else {
+            var dataForm = "fromInput=" + $('#table').find(":selected").text();
+            ajaxPost(dataForm, function (data) {
+                if (data)
+                    if (data[0] == "join") {
+                        $('#boxCheckbox').html('<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input class="form-check-input" type="checkbox" name="select" value="*">' +
+                            '*</label></div>');
+                        for (var i = 1; i < data.length; i++) {
+                            $('#boxCheckbox').append('<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input class="form-check-input" type="checkbox" name="select" value="' + data[i] + '"> ' +
+                                data[i] + '</label></div>');
+                        }
+                    } else {
+                        if (data[0].name != null) {
+                            $('#boxCheckbox').html('<div class="form-check">' +
+                                '<label class="form-check-label">' +
+                                '<input class="form-check-input" type="checkbox" name="select" value="*">' +
+                                '*</label></div>');
+                            for (var i = 0; i < data.length; i++) {
+                                $('#boxCheckbox').append('<div class="form-check">' +
+                                    '<label class="form-check-label">' +
+                                    '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
+                                    data[i].name + '</label></div>');
+                            }
+                        }
+                    }
 
-        //$('#join3').html('<option value="null"></option>');
-        var dataForm = "fromInput=" + $('#table').find(":selected").text();
-        ajaxPost(dataForm, function (data) {
-            $('#boxCheckbox').html('<div class="form-check">' +
-                '<label class="form-check-label">' +
-                '<input class="form-check-input" type="checkbox" name="select" value="*">' +
-                '*</label></div>');
-            for (var i = 0; i < data.length; i++) {
-                //$('#modalWhere #optGroup').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
-                $('#boxCheckbox').append('<div class="form-check">' +
-                    '<label class="form-check-label">' +
-                    '<input class="form-check-input" type="checkbox" name="select" value="' + data[i].name + '"> ' +
-                    data[i].name + '</label></div>');
-                //$('#join3').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
-            }
-        });
+            });
+        }
     });
 
 
@@ -503,8 +521,9 @@ $(document).ready(function () {
     $('#btdModalJoin').on('click', function () {
         var id = $('#inputJoinId').val();
         var table = $('#modalJoin #tableJoin1').find(':selected').text();
-        var join = $('#join').find(':selected').val();
-        var tableJoin = $('#tableJoin2').find(':selected').val();
+        var tableJoin = $('#tableJoin2').find(':selected').text();
+        var tableId = $('#modalJoin #tableJoin1').find(':selected').val();
+        var tableJoinId = $('#modalJoin #tableJoin2').find(':selected').val();
         var value1 = $('#value1').find(':selected').val();
         var value2 = $('#value2').find(':selected').val();
 
@@ -512,50 +531,99 @@ $(document).ready(function () {
             "joinGenerer": table,
             "id": id,
             "tableJoin": tableJoin,
-            "join": join,
             "value1": value1,
-            "value2": value2
+            "value2": value2,
         };
         ajaxGet(dataJoin, $('#modalJoin').modal('hide'));
         console.log(dataJoin);
+
         var joinForme = '#' + id;
         $(joinForme + ' > .join-tables').remove();
         $(joinForme).append('<div class="join-tables"></div>');
         $(joinForme + ' > .join-tables').append('<span class="first-join">' + table + "." + value1 + '</span>');
         $(joinForme + ' > .join-tables').append('<span class="second-join">' + tableJoin + "." + value2 + '</span>');
 
+        var dataLink = {
+            "dataLink": true,
+            "tableId": tableId,
+            "tableJoinId": tableJoinId,
+            "idJoin": joinForme
+        };
 
-        if (x_1 == 0 && y_1 == 0) {
-            var join = "#" + id;
-            var target1 = $(join);
-            x = (parseFloat(target1.attr("data-x")) || 0);
-            y = (parseFloat(target1.attr('data-y')) || 0);
-            x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
-            y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
-            id_premier = $(target1).attr('id');
+        ajaxPost(dataLink, function (data) {
+            var x_1 = 0;
+            var y_1 = 0;
+            var x_2 = 0;
+            var y_2 = 0;
+            var id_premier;
+            var id_second;
+            if (x_1 == 0 && y_1 == 0) {
+                var target1 = $(data.id);
+                x = (parseFloat(target1.attr("data-x")) || 0);
+                y = (parseFloat(target1.attr('data-y')) || 0);
+                x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
+                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
+                id_premier = $(target1).attr('id');
 
-            target2 = $('#' + forme);
-            x2 = (parseFloat(target2.attr('data-x')) || 0);
-            y2 = (parseFloat(target2.attr('data-y')) || 0);
-            x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
-            y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
-            id_second = $(target2).attr('id');
+                target2 = $('#' + data.link1);
+                x2 = (parseFloat(target2.attr('data-x')) || 0);
+                y2 = (parseFloat(target2.attr('data-y')) || 0);
+                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+                y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
+                id_second = $(target2).attr('id');
 
-            var idLine = $('.line').attr("data-id");
-            var test = id_premier + '-' + id_second;
-            if (idLine == test) {
-                var html = '#' + idLine;
-                $(html).remove();
-                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-            } else {
-                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                var idLine = $('.line').attr("data-id");
+                var test = id_premier + '-' + id_second;
+                if (idLine == test) {
+                    var html = '#' + idLine;
+                    $(html).remove();
+                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                } else {
+                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                }
+                nb_links++;
+                links[nb_links] = {
+                    forme1: id_premier,
+                    forme2: id_second
+                };
             }
-            nb_links++;
-            links[nb_links] = {
-                forme1: id_premier,
-                forme2: id_second
-            };
-        }
+            var x_1_2 = 0;
+            var y_1_2 = 0;
+            var x_2_2 = 0;
+            var y_2_2 = 0;
+            var id_premier_2;
+            var id_second_2;
+            if (x_1_2 == 0 && y_1_2 == 0) {
+                var target1 = $(data.id);
+                x = (parseFloat(target1.attr("data-x")) || 0);
+                y = (parseFloat(target1.attr('data-y')) || 0);
+                x_1_2 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
+                y_1_2 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
+                id_premier_2 = $(target1).attr('id');
+
+                target2 = $('#' + data.link2);
+                x2 = (parseFloat(target2.attr('data-x')) || 0);
+                y2 = (parseFloat(target2.attr('data-y')) || 0);
+                x_2_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+                y_2_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
+                id_second_2 = $(target2).attr('id');
+
+                var idLine = $('.line').attr("data-id");
+                var test = id_premier + '-' + id_second;
+                if (idLine == test) {
+                    var html = '#' + idLine;
+                    $(html).remove();
+                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+                } else {
+                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+                }
+                nb_links++;
+                links[nb_links] = {
+                    forme1: id_premier_2,
+                    forme2: id_second_2
+                };
+            }
+        });
     });
 
     $('#table2').on('change', function () {
@@ -1000,56 +1068,56 @@ $(document).ready(function () {
     $('#min').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="min">MIN </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectMin" type="text">');
         }
     });
 
     $('#max').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="max">MAX </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectMax" type="text">');
         }
     });
 
     $('#count').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label  for="count">COUNT </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectCount" type="text">');
         }
     });
 
     $('#avg').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="avg">AVG </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectAvg" type="text">');
         }
     });
 
     $('#sum').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="sum">SUM </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectSum" type="text">');
         }
     });
 
     $('#having').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="having">HAVING </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectHaving" type="text">');
         }
     });
 
     $('#groupby').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="groupby">GROUPBY </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectGroup" type="text">');
         }
     });
 
     $('#orderby').on("click", function () {
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label  for="orderby">ORDERBY </label>' +
-                '<input class="form-control function-form" type="text"></input>');
+                '<input class="form-control function-form" id="selectOrder" type="text">');
         }
     });
 });

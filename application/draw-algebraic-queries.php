@@ -310,18 +310,6 @@ $table = $help->allTables($_SESSION['bdd']);
                     </select>
                     <br>
                     <br>
-                    <label>Type de jointure</label>
-                    <select class="custom-select" id="join">
-                        <optgroup id="optGroupTypeJoin" label="Choisir une jointure">
-                            <option value="null"></option>
-                            <option value="INNER JOIN">INNER JOIN</option>
-                            <option value="LEFT JOIN">LEFT JOIN</option>
-                            <option value="RIGHT JOIN">RIGHT JOIN</option>
-                            <option value="FULL JOIN">FULL JOIN</option>
-                        </optgroup>
-                    </select>
-                    <br>
-                    <br>
                     <label>Valeur 1</label>
                     <select class="custom-select" id="value1">
                         <optgroup id="optGroupJoin1" label="Choisir une colonne">
