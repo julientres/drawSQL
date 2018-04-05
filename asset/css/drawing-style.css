@@ -3,6 +3,7 @@ body {
     padding:0;
     min-width: 800px;
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
 #main {
@@ -40,14 +41,14 @@ body {
 #options {
     float:right;
     width:50px;
-    margin-right: 10px;
+    margin-right: 13px;
 }
 
 .form{
-    border-radius: 8px;
-    width: 130px;
-    box-sizing: border-box;
     position: absolute;
+    border-radius: 8px;
+    min-width: 130px;
+    box-sizing: border-box;
 }
 
 .point{
@@ -106,6 +107,109 @@ body {
 /* ----- MODAL ------ */
 #divCodeJoin{
     display: none;
+}
+
+.btn-outline-secondary{
+    margin-top: 10px;
+}
+
+#function_select{
+    margin-top: 20px;
+}
+
+#function_select label{
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.function-form{
+    display: inline;
+    width: 300px;
+}
+
+.select-column{
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    height: 50px;
+}
+
+.from-table{
+    position: absolute;
+    width: 124px;
+    top: 51px;
+    left: 0px;
+    text-align: center;
+}
+
+.where-condition{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+    width: 180px;
+    top: 10px;
+    left: 10px;
+}
+
+.first-join{
+    position: absolute;
+    top: 18px;
+    right: 150px;
+}
+
+.second-join{
+    position: absolute;
+    top: 18px;
+    left: 150px;
+}
+
+[data-type="select"] p{
+    padding-top: 10px;
+    margin: 0;
+}
+
+
+[data-type="select"] p, [data-type="select"] span{
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.function-name{
+    position: absolute;
+    font-weight: bold;
+    height: 30px;
+    right: 170px;
+}
+
+.function-value{
+    position: absolute;
+    height: 30px;
+    width: 90px;
+    left: 155px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.first{
+    top: 59px;
+}
+
+.second{
+    top: 80px;
+}
+
+.third{
+    top: 100px;
+}
+
+.fourth{
+    top: 122px;
+}
+
+.fifth{
+    top: 141px;
 }
 /*
 #boxSelect{
