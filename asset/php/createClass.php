@@ -52,7 +52,6 @@ if (isset($_GET['selectGenerer'])) {
         $table = $_GET['table'];
         $_SESSION['nbSelect'] += 1;
         $select = new Select("" . $column . "");
-
         $_SESSION[$id]['object'] = serialize($select);
         $_SESSION[$id]['table'] = $table;
         echo true;
@@ -61,6 +60,24 @@ if (isset($_GET['selectGenerer'])) {
     }
 }
 if(isset($_POST['table'])){
+    $nb = $_SESSION['nbFrom'];
+    $table = array();
+    $nameId = array();
+    $res = array();
+    for($i=1; $i<=$nb;$i++){
+        $id = "from".$i;
+        array_push($nameId,$id);
+        if($_SESSION[$id]['object'] != null){
+            $object =  unserialize($_SESSION[$id]['object']);
+            $tableSelected = $object->getTable();
+            array_push($table,$tableSelected);
+        }
+    }
+    array_push($res,$table);
+    array_push($res,$nameId);
+    echo json_encode($res);
+}
+if(isset($_POST['table2'])){
     $nb = $_SESSION['nbFrom'];
     $table = array();
     for($i=1; $i<=$nb;$i++){
@@ -116,12 +133,13 @@ if (isset($_GET['where'])) {
 if (isset($_POST['where'])) {
     $id = $_POST['where'];
     if($_SESSION[$id]['object'] != null){
-        $object = unserialize($_SESSION[$id]['object']);
-        $table = $object->getTable();
-        $column = $object->getColumn();
-        $operate = $object->getOperate();
-        $value1 = $object->getValue();
-        $value2 = $object->getValue2();
+        $object = $_SESSION[$id]['object'];
+        $where = unserialize($_SESSION[$id]['object']);
+        $table = $_SESSION[$id]['table'];
+        $column = $where->getColumn();
+        $operate = $where->getOperate();
+        $value1 = $where->getValue();
+        $value2 = $where->getValue2();
         $res = ['table' => $table, 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2, 'res' => true, 'id' => $id];
         echo json_encode($res);
     }else{
@@ -146,6 +164,7 @@ if (isset($_GET['whereGenerer'])) {
         }
         $_SESSION['nbWhere'] += 1;
         $_SESSION[$id]['object'] = serialize($where);
+        $_SESSION[$id]['table'] = $table;
         echo true;
     } else {
         echo false;

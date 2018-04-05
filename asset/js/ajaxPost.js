@@ -4,6 +4,7 @@ function ajaxPost(data, handleData) {
         type: "POST",
         data: data,
         success: function (res) {
+            console.log(res);
             handleData(JSON.parse(res));
         },
         error: function (res) {

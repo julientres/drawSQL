@@ -5,7 +5,6 @@ $returnBDD = doConnexion();
 
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
-
 ?>
 
 <!DOCTYPE html>
@@ -135,6 +134,7 @@ $table = $help->allTables($_SESSION['bdd']);
                     </div>
                 </div>
                 <input type="hidden" id="inputSelectId" value="">
+                <input type="hidden" id="idTable" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
