@@ -5,13 +5,6 @@ $returnBDD = doConnexion();
 
 $help = new HelpDataEntry();
 $table = $help->allTables($_SESSION['bdd']);
-
-unset($_SESSION['name']);
-unset($_SESSION['sql']);
-unset($_SESSION['select']);
-unset($_SESSION['where']);
-unset($_SESSION['join']);
-unset($_SESSION['select']);
 ?>
 
 <!DOCTYPE html>
@@ -115,7 +108,13 @@ unset($_SESSION['select']);
                     </button>
                 </div>
                 <div class="modal-body" id="textModal">
-                    <div id="divSelect"></div>
+                    <select class="custom-select" id="table">
+                        <optgroup id="optGroupSelect" label="Choisir une table">
+
+                        </optgroup>
+                    </select>
+                    <br>
+                    <div id="divSelect">
                     <div id="boxSelect">
                         <div>
                             <button id="min" class="btn btn-outline-secondary">MIN</button>
@@ -131,6 +130,8 @@ unset($_SESSION['select']);
                     <div id="function_select">
                     </div>
                 </div>
+                <input type="hidden" id="inputSelectId" value="">
+                <input type="hidden" id="idTable" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
@@ -158,6 +159,7 @@ unset($_SESSION['select']);
                             ?>
                         </optgroup>
                     </select>
+                    <input type="hidden" id="inputFromId" value="">
                 </div>
                 <div id="console">
 
@@ -179,15 +181,23 @@ unset($_SESSION['select']);
                     <h5 class="modal-title" id="exampleModalLabel">Where</h5>
                 </div>
                 <div class="modal-body" id="textModal">
-                    <select class="custom-select" id="where1">
-                        <optgroup id="optGroup" label="Choisir une colonne">
+                    <select class="custom-select" id="table2">
+                        <optgroup id="optGroupTable" label="Choisir une table">
 
                         </optgroup>
                     </select>
                     <br>
                     <br>
+                    <select class="custom-select" id="where1">
+                        <optgroup id="optGroupColonne" label="Choisir une colonne">
+
+                        </optgroup>
+                    </select>
+                    <br>
+                    <br>
+
                     <select class="custom-select" id="where2">
-                        <optgroup label="Choisir une condition">
+                        <optgroup id="optGroupOper" label="Choisir une propri">
                             <option value=""></option>
                             <option value="=">=</option>
                             <option value="<>"><></option>
@@ -213,9 +223,7 @@ unset($_SESSION['select']);
                     </div>
 
                 </div>
-                <div id="console">
-
-                </div>
+                <input id="inputWhereId" type="hidden" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>

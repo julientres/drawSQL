@@ -45,4 +45,8 @@ class Where{
     public function getValue(){
         return $this->value;
     }
+
+    public function getValue2(){
+        return $this->value2;
+    }
 }
