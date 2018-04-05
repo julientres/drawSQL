@@ -245,6 +245,7 @@ $table = $help->allTables($_SESSION['bdd']);
 
                 </div>
                 <input id="inputWhereId" type="hidden" value="">
+                <input id="inputFromForm" type="hidden" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>
@@ -263,6 +264,36 @@ $table = $help->allTables($_SESSION['bdd']);
                     <h5 class="modal-title" id="exampleModalLabel">Join</h5>
                 </div>
                 <div class="modal-body" id="textModal">
+                    <!--<label>Lier forme</label>
+                    <select class="custom-select" id="tableJoin1">
+                        <optgroup id="optGroupLie" label="Choisir une forme à lier">
+                            <?php
+                            /*$nbS = $_SESSION['nbSelect'];
+                            $nbF = $_SESSION['nbFrom'];
+                            $nbW = $_SESSION['nbWhere'];
+                            $nbJ = $_SESSION['nbJoin'];
+                            for($i=1; $i<=$nbF;$i++){
+                                $id = "from".$i;
+                                if($_SESSION[$id]['object'] != null){
+                                    echo "<option value='" .$_SESSION[$id]['id']. "'>" . $_SESSION[$id]['table'] .  "</option>";
+                                }
+                            }
+                            for($i=1; $i<=$nbW;$i++){
+                                $id = "where".$i;
+                                if($_SESSION[$id]['object'] != null){
+                                    echo "<option value='" .$_SESSION[$id]['from']. "'>" . $_SESSION[$id]['table'] .  "</option>";
+                                }
+                            }
+                            for($i=1; $i<=$nbJ;$i++){
+                                $id = "join".$i;
+                                if($_SESSION[$id]['object'] != null){
+                                    $object =  unserialize($_SESSION[$id]['object']);
+                                    $tableSelected = $object->getTable();
+                                }
+                            }*/
+                            ?>
+                        </optgroup>
+                    </select>-->
                     <label>Table 1</label>
                     <select class="custom-select" id="tableJoin1">
                         <optgroup id="optGroupJoinTab1" label="Choisir une table">

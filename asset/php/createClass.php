@@ -109,6 +109,7 @@ if (isset($_GET['fromGenerer'])) {
         $from = new From("" . $table . "");
         $_SESSION['nbFrom'] += 1;
         $_SESSION[$id]['object'] = serialize($from);
+        $_SESSION[$id]['table'] = $table;
         echo true;
     } else {
         echo false;
@@ -131,7 +132,8 @@ if (isset($_POST['where'])) {
         $operate = $where->getOperate();
         $value1 = $where->getValue();
         $value2 = $where->getValue2();
-        $res = ['table' => $table, 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2, 'res' => true, 'id' => $id];
+        $idFrom = $_SESSION[$id]['from'];
+        $res = ['table' => $table, 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2, 'res' => true, 'id' => $id,"idFrom" =>$idFrom];
         echo json_encode($res);
     }else{
         $res = ['table' => null, 'res' => false, 'id' => $id];
@@ -154,6 +156,7 @@ if (isset($_GET['whereGenerer'])) {
             $where = new Where("" . $column . "", "" . $operate . "", "" . $value1 . "");
         }
         $_SESSION['nbWhere'] += 1;
+        $_SESSION[$id]['from'] = $_GET['idFrom'];
         $_SESSION[$id]['object'] = serialize($where);
         $_SESSION[$id]['table'] = $table;
         echo true;

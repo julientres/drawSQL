@@ -93,12 +93,15 @@ $(document).ready(function () {
             var table = "table=true";
             var html = "";
             ajaxPost(table, function (data) {
-                console.log(data);
-                html = '<option value="null"></option>';
-                for (var i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
+                if(data == null){
+
+                }else{
+                    html = '<option value="null"></option>';
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
+                    }
+                    $('#optGroupSelect').html(html);
                 }
-                $('#optGroupSelect').html(html);
             });
         } else if (type == 'from') {
             var dataFrom = "from=" + id;
@@ -125,6 +128,7 @@ $(document).ready(function () {
             ajaxPost(dataWhere, function (data) {
                 if (data.table == null) {
                     $('#inputWhereId').val(data.id);
+                    $('#inputFromForm').val(data.idFrom);
                     $('#table2 #optGroupTable option').each(function () {
                         $(this).prop("selected", false);
                     });
@@ -165,11 +169,15 @@ $(document).ready(function () {
             var table = "table2=true";
             var html = "";
             ajaxPost(table, function (data) {
-                html = '<option value="null"></option>';
-                for (var i = 0; i < data.length; i++) {
-                    html += '<option value="' +  data[1][i] + '">' +  data[0][i] + '</option>';
+                if(data[0][0] == null){
+                }else{
+                    html = '<option value="null"></option>';
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' +  data[1][i] + '">' +  data[0][i] + '</option>';
+                    }
+                    $('#optGroupTable').html(html);
                 }
-                $('#optGroupTable').html(html);
+
             });
         } else if (type == 'join') {
             var dataJoin = "join=" + id;
@@ -228,12 +236,16 @@ $(document).ready(function () {
             var table = "table3=true";
             var html = "";
             ajaxPost(table, function (data) {
-                html = '<option value="null"></option>';
-                for (var i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i] + '">' + data[i] + '</option>';
+                console.log(data);
+                if(data[0][0] == null ){
+                }else{
+                    html = '<option value="null"></option>';
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
+                    }
+                    $('#optGroupJoinTab1').html(html);
+                    $('#optGroupJoinTab2').html(html);
                 }
-                $('#optGroupJoinTab1').html(html);
-                $('#optGroupJoinTab2').html(html);
             });
         }
         /*else if (type == 'subquery') {
@@ -388,7 +400,8 @@ $(document).ready(function () {
                     "columnWhere": column,
                     "operate": operate,
                     "value1": value1,
-                    "value2": value2
+                    "value2": value2,
+                    "idFrom": idTable
                 };
                 ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
                 var where = '#' + id;
@@ -403,20 +416,28 @@ $(document).ready(function () {
                 }
             }
 
-            var idFrom = idFormFrom;
-            console.log(idFrom);
+            var x_1 = 0;
+            var y_1 = 0;
+            var x_2 = 0;
+            var y_2 = 0;
+            var id_premier;
+            var id_second;
 
             if (x_1 == 0 && y_1 == 0) {
                 var join = "#" + id;
+                console.log(join);
                 var target1 = $(join);
+                console.log(target1);
                 x = (parseFloat(target1.attr("data-x")) || 0);
                 y = (parseFloat(target1.attr('data-y')) || 0);
                 x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
                 y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
                 id_premier = $(target1).attr('id');
 
-
-                target2 = $(idTable);
+                var forme = '#' + idTable;
+                console.log(forme);
+                target2 = $(forme);
+                console.log(target2);
                 x2 = (parseFloat(target2.attr('data-x')) || 0);
                 y2 = (parseFloat(target2.attr('data-y')) || 0);
                 x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
@@ -486,6 +507,7 @@ $(document).ready(function () {
         var tableJoin = $('#tableJoin2').find(':selected').val();
         var value1 = $('#value1').find(':selected').val();
         var value2 = $('#value2').find(':selected').val();
+
         var dataJoin = {
             "joinGenerer": table,
             "id": id,
@@ -512,8 +534,7 @@ $(document).ready(function () {
             y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
             id_premier = $(target1).attr('id');
 
-            var table2 = '#' + table;
-            target2 = $(table2);
+            target2 = $('#' + forme);
             x2 = (parseFloat(target2.attr('data-x')) || 0);
             y2 = (parseFloat(target2.attr('data-y')) || 0);
             x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
@@ -539,7 +560,7 @@ $(document).ready(function () {
 
     $('#table2').on('change', function () {
         $('#optGroupColonne').html('<option value="null"></option>');
-        var dataForm = "fromInput=" + $('#table2').find(":selected").val();
+        var dataForm = "fromInput=" + $('#table2').find(":selected").text();
         ajaxPost(dataForm, function (data) {
             console.log(data)
             for (var i = 0; i < data.length; i++) {
@@ -550,9 +571,9 @@ $(document).ready(function () {
 
     $('#tableJoin1').on('change', function () {
         $('#optGroupJoin1').html('<option value="null"></option>');
-        var dataForm = "fromInput=" + $('#tableJoin1').find(":selected").val();
+        var dataForm = "fromInput=" + $('#tableJoin1').find(":selected").text();
         ajaxPost(dataForm, function (data) {
-            console.log(data)
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 $('#optGroupJoin1').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
             }
@@ -561,9 +582,9 @@ $(document).ready(function () {
 
     $('#tableJoin2').on('change', function () {
         $('#optGroupJoin2').html('<option value="null"></option>');
-        var dataForm = "fromInput=" + $('#tableJoin2').find(":selected").val();
+        var dataForm = "fromInput=" + $('#tableJoin2').find(":selected").text();
         ajaxPost(dataForm, function (data) {
-            console.log(data)
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 $('#optGroupJoin2').append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
             }
