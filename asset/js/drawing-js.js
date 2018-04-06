@@ -668,7 +668,7 @@ $(document).ready(function () {
             var fromText = data.from;
             var whereText = data.where;
             var grouptext = data.group;
-            var order = data.order;
+            //var order = data.order;
             $('#codeWhere').html(whereText);
             $('#codeSelect').html(selectText);
             $('#codeFrom').html(fromText);

@@ -16,6 +16,7 @@
           <code id="codeFrom"></code><br>
           <div id="divCodeJoin"><code id="codeJoin"></code><br></div>
           <code id="codeWhere"></code>
+          <code id="codeGroup"></code>
       </div>
       <div class="modal-footer">
         <div class="btn-group" role="group" aria-label="...">
