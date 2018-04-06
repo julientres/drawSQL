@@ -94,17 +94,6 @@ $table = $help->allTables($_SESSION['bdd']);
                               stroke-width="2"></path>
                     </svg>
                 </button>
-                <!--<button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
-                <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
-                <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
-                -->
-                <button id="link" class="list-group-item list-group-item-action" data-toggle="tooltip"
-                        data-placement="right" data-processing="false" title="LINE">
-                    <svg height="50" width="100">
-                        <polyline id="polyLine" points="10,40 90,10" fill="none" stroke="#000"
-                                  stroke-width="2"></polyline>
-                    </svg>
-                </button>
             </ul>
         </div>
         <div id="drawing">

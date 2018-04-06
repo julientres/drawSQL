@@ -14,8 +14,7 @@
       <div class="modal-body">
           <code id="codeSelect"></code><br>
           <code id="codeFrom"></code><br>
-          <div id="divCodeJoin"><code id="codeJoin"></code><br></div>
-          <code id="codeWhere"></code>
+          <code id="codeWhere"></code><br>
           <code id="codeGroup"></code>
       </div>
       <div class="modal-footer">
