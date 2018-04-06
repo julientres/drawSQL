@@ -906,6 +906,41 @@ $(document).ready(function () {
             }
         })
 
+    //drag grid
+    var el = $('#drawing');
+    interact('#drawing')
+        .draggable({
+            // enable inertial throwing
+            inertia: true,
+            // keep the element within the area of it's parent
+            restrict: {
+              restriction: el,
+              endOnly: true,
+              elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+            },
+            // enable autoScroll
+            autoScroll: true,
+
+            // call this function on every dragmove event
+            onmove: function(event) {                    
+                if(event.clientX <= $("#drawing").width() - 10 && event.clientY <= $("#drawing").height() - 10) {
+                    $('.form').each(function(){
+                        if($(this).attr('is-child') == undefined) { 
+                            var x = (parseFloat($(this).attr('data-x')) || 0) + event.dx,
+                            y = (parseFloat($(this).attr('data-y')) || 0) + event.dy;
+
+                            if(x > 0 && y >0) {
+                                $(this).css('transform', 'translate(' + x + 'px, ' + y + 'px)');
+
+                                $(this).attr('data-x', x);
+                                $(this).attr('data-y', y);
+                            }                            
+                        }      
+                    });
+                }
+            }
+        })
+
     $(document).on('click', '.draggable', function (event) {
         event.stopImmediatePropagation();
         event.stopPropagation();
