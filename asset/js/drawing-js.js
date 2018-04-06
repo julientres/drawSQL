@@ -257,7 +257,7 @@ $(document).ready(function () {
             dataSelect += ",";
         });
 
-        var column = dataSelect.substring(0, dataSelect.length - 3);
+        var column = dataSelect.substring(0, dataSelect.length - 1);
         var id = $('#inputSelectId').val();
         var table = $('#table').find(":selected").val();
         var min = $('#selectMin').val();
@@ -396,7 +396,7 @@ $(document).ready(function () {
             var value1 = $('#where3').val();
             var value2 = $('#where4').val();
             var id = $('#inputWhereId').val();
-            var condition = column + " " + operate + " " + value1;
+            var condition = column + " " + operate + " '" + value1 + "'";
             if (column != null && operate != null && value1 != null) {
                 var dataWhere = {
                     "whereGenerer": table,
@@ -663,19 +663,16 @@ $(document).ready(function () {
     $('#btdGenerer').on('click', function () {
         var dataModal = "modal=true";
         ajaxPost(dataModal, function (data) {
+            console.log(data);
             var selectText = data.select;
             var fromText = data.from;
-            if (data.where != null) {
-                var whereText = data.where;
-                $('#codeWhere').html(whereText);
-            }
-            if (data.join != null) {
-                $('#divCodeJoin').show();
-                var joinText = data.join;
-                $('#codeJoin').html(joinText);
-            }
+            var whereText = data.where;
+            var grouptext = data.group;
+            var order = data.order;
+            $('#codeWhere').html(whereText);
             $('#codeSelect').html(selectText);
             $('#codeFrom').html(fromText);
+            $('#codeGroup').html(grouptext);
             $('#generateCodeModal').modal('show');
         });
     });

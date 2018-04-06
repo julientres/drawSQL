@@ -53,6 +53,14 @@ class ExecutionQuery
         $result = $query->fetchAll();
         return $result;
     }
+    public function execQuery($sql)
+    {
+        $bdd = doConnexion();
+        $str = $sql;
+        $query = $bdd['object']->prepare($str);
+        $query->execute();
+        $result = $query->fetchAll();
+        return $result;
+    }
 }
 
-?>
