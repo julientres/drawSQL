@@ -5,7 +5,10 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
 }
-
+/* ------ MODAL -------- */
+.modal-content{
+    padding: 10px!important;
+}
 
 /* ------ ZONE DE DESSIN ------ */
 
