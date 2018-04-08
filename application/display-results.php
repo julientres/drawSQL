@@ -44,18 +44,25 @@ require_once('forms/HelpDataEntry.php');
     <h3>Requête SQL</h3>
     <?php
     $req = $_SESSION['sql'];
-    $req = json_decode($req);
-    echo "<code>" .$req->select . "</code><br>";
-    echo "<code>" . $req->from . "</code><br>";
-    if($req->join != null){
-        echo "<div id='divCodeJoin'><code>" . $req->join . "</code><br>";
+    echo "<code>" .$req['select'] . "</code><br>";
+    echo "<code>" . $req['from'] . "</code><br>";
+    if($req['where'] != null){
+        echo "<code>" . $req['where'] . "</code><br>";
     }
-    if($req->where != null) {
-        echo "<code>" . $req->where . "</code>";
+    if($req['having'] != null){
+        echo "<code>" . $req['order'] . "</code><br>";
+    }
+    if($req['group'] != null){
+        echo "<code>" . $req['group'] . "</code><br>";
+    }
+    if($req['order'] != null){
+        echo "<code>" . $req['order'] . "</code><br>";
     }
     ?>
 </div>
 <div id="results">
+    <h3>Résultat</h3>
+    <div id="err"></div>
     <table class="table table-bordered">
         <thead>
             <tr id="nameColumns">
