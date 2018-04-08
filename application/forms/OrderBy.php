@@ -9,7 +9,7 @@
 		}
 
 		public function getColumn(){
-            return $this->column = $column;
+            return $this->column;
         }
 
 	}

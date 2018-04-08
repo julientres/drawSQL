@@ -13,10 +13,4 @@
         public function getOpera(){
             return $this->operation;
         }
-
-        public function convertToSQL() {
-            $queryFrom = "HAVING ".$this->column. " " . $this->operation;
-
-            return $queryFrom;
-        }
 	}
