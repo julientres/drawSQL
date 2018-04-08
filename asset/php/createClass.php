@@ -369,24 +369,24 @@ if (isset($_GET['idDeleteForm'])) {
         foreach ($formSessionArr as $value) {
             unset($_SESSION[$value]);
         }
-        unset($_SESSION['nbSelect']) ;
-        unset($_SESSION['nbFrom']) ;
-        unset($_SESSION['nbWhere']) ;
-        unset($_SESSION['nbJoin']) ;
-        unset($_SESSION['nbGroup']) ;
-        unset($_SESSION['nbOrder']) ;
-        unset($_SESSION['nbHaving']) ;
+        unset($_SESSION['nbSelect']);
+        unset($_SESSION['nbFrom']);
+        unset($_SESSION['nbWhere']);
+        unset($_SESSION['nbJoin']);
+        unset($_SESSION['nbGroup']);
+        unset($_SESSION['nbOrder']);
+        unset($_SESSION['nbHaving']);
         echo true;
     } else {
         $formSession = $get;
         $form = $_SESSION[$get]['object'];
-        if (is_a($form, 'Select')) unset($_SESSION['nbSelect']) ;
-        if (is_a($form, 'From')) unset($_SESSION['nbFrom']) ;
-        if (is_a($form, 'Where')) unset($_SESSION['nbWhere']) ;
-        if (is_a($form, 'Join')) unset($_SESSION['nbJoin']) ;
-        if (is_a($form, 'GroupBy')) unset($_SESSION['nbGroup']) ;
-        if (is_a($form, 'OrderBy')) unset($_SESSION['nbOrder']) ;
-        if (is_a($form, 'Having')) unset($_SESSION['nbHaving']) ;
+        if (is_a($form, 'Select')) unset($_SESSION['nbSelect']);
+        if (is_a($form, 'From')) unset($_SESSION['nbFrom']);
+        if (is_a($form, 'Where')) unset($_SESSION['nbWhere']);
+        if (is_a($form, 'Join')) unset($_SESSION['nbJoin']);
+        if (is_a($form, 'GroupBy')) unset($_SESSION['nbGroup']);
+        if (is_a($form, 'OrderBy')) unset($_SESSION['nbOrder']);
+        if (is_a($form, 'Having')) unset($_SESSION['nbHaving']);
         unset($_SESSION[$formSession]);
         echo true;
     }
@@ -435,161 +435,133 @@ if (isset($_POST['modal'])) {
                 $selectObj = unserialize($_SESSION[$id]['object']);
                 $column = $selectObj->getColumn();
 
-        for ($i = 0; $i <= $nbHaving; $i++) {
-            $id = "having" . $i;
-            if ($_SESSION[$id]['object'] != null) {
-                $havingObj = unserialize($_SESSION[$id]['object']);
-                $tableHaving = ['column' => $havingObj->getColumn(), 'operate' => $havingObj->getOpera()];
-                array_push($having, $tableHaving);
+                for ($i = 0; $i <= $nbHaving; $i++) {
+                    $id = "having" . $i;
+                    if ($_SESSION[$id]['object'] != null) {
+                        $havingObj = unserialize($_SESSION[$id]['object']);
+                        $tableHaving = ['column' => $havingObj->getColumn(), 'operate' => $havingObj->getOpera()];
+                        array_push($having, $tableHaving);
+                    }
+                }
+                $sqlSelect = "SELECT " . $select[0]['column'];
+                $sqlFrom = " FROM ";
+                foreach ($from as $value) {
+                    $sqlFrom .= $value . ",";
+                }
+                $sqlFrom = rtrim($sqlFrom, ", ");
+                if (isset($join)) {
+                    $sqlWhere = " WHERE " . $join[0]['table'] . "." . $join[0]['value1'] . "=" . $join[0]['tableJoin'] . "." . $join[0]['value2'];
+                    foreach ($where as $value) {
+                        $sqlWhere .= " AND " . $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                    }
+                } else {
+                    $sqlWhere = " WHERE ";
+                    foreach ($where as $value) {
+                        $sqlWhere .= $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                        $sqlWhere .= " AND ";
+                    }
+                }
+                $sqlGroup = " GROUP BY " . $group->getColumn();
+
+                for ($i = 0; $i <= $nbFrom; $i++) {
+                    $id = "from" . $i;
+                    if ($_SESSION[$id]['object'] != null) {
+                        $object = unserialize($_SESSION[$id]['object']);
+                        $tableFrom = $object->getTable();
+                        array_push($from, $tableFrom);
+                    }
+                }
+
+                for ($i = 0; $i <= $nbJoin; $i++) {
+                    $id = "join" . $i;
+                    if ($_SESSION[$id]['object'] != null) {
+                        $joinObj = unserialize($_SESSION[$id]['object']);
+                        $table = $joinObj->getTableJ();
+                        $tableJoin = $joinObj->getTableJoin();
+                        $value1 = $joinObj->getValue1();
+                        $value2 = $joinObj->getValue2();
+                        $tableSelected = ['table' => $table, 'tableJoin' => $tableJoin, 'value1' => $value1, 'value2' => $value2];
+                        array_push($join, $tableSelected);
+                    }
+                }
+
+                for ($i = 0; $i <= $nbWhere; $i++) {
+                    $id = "where" . $i;
+                    if ($_SESSION[$id]['object'] != null) {
+                        $whereObj = unserialize($_SESSION[$id]['object']);
+                        $column = $whereObj->getColumn();
+                        $operate = $whereObj->getOperate();
+                        $value1 = $whereObj->getValue();
+                        $value2 = $whereObj->getValue2();
+                        $tableWhere = ['column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2];
+                        array_push($where, $tableWhere);
+                    }
+                }
+
+                for ($i = 0; $i <= $nbSelect; $i++) {
+                    $id = "select" . $i;
+                    if ($_SESSION[$id]['object'] != null) {
+                        $selectObj = unserialize($_SESSION[$id]['object']);
+                        $column = $selectObj->getColumn();
+
+                        /*$min = $selectObj->getMin();
+                        $max = $selectObj->getMax();
+                        $count = $selectObj->getCount();
+                        $avg = $selectObj->getAvg();
+                        $sum = $selectObj->getSum();*/
+
+                        $tableSelected = ['column' => $column, 'min' => $min, 'max' => $max, 'count' => $count, 'avg' => $avg, 'sum' => $sum];
+                        array_push($select, $tableSelected);
+
+                    }
+                }
+
+
+                if (isset($select) && !empty($select)) {
+                    $sqlSelect = "SELECT " . $select[0]['column'];
+                } else {
+                    $sqlSelect = null;
+                }
+                if (isset($from) && !empty($from)) {
+                    $sqlFrom = " FROM ";
+                    foreach ($from as $value) {
+                        $sqlFrom .= $value . ",";
+                    }
+                    $sqlFrom = rtrim($sqlFrom, ", ");
+                } else {
+                    $sqlFrom = null;
+                }
+
+                if (isset($join) && !empty($join)) {
+                    $sqlWhere = " WHERE " . $join[0]['table'] . "." . $join[0]['value1'] . "=" . $join[0]['tableJoin'] . "." . $join[0]['value2'];
+                    foreach ($where as $value) {
+                        $sqlWhere .= " AND " . $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                    }
+                } else if (isset($where) && !empty($where)) {
+                    $sqlWhere = " WHERE ";
+                    foreach ($where as $value) {
+                        $sqlWhere .= $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                        $sqlWhere .= " AND ";
+                    }
+                } else {
+                    $sqlWhere = null;
+                }
+
+                if (isset($group) && !empty($group)) {
+                    $sqlGroup = " GROUP BY " . $group->getColumn();
+                } else {
+                    $sqlGroup = null;
+                }
+
+                //$sqlOrder = " ORDER BY " . $order->getColumn();
+
+
+                $sql = ['select' => $sqlSelect, 'from' => $sqlFrom, 'where' => $sqlWhere, 'group' => $sqlGroup];
+                echo json_encode($sql);
             }
         }
-        $sqlSelect = "SELECT " . $select[0]['column'];
-        $sqlFrom = " FROM ";
-        foreach ($from as $value) {
-            $sqlFrom .= $value . ",";
-        }
-        $sqlFrom = rtrim($sqlFrom, ", ");
-        if (isset($join)) {
-            $sqlWhere = " WHERE " . $join[0]['table'] . "." . $join[0]['value1'] . "=" . $join[0]['tableJoin'] . "." . $join[0]['value2'];
-            foreach ($where as $value) {
-                $sqlWhere .= " AND " . $value['column'] . $value['operate']. "'". $value['value1']."'";
-            }
-        } else {
-            $sqlWhere = " WHERE ";
-            foreach ($where as $value) {
-                $sqlWhere .= $value['column'] . $value['operate']. "'".$value['value1']. "'";
-                $sqlWhere .= " AND ";
-            }
-        }
-        $sqlGroup = " GROUP BY " . $group->getColumn();
-
-        for ($i = 0; $i <= $nbFrom; $i++) {
-            $id = "from" . $i;
-            if ($_SESSION[$id]['object'] != null) {
-                $object = unserialize($_SESSION[$id]['object']);
-                $tableFrom = $object->getTable();
-                array_push($from, $tableFrom);
-            }
-        }
-
-        for ($i = 0; $i <= $nbJoin; $i++) {
-            $id = "join" . $i;
-            if ($_SESSION[$id]['object'] != null) {
-                $joinObj = unserialize($_SESSION[$id]['object']);
-                $table = $joinObj->getTableJ();
-                $tableJoin = $joinObj->getTableJoin();
-                $value1 = $joinObj->getValue1();
-                $value2 = $joinObj->getValue2();
-                $tableSelected = ['table' => $table, 'tableJoin' => $tableJoin, 'value1' => $value1, 'value2' => $value2];
-                array_push($join, $tableSelected);
-            }
-        }
-
-        for ($i = 0; $i <= $nbWhere; $i++) {
-            $id = "where" . $i;
-            if ($_SESSION[$id]['object'] != null) {
-                $whereObj = unserialize($_SESSION[$id]['object']);
-                $column = $whereObj->getColumn();
-                $operate = $whereObj->getOperate();
-                $value1 = $whereObj->getValue();
-                $value2 = $whereObj->getValue2();
-                $tableWhere = ['column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2];
-                array_push($where, $tableWhere);
-            }
-        }
-
-        for ($i = 0; $i <= $nbSelect; $i++) {
-            $id = "select" . $i;
-            if ($_SESSION[$id]['object'] != null) {
-                $selectObj = unserialize($_SESSION[$id]['object']);
-                $column = $selectObj->getColumn();
-
-                /*$min = $selectObj->getMin();
-                $max = $selectObj->getMax();
-                $count = $selectObj->getCount();
-                $avg = $selectObj->getAvg();
-                $sum = $selectObj->getSum();*/
-
-                $tableSelected = ['column' => $column, 'min' => $min, 'max' => $max, 'count' => $count, 'avg' => $avg, 'sum' => $sum];
-                array_push($select, $tableSelected);
-
-            }
-        }
-
-
-        if (isset($select) && !empty($select)) {
-            $sqlSelect = "SELECT " . $select[0]['column'];
-        } else {
-            $sqlSelect = null;
-        }
-        if (isset($from) && !empty($from)) {
-            $sqlFrom = " FROM ";
-            foreach ($from as $value) {
-                $sqlFrom .= $value . ",";
-            }
-            $sqlFrom = rtrim($sqlFrom, ", ");
-        } else {
-            $sqlFrom = null;
-        }
-
-        if (isset($join) && !empty($join)) {
-            $sqlWhere = " WHERE " . $join[0]['table'] . "." . $join[0]['value1'] . "=" . $join[0]['tableJoin'] . "." . $join[0]['value2'];
-            foreach ($where as $value) {
-                $sqlWhere .= " AND " . $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
-            }
-        } else if (isset($where) && !empty($where)) {
-            $sqlWhere = " WHERE ";
-            foreach ($where as $value) {
-                $sqlWhere .= $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
-                $sqlWhere .= " AND ";
-            }
-        } else {
-            $sqlWhere = null;
-        }
-
-        if (isset($group) && !empty($group)) {
-            $sqlGroup = " GROUP BY " . $group->getColumn();
-        } else {
-            $sqlGroup = null;
-        }
-
-        //$sqlOrder = " ORDER BY " . $order->getColumn();
-
-
-        $sql = ['select' => $sqlSelect, 'from' => $sqlFrom, 'where' => $sqlWhere, 'group' => $sqlGroup];
-        echo json_encode($sql);
     }
-
-
-    /*$myObj = new stdClass();
-    $select = unserialize($_SESSION['select']);
-    $from = unserialize($_SESSION['from']);
-
-    $tabSelect = $select->convertToSQL();
-    $tabFrom = $from->convertToSQL();
-
-
-    $myObj->select = $tabSelect;
-
-    $myObj->from = $tabFrom;
-
-    if (isset($_SESSION['join'])) {
-        $join = unserialize($_SESSION['join']);
-        $tabJoin = $join->convertToSQL();
-        $myObj->join = $tabJoin;
-    }
-
-    if (isset($_SESSION['where'])) {
-        $where = unserialize($_SESSION['where']);
-        $tabWhere = $where->convertToSQL();
-        $myObj->where = $tabWhere;
-    }
-
-    $myJson = json_encode($myObj);
-    $_SESSION['sql'] = $myJson;
-    echo $myJson;*/
 }
-
 
 if (isset($_POST['result'])) {
     if ($_POST['result']) {

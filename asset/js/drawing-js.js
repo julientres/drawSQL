@@ -390,7 +390,6 @@ $(document).ready(function () {
             var idTable = $('#table2').find(":selected").val()
             var column = $('#modalWhere #where1').find(":selected").text();
             var operate = $('#modalWhere #where2').find(":selected").text();
-            console.log(operate);
             var value2 = $('#where4').val();
             var id = $('#inputWhereId').val();
             var value1 = $('#where3').val();
@@ -440,42 +439,35 @@ $(document).ready(function () {
             var y_1 = 0;
             var y_2 = 0;
             var x_2 = 0;
+            var id_second;
+            var id_premier;
 
             if (x_1 == 0 && y_1 == 0) {
                 var join = "#" + id;
-            var id_second;
-            var id_premier;
                 var target1 = $(join);
-                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
-                id_premier = $(target1).attr('id');
                 x = (parseFloat(target1.attr("data-x")) || 0);
                 y = (parseFloat(target1.attr('data-y')) || 0);
+                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
                 x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
+                id_premier = $(target1).attr('id');
 
-                target2 = $(forme);
-                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+
                 var forme = '#' + idTable;
+                target2 = $(forme);
                 y2 = (parseFloat(target2.attr('data-y')) || 0);
                 x2 = (parseFloat(target2.attr('data-x')) || 0);
-
+                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
                 y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
                 id_second = $(target2).attr('id');
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
 
-                if (idLine == test) {
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                    var html = '#' + idLine;
-                } else {
+                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+
                 nb_links++;
                 links[nb_links] = {
-                }
-                    forme2: id_second
-                    forme1: id_premier,
-
+                    forme2: id_second,
+                    forme1: id_premier
                 };
+
             }
         }
     );
