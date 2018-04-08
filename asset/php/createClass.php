@@ -29,18 +29,25 @@ if (isset($_POST['fromInput'])) {
         $name1 = $help->showResultsColumns($column1);
         $column2 = $help->columnsFromTable($tableJoin, $_SESSION['bdd']);
         $name2 = $help->showResultsColumns($column2);
+
         foreach (json_decode($name1) as $value) {
             array_push($array, $table . "." . $value->name);
         }
         foreach (json_decode($name2) as $value) {
             array_push($array, $tableJoin . "." . $value->name);
         }
+        $tabColumn = [];
+        array_push($tabColumn,$column1);
+        array_push($tabColumn,$column2);
+
+        $_SESSION['column'] = $tabColumn;
         echo json_encode($array);
     } else {
         $fromSelect = $_POST['fromInput'];
         $column = $help->columnsFromTable($fromSelect, $_SESSION['bdd']);
+        $_SESSION['column'] = $column;
         $name = $help->showResultsColumns($column);
-        $_SESSION['name'] = $name;
+        $_SESSION['name'] = json_decode($name);
         echo $help->showResultsColumns($column);
     }
 }
@@ -376,11 +383,12 @@ if (isset($_GET['idDeleteForm'])) {
         unset($_SESSION['nbGroup']);
         unset($_SESSION['nbOrder']);
         unset($_SESSION['nbHaving']);
+        unset($_SESSION['column']);
         echo true;
     } else {
         $formSession = $get;
         $form = $_SESSION[$get]['object'];
-        if (is_a($form, 'Select')) unset($_SESSION['nbSelect']);
+        if (is_a($form, 'Select')) unset($_SESSION['nbSelect'],$_SESSION['column']) ;
         if (is_a($form, 'From')) unset($_SESSION['nbFrom']);
         if (is_a($form, 'Where')) unset($_SESSION['nbWhere']);
         if (is_a($form, 'Join')) unset($_SESSION['nbJoin']);
@@ -467,7 +475,8 @@ if (isset($_POST['modal'])) {
                 $operate = $whereObj->getOperate();
                 $value1 = $whereObj->getValue();
                 $value2 = $whereObj->getValue2();
-                $tableWhere = ['column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2];
+                $table = $_SESSION[$id]['table'];
+                $tableWhere = ['table' => $table , 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2];
                 array_push($where, $tableWhere);
             }
         }
@@ -509,28 +518,28 @@ if (isset($_POST['modal'])) {
         if (isset($join) && !empty($join)) {
             $sqlWhere = " WHERE " . $join[0]['table'] . "." . $join[0]['value1'] . "=" . $join[0]['tableJoin'] . "." . $join[0]['value2'];
             foreach ($where as $value) {
-                $sqlWhere .= " AND " . $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                $sqlWhere .= " AND " . $value['table'].".".$value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
             }
         } else if (isset($where) && !empty($where)) {
             $sqlWhere = " WHERE ";
             foreach ($where as $value) {
-                $sqlWhere .= $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
-                $sqlWhere .= " AND ";
+                $sqlWhere .= $value['table'].".".$value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                if(count($where) > 1) $sqlWhere .= " AND ";
             }
         } else {
             $sqlWhere = null;
         }
 
         if (isset($group) && !empty($group)) {
-            $sqlGroup = " GROUP BY " . $group->getColumn();
+            $sqlGroup = " GROUP BY " . $group[0];
         } else {
             $sqlGroup = null;
         }
-
         //$sqlOrder = " ORDER BY " . $order->getColumn();
 
 
         $sql = ['select' => $sqlSelect, 'from' => $sqlFrom, 'where' => $sqlWhere, 'group' => $sqlGroup];
+        $_SESSION['sql'] = $sql;
         echo json_encode($sql);
     }
 }
@@ -538,49 +547,26 @@ if (isset($_POST['modal'])) {
 
 if (isset($_POST['result'])) {
     if ($_POST['result']) {
-        $select = unserialize($_SESSION['select']);
-        $from = unserialize($_SESSION['from']);
 
-        $tabSelect = $select->convertToSQL();
-        $tabFrom = $from->convertToSQL();
+        $sql = $_SESSION['sql'];
+        $select = $sql['select'];
+        $from = $sql['from'];
+        $where = $sql['where'];
+        $group = $sql['group'];
 
-        if (isset($_SESSION['where'])) {
-            $where = unserialize($_SESSION['where']);
-            $tabWhere = $where->convertToSQL();
-            $execution = new ExecutionQuery($tabSelect, $tabFrom, $tabWhere);
-            $_SESSION['exec'] = "" . $tabSelect . " " . $tabFrom . " " . $tabWhere . "";
-        } elseif (isset($_SESSION['join'])) {
-            $join = unserialize($_SESSION['join']);
-            $tabJoin = $join->convertToSQL();
-            $execution = new ExecutionQuery($tabSelect, $tabFrom, $tabJoin);
-            $_SESSION['exec'] = "" . $tabSelect . " " . $tabFrom . " " . $tabJoin . "";
-        } elseif (isset($_SESSION['where']) && isset($_SESSION['join'])) {
-            $join = unserialize($_SESSION['join']);
-            $tabJoin = $join->convertToSQL();
-            $where = unserialize($_SESSION['where']);
-            $tabWhere = $where->convertToSQL();
-            $execution = new ExecutionQuery($tabSelect, $tabFrom, $tabJoin);
-            $_SESSION['exec'] = "" . $tabSelect . " " . $tabFrom . " " . $tabJoin . " " . $tabWhere . "";
-        } else {
-            $execution = new ExecutionQuery($tabSelect, $tabFrom);
-            $_SESSION['exec'] = "" . $tabSelect . " " . $tabFrom . "";
-        }
-        $result = $execution->exec();
+        $req = $select . " " . $from . " " . $where . " " . $group;
+        $execution = new ExecutionQuery();
+        $result = $execution->execQuery($req);
+
         $table = [];
         array_push($table, array('resultat' => $result));
         $column = $_SESSION['column'];
-        //var_dump($column);
-        if ($column == '*') {
-            $name = $_SESSION['name'];
-            array_push($table, array('column' => json_decode($name)));
-        } else {
-            $name = explode(",", $column);
-            $tableName = [];
-            for ($i = 0; $i < sizeof($name); $i++) {
-                array_push($tableName, array('name' => $name[$i]));
-            }
-            array_push($table, array('column' => $tableName));
-        }
+        array_push($table, array('column' => $column));
+
+
+        //var_dump($table);
+        //var_dump($_SESSION['column']);
+        //var_dump($_SESSION['name']);
 
         echo json_encode($table);
     }
