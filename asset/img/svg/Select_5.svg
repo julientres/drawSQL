@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 444.1 234" style="enable-background:new 0 0 444.1 234;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#000000;stroke-miterlimit:10;}
+</style>
+<g>
+	<g id="XMLID_2_">
+		<g>
+			<polygon class="st0" points="222,84 28,84 18,54 0,0 444.1,0 426.1,54 416.1,84 			"/>
+			<polygon class="st0" points="222,204 222,234 78,234 68,204 			"/>
+			<polygon class="st0" points="376.1,204 366.1,234 222,234 222,204 			"/>
+			<polygon class="st0" points="416.1,84 406.1,114 222,114 222,84 			"/>
+			<polygon class="st0" points="406.1,114 396.1,144 222,144 222,114 			"/>
+			<polygon class="st0" points="396.1,144 386.1,174 222,174 222,144 			"/>
+			<polygon class="st0" points="386.1,174 376.1,204 222,204 222,174 			"/>
+			<polygon class="st0" points="222,174 222,204 68,204 58,174 			"/>
+			<polygon class="st0" points="222,144 222,174 58,174 48,144 			"/>
+			<polygon class="st0" points="222,114 222,144 48,144 38,114 			"/>
+			<polygon class="st0" points="222,84 222,114 38,114 28,84 			"/>
+		</g>
+		<g>
+			<line class="st1" x1="0" y1="0" x2="444.1" y2="0"/>
+			<polyline class="st1" points="68,204 222,204 376.1,204 			"/>
+			<polyline class="st1" points="0,0 18,54 28,84 38,114 48,144 58,174 68,204 78,234 			"/>
+			<polyline class="st1" points="444.1,0 426.1,54 416.1,84 406.1,114 396.1,144 386.1,174 376.1,204 366.1,234 			"/>
+			<polyline class="st1" points="222,234 222,204 222,174 			"/>
+			<polyline class="st1" points="58,174 222,174 386.1,174 			"/>
+			<line class="st1" x1="222" y1="174" x2="222" y2="144"/>
+			<polyline class="st1" points="48,144 222,144 396.1,144 			"/>
+			<line class="st1" x1="222" y1="144" x2="222" y2="114"/>
+			<polyline class="st1" points="38,114 222,114 406.1,114 			"/>
+			<line class="st2" x1="366.1" y1="234" x2="222" y2="234"/>
+			<line class="st2" x1="78" y1="234" x2="222" y2="234"/>
+		</g>
+	</g>
+</g>
+<line class="st1" x1="222" y1="113" x2="222" y2="83"/>
+<line class="st1" x1="28" y1="84" x2="416.1" y2="84"/>
+</svg>

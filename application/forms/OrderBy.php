@@ -1,19 +1,15 @@
 <?php
-	class OrderBy extends Form {
+	class OrderBy{
 		private $column;
 		private $order;
 
-		public function __construct($image, $column, $order) {
-			super($image);
+		public function __construct($column, $order) {
 			$this->column = $column;
 			$this->order = $order;
 		}
 
-		public function convertToSQL($c, $o) {
-			$queryOrderBy = array("index" => 7,
-							"query" => "ORDER BY ");
+		public function getColumn(){
+            return $this->column;
+        }
 
-			return $queryOrderBy;
-		}
 	}
-?>
