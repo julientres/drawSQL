@@ -545,6 +545,19 @@ $(document).ready(function () {
                             y = (parseFloat($(this).attr('data-y')) || 0) + event.dy;
 
                             if(x > 0 && y > 0) {
+                                if(links.length != 0) {                                    
+                                    for (var i = 1; i < links.length; i++) {
+                                        if (links[i].forme1 == $(this).attr('id')) {
+                                            $('#' + links[i].forme1 + '-' + links[i].forme2 + '').find('line').attr('x1', x+50);
+                                            $('#' + links[i].forme1 + '-' + links[i].forme2 + '').find('line').attr('y1', y+50);
+                                        }
+                                        if (links[i].forme2 == $(this).attr('id')) {
+                                            $('#' + links[i].forme1 + '-' + links[i].forme2 + '').find('line').attr('x2', x+50);
+                                            $('#' + links[i].forme1 + '-' + links[i].forme2 + '').find('line').attr('y2', y+50);
+                                        }
+                                    }
+                                }
+
                                 $(this).css('transform', 'translate(' + x + 'px, ' + y + 'px)');
 
                                 $(this).attr('data-x', x);
@@ -573,7 +586,7 @@ $(document).ready(function () {
                 var arrayToDelete = {};
                 $('.draggable').each(function(index) {
                     arrayToDelete[index] = $(this).attr('id');
-                })
+                })                
 
                 var idDeleteForm = {'idDeleteForm':arrayToDelete}
                 ajaxGet(idDeleteForm, function() {
