@@ -225,7 +225,7 @@ $table = $help->allTables($_SESSION['bdd']);
                     </select>
                     <br>
                     <br>
-                    <input type="text" class="form-control input-group" id="where3" maxlength="100">
+                    <input type="text" class="form-control input-group" id="where3" maxlength="200">
                     <br>
                     <div id="divBetween">
                         <p>And</p>
