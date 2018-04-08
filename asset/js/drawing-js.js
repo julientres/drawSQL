@@ -65,10 +65,9 @@ $(document).ready(function () {
         if (type == 'select') {
             var dataSelect = "select=" + id;
             ajaxPost(dataSelect, function (data) {
-                console.log(data);
                 if (data.column == null) {
                     $('#inputSelectId').val(data.id);
-                    $('#table #optGroupSelect option').each(function () {
+                    $('#optGroupSelect option').each(function () {
                         $(this).prop("selected", false);
                     });
                     $("#divSelect input:checkbox").each(function () {
@@ -76,14 +75,15 @@ $(document).ready(function () {
                     });
                     $('#modalSelect').modal('show');
                 } else {
+                    $('#inputSelectId').val(data.id);
                     $("#divSelect input:checkbox").each(function () {
                         $('#inputSelectId').val(data.id);
-                        if (data.column === $(this).val()) {
+                        if (data.column == $(this).val()) {
                             $(this).prop("checked", true);
                         }
                     });
-                    $('#table #optGroupSelect option').each(function () {
-                        if (data.table === $(this).val()) {
+                    $('#optGroupSelect option').each(function () {
+                        if (data.table == $(this).val()) {
                             $(this).prop("selected", true);
                         }
                     });
@@ -432,7 +432,7 @@ $(document).ready(function () {
                 }else{
                     $(where).css("width", "250px");
                 }
-                $(where + " > .add-button").css('left', '250px'); 
+                $(where + " > .add-button").css('left', '250px');
 
             }
             var x_1 = 0;
@@ -682,12 +682,16 @@ $(document).ready(function () {
             var selectText = data.select;
             var fromText = data.from;
             var whereText = data.where;
-            var grouptext = data.group;
-            //var order = data.order;
-            $('#codeWhere').html(whereText);
-            $('#codeSelect').html(selectText);
-            $('#codeFrom').html(fromText);
-            $('#codeGroup').html(grouptext);
+            var groupText = data.group;
+            var orderText = data.order;
+            var havingText = data.having;
+
+            if(whereText != null) $('#codeWhere').html(whereText);
+            if(selectText != null) $('#codeSelect').html(selectText);
+            if(fromText != null) $('#codeFrom').html(fromText);
+            if(orderText != null) $('#codeOrder').html(orderText);
+            if(groupText != null) $('#codeGroup').html(groupText);
+            if(havingText != null) $('#codeHaving').html(havingText);
             $('#generateCodeModal').modal('show');
         });
     });
@@ -937,15 +941,15 @@ $(document).ready(function () {
             autoScroll: true,
 
             // call this function on every dragmove event
-            onmove: function(event) {                    
+            onmove: function(event) {
                 if(event.clientX <= $("#drawing").width() - 10 && event.clientY <= $("#drawing").height() - 10) {
                     $('.form').each(function(){
-                        if($(this).attr('is-child') == undefined) { 
+                        if($(this).attr('is-child') == undefined) {
                             var x = (parseFloat($(this).attr('data-x')) || 0) + event.dx,
                             y = (parseFloat($(this).attr('data-y')) || 0) + event.dy;
 
                             if(x > 0 && y > 0) {
-                                if(links.length != 0) {                                    
+                                if(links.length != 0) {
                                     for (var i = 1; i < links.length; i++) {
                                         if (links[i].forme1 == $(this).attr('id')) {
                                             $('#' + links[i].forme1 + '-' + links[i].forme2 + '').find('line').attr('x1', x+50);
@@ -962,8 +966,8 @@ $(document).ready(function () {
 
                                 $(this).attr('data-x', x);
                                 $(this).attr('data-y', y);
-                            }                            
-                        }      
+                            }
+                        }
                     });
                 }
             }
@@ -1130,59 +1134,133 @@ $(document).ready(function () {
         }
     }
 
+
+    var numMin = 0;
+    var numMax = 0;
+    var numCount = 0;
+    var numAvg = 0;
+    var numSum = 0;
+    var numHaving = 0;
+    var numGroupBy = 0;
+    var numOrderBy = 0;
+
+    tabAgregat = [];
+
     $('#min').on("click", function () {
+        numMin ++;
+        var id = "min" + numMin;
+        tabAgregat.push(id);
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="min">MIN </label>' +
-                '<input class="form-control function-form" id="selectMin" type="text">');
+                '<input class="form-control function-form" id="selectMin" data-agre="'+ id + '" type="text">' +
+                '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '">' +
+                '<span  aria-hidden="true">×</span>' +
+                '</button>');
         }
     });
 
     $('#max').on("click", function () {
+        numMax ++;
+        var id = "max" + numMax;
+        tabAgregat.push(id);
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="max">MAX </label>' +
-                '<input class="form-control function-form" id="selectMax" type="text">');
+                '<input class="form-control function-form" id="selectMax" data-agre="'+ id + '" type="text">' +
+                '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                '<span aria-hidden="true">×</span>' +
+                '</button>');
         }
     });
 
     $('#count').on("click", function () {
+        numCount ++;
+        var id = "count" + numCount;
+        tabAgregat.push(id);
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label  for="count">COUNT </label>' +
-                '<input class="form-control function-form" id="selectCount" type="text">');
+                '<input class="form-control function-form" id="selectCount" data-agre="'+ id + '" type="text">' +
+                '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                '<span aria-hidden="true">×</span>' +
+                '</button>');
         }
     });
 
     $('#avg').on("click", function () {
+        numAvg ++;
+        var id = "avg" + numAvg;
+        tabAgregat.push(id);
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="avg">AVG </label>' +
-                '<input class="form-control function-form" id="selectAvg" type="text">');
+                '<input class="form-control function-form" id="selectAvg" data-agre="'+ id + '" type="text">' +
+                '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                '<span aria-hidden="true">×</span>' +
+                '</button>');
         }
     });
 
     $('#sum').on("click", function () {
+        numSum ++;
+        var id = "sum" + numSum;
+        tabAgregat.push(id);
         if ($("#function_select > input").length < 5) {
             $("#function_select").append('<label for="sum">SUM </label>' +
-                '<input class="form-control function-form" id="selectSum" type="text">');
+                '<input class="form-control function-form" id="selectSum" data-agre="'+ id + '" type="text">' +
+                '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                '<span aria-hidden="true">×</span>' +
+                '</button>');
         }
     });
 
     $('#having').on("click", function () {
-        if ($("#function_select > input").length < 5) {
-            $("#function_select").append('<label for="having">HAVING </label>' +
-                '<input class="form-control function-form" id="selectHaving" type="text">');
+        if (numHaving < 1) {
+            numHaving ++;
+            var id = "having" + numHaving;
+            tabAgregat.push(id);
+            if ($("#function_select > input").length < 5) {
+                $("#function_select").append('<label for="having">HAVING </label>' +
+                    '<input class="form-control function-form" id="selectHaving" data-agre="'+ id + '" type="text">' +
+                    '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                    '<span aria-hidden="true">×</span>' +
+                    '</button>');
+            }
         }
     });
 
     $('#groupby').on("click", function () {
-        if ($("#function_select > input").length < 5) {
-            $("#function_select").append('<label for="groupby">GROUPBY </label>' +
-                '<input class="form-control function-form" id="selectGroup" type="text">');
+        if (numGroupBy < 1) {
+            numGroupBy ++;
+            var id = "group" + numGroupBy;
+            tabAgregat.push(id);
+            if ($("#function_select > input").length < 5) {
+                $("#function_select").append('<label for="groupby">GROUPBY </label>' +
+                    '<input class="form-control function-form" id="selectGroup" data-agre="'+ id + '" type="text">' +
+                    '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                    '<span aria-hidden="true">×</span>' +
+                    '</button>');
+            }
         }
     });
 
     $('#orderby').on("click", function () {
-        if ($("#function_select > input").length < 5) {
-            $("#function_select").append('<label  for="orderby">ORDERBY </label>' +
-                '<input class="form-control function-form" id="selectOrder" type="text">');
+        if (numOrderBy < 1) {
+            numOrderBy ++;
+            var id = "order" + numOrderBy;
+            tabAgregat.push(id);
+            if ($("#function_select > input").length < 5) {
+                $("#function_select").append('<label  for="orderby">ORDERBY </label>' +
+                    '<input class="form-control function-form" id="selectOrder" data-agre="'+ id + '" type="text">' +
+                    '<button type="button" class="close" id="btdAgrega" data-adrebtd="'+ id + '" aria-label="Close">' +
+                    '<span aria-hidden="true">×</span>' +
+                    '</button>');
+            }
         }
     });
+
+    $('#function_select #btdAgrega').on('click', function (){
+        console.log("click !");
+        var btd = $(this).attr('data-adrebtd');
+        $('#selectOrder').find('[data-agre="' + btd + '"').val("");
+        $('#selectOrder').find('[data-agre="' + btd + '"').remove();
+    });
+
 });
