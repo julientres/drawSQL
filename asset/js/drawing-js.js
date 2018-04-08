@@ -419,14 +419,32 @@ $(document).ready(function () {
                 console.log(dataWhere);
                 var where = '#' + id;
                 $(where + " > .img-form").remove();
-                $(where).append('<img class="img-form"src="../asset/img/svg/Where_b.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(where).css("width", "250px");
-                $(where).css("height", "100px");
-                $(where + " > .add-button").css('left', '250px');
                 if (condition != null) {
                     $(where + ' > .where-condition').remove();
                     $(where).append('<p class="where-condition">' + condition + '</p>');
                 }
+                var heightp = $(where + ' > .where-condition').height();
+                if(heightp <= 21){
+                    $(where).append('<img class="img-form"src="../asset/img/svg/Where_1.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                    $(where).css("width", "250px");
+                }else if(heightp <= 42){
+                    $(where).append('<img class="img-form"src="../asset/img/svg/Where_2.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                    $(where).css("width", "250px");
+                }else if(heightp <= 63){
+                    $(where).append('<img class="img-form"src="../asset/img/svg/Where_3.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                    $(where).css("width", "250px");
+                }else if(heightp <= 84){
+                    $(where).append('<img class="img-form"src="../asset/img/svg/Where_4.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                    $(where).css("width", "250px");
+                }else if(heightp <= 105){
+                    $(where).append('<img class="img-form"src="../asset/img/svg/Where_5.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                    $(where).css("width", "250px");
+                }else{
+                    $(where).append('<img class="img-form"src="../asset/img/svg/Where_6.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                    $(where).css("width", "250px");
+                }
+                $(where + " > .add-button").css('left', '250px'); 
+
             }
 
             var x_1 = 0;
@@ -437,36 +455,40 @@ $(document).ready(function () {
             var id_second;
 
             if (x_1 == 0 && y_1 == 0) {
+                
                 var join = "#" + id;
-                var target1 = $(join);
-                x = (parseFloat(target1.attr("data-x")) || 0);
-                y = (parseFloat(target1.attr('data-y')) || 0);
-                x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
-                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
-                id_premier = $(target1).attr('id');
+                
+                if(idTable != 'null'){
+                    var target1 = $(join);
+                    x = (parseFloat(target1.attr("data-x")) || 0);
+                    y = (parseFloat(target1.attr('data-y')) || 0);
+                    x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
+                    y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
+                    id_premier = $(target1).attr('id');
 
-                var forme = '#' + idTable;
-                target2 = $(forme);
-                x2 = (parseFloat(target2.attr('data-x')) || 0);
-                y2 = (parseFloat(target2.attr('data-y')) || 0);
-                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
-                y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
-                id_second = $(target2).attr('id');
+                    var forme = '#' + idTable;
+                    target2 = $(forme);
+                    x2 = (parseFloat(target2.attr('data-x')) || 0);
+                    y2 = (parseFloat(target2.attr('data-y')) || 0);
+                    x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+                    y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
+                    id_second = $(target2).attr('id');
 
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
-                if (idLine == test) {
-                    var html = '#' + idLine;
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                } else {
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                    var idLine = $('.line').attr("data-id");
+                    var test = id_premier + '-' + id_second;
+                    if (idLine == test) {
+                        var html = '#' + idLine;
+                        $(html).remove();
+                        $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                    } else {
+                        $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                    }
+                    nb_links++;
+                    links[nb_links] = {
+                        forme1: id_premier,
+                        forme2: id_second
+                    };
                 }
-                nb_links++;
-                links[nb_links] = {
-                    forme1: id_premier,
-                    forme2: id_second
-                };
 
             }
         }
