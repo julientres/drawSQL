@@ -6,16 +6,66 @@ body {
     font-size: 14px;
 }
 
+
+/* ------ ZONE DE DESSIN ------ */
+
 #main {
     width:100%;
-    overflow: hidden;
+    margin: auto;
+    overflow: auto;
     padding-top: 10px;
     padding-bottom:10px;
     margin-top: 30px;
 }
+
 #divBetween{
     display: none;
 }
+
+#drawing {
+    position:relative;
+    float: left;
+    width: 85%;
+    height: 80vh;
+    margin-left: 10px;
+    border:1px solid #222;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-image: url('../img/svg/grid.svg');
+    background-position: fixed;
+}
+
+#options {
+    float:right;
+    width:50px;
+    margin-right: 13px;
+}
+
+
+.drag1{
+    border-radius: 8px;
+    width: 130px;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+.tap-target{
+    cursor: pointer;
+}
+
+#grille {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+
+
+
+/* ------- FORMES -------*/
+
 #forms button {
     padding: 0;
 }
@@ -28,20 +78,6 @@ body {
 #forms svg {
     display: inline-block;
     vertical-align: middle;
-}
-
-#drawing {
-    position:relative;
-    height: 80vh;
-    margin-right: 70px;
-    margin-left: 120px;
-    border:1px solid #222;
-}
-
-#options {
-    float:right;
-    width:50px;
-    margin-right: 13px;
 }
 
 .form{
@@ -58,17 +94,6 @@ body {
     background-color: red;
 }
 
-.drag1{
-    border-radius: 8px;
-    width: 130px;
-    box-sizing: border-box;
-    position: absolute;
-}
-
-.tap-target{
-    cursor: pointer;
-}
-
 #line-container{
     position: absolute;
     width: 100%;
@@ -81,14 +106,6 @@ body {
     height: 100%;
 }
 
-#grille {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-}
 .add-button{
     position: absolute;
     padding: 0px 5px;
@@ -103,29 +120,7 @@ body {
     color: #FFF;
 }
 
-
-/* ----- MODAL ------ */
-#divCodeJoin{
-    display: none;
-}
-
-.btn-outline-secondary{
-    margin-top: 10px;
-}
-
-#function_select{
-    margin-top: 20px;
-}
-
-#function_select label{
-    width: 100px;
-    margin-bottom: 10px;
-}
-
-.function-form{
-    display: inline;
-    width: 300px;
-}
+/* Ecrire dans un Select */
 
 .select-column{
     position: absolute;
@@ -134,45 +129,15 @@ body {
     height: 50px;
 }
 
-.from-table{
-    position: absolute;
-    width: 124px;
-    top: 51px;
-    left: 0px;
-    text-align: center;
-}
-
-.where-condition{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: absolute;
-    width: 180px;
-    top: 10px;
-    left: 10px;
-}
-
-.first-join{
-    position: absolute;
-    top: 18px;
-    right: 150px;
-}
-
-.second-join{
-    position: absolute;
-    top: 18px;
-    left: 150px;
-}
-
-[data-type="select"] p{
-    padding-top: 10px;
-    margin: 0;
-}
-
-
 [data-type="select"] p, [data-type="select"] span{
     font-size: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+[data-type="select"] p{
+    padding-top: 7px;
+    margin: 0;
 }
 
 
@@ -211,6 +176,110 @@ body {
 .fifth{
     top: 141px;
 }
+
+/* Ecire dans un From */
+
+.from-table{
+    position: absolute;
+    width: 124px;
+    top: 51px;
+    left: 0px;
+    text-align: center;
+}
+
+/* Ecrire dans un Where */
+
+.where-condition{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+    width: 180px;
+    top: 10px;
+    left: 10px;
+}
+
+/* Ecire dans un Join */
+
+.first-join{
+    position: absolute;
+    top: 18px;
+    right: 150px;
+}
+
+.second-join{
+    position: absolute;
+    top: 18px;
+    left: 150px;
+}
+
+
+
+/* ----- MODAL ------ */
+
+/* Modal Join */
+
+#divCodeJoin{
+    display: none;
+}
+
+.join-modal{
+    display: block;
+    width: 45%;
+}
+
+.join-modal select{
+    margin-bottom: 15px;
+}
+
+.left{
+    float: right;
+}
+
+.rigth{
+    float: right;
+}
+
+/*Modal Select*/
+
+.btn-outline-secondary{
+    margin-top: 10px;
+}
+
+#function_select{
+    margin-top: 20px;
+}
+
+#function_select label{
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.function-form{
+    display: inline;
+    width: 300px;
+}
+
+
+
+/* ----- DRAG AND DROP ----- */
+
+/* Zone de drop */
+
+.drop-active {
+    border:3px dashed blue !important;
+}
+
+/* Forme qui entre dans la zone de drop*/
+
+.can-drop {
+    border:3px dashed green !important;
+}
+
+.accept-drop {
+    z-index:10;
+}
+
+
 /*
 #boxSelect{
     display: flex;
@@ -234,5 +303,3 @@ body {
     font-size: 23px;
 }
 */
-
-
