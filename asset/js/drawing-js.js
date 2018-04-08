@@ -270,116 +270,126 @@ $(document).ready(function () {
 
         ajaxGet(dataSelectColumn, $('#modalSelect').modal('hide'));
 
-        var x_1 = 0;
-        var y_1 = 0;
-        var x_2 = 0;
-        var y_2 = 0;
-        var id_premier;
-        var id_second;
+        var dataLinkSelect = {
+            "dataLinkSelect": true,
+            "tableId": table,
+            "idSelect": id
+        };
+        console.log(dataLinkSelect);
+        ajaxPost(dataLinkSelect, function (data) {
+            console.log(data);
+            var x_1 = 0;
+            var y_1 = 0;
+            var x_2 = 0;
+            var y_2 = 0;
+            var id_premier;
+            var id_second;
+            if (x_1 == 0 && y_1 == 0) {
+
+                var select = "#" + data.id;
+                var target1 = $(select);
+                x = (parseFloat(target1.attr("data-x")) || 0);
+                y = (parseFloat(target1.attr('data-y')) || 0);
+                x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
+                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
+                id_premier = $(target1).attr('id');
+
+                var table2 = '#' + data.link;
+                target2 = $(table2);
+                x2 = (parseFloat(target2.attr('data-x')) || 0);
+                y2 = (parseFloat(target2.attr('data-y')) || 0);
+                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+                y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
+                id_second = $(target2).attr('id');
 
 
-        if (x_1 == 0 && y_1 == 0) {
+                var idLine = $('.line').attr("data-id");
+                var test = id_premier + '-' + id_second;
+                if (idLine == test) {
+                    var html = '#' + idLine;
+                    $(html).remove();
+                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                } else {
+                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                }
+                nb_links++;
+                links[nb_links] = {
+                    forme1: id_premier,
+                    forme2: id_second
+                };
+                $(select + ' > .select-column').remove();
+                $(select + ' > .function').remove();
+                $(select).append('<p class="select-column">' + column + '</p>');
 
-            var select = "#" + id;
-            var target1 = $(select);
-            x = (parseFloat(target1.attr("data-x")) || 0);
-            y = (parseFloat(target1.attr('data-y')) || 0);
-            x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
-            y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
-            id_premier = $(target1).attr('id');
+                for (i = 0; i < $("#function_select > input").length; i++) {
+                    label = $('#function_select label:eq(' + i + ')').text();
+                    input = $('#function_select input:eq(' + i + ')').val();
+                    console.log(label);
+                    console.log(input);
+                    $(select).append('<div class="function function_' + i + '"></div>');
+                    if (i == 0) {
+                        $('.function_' + i + '').append('<span class="function-name first">' + label + '</span>');
+                        $('.function_' + i + '').append('<span class="function-value first">' + input + '</span>');
+                    } else if (i == 1) {
+                        $('.function_' + i + '').append('<span class="function-name second">' + label + '</span>');
+                        $('.function_' + i + '').append('<span class="function-value second">' + input + '</span>');
+                    } else if (i == 2) {
+                        $('.function_' + i + '').append('<span class="function-name third">' + label + '</span>');
+                        $('.function_' + i + '').append('<span class="function-value third">' + input + '</span>');
+                    } else if (i == 3) {
+                        $('.function_' + i + '').append('<span class="function-name fourth">' + label + '</span>');
+                        $('.function_' + i + '').append('<span class="function-value fourth">' + input + '</span>');
+                    } else if (i == 4) {
+                        $('.function_' + i + '').append('<span class="function-name fifth">' + label + '</span>');
+                        $('.function_' + i + '').append('<span class="function-value fifth">' + input + '</span>');
+                    }
+                }
 
-            var table2 = '#' + table;
-            target2 = $(table2);
-            x2 = (parseFloat(target2.attr('data-x')) || 0);
-            y2 = (parseFloat(target2.attr('data-y')) || 0);
-            x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
-            y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
-            id_second = $(target2).attr('id');
-
-
-            var idLine = $('.line').attr("data-id");
-            var test = id_premier + '-' + id_second;
-            if (idLine == test) {
-                var html = '#' + idLine;
-                $(html).remove();
-                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-            } else {
-                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                switch ($("#function_select > input").length) {
+                    case 0:
+                        $(select + " > .img-form").remove();
+                        $(select).append('<img class="img-form"src="../asset/img/svg/Select_0.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                        $(select).css("width", "300px");
+                        $(select + " > .add-button").css('left', '300px');
+                        break;
+                    case 1:
+                        $(select + " > .img-form").remove();
+                        $(select).append('<img class="img-form"src="../asset/img/svg/Select_1.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                        $(select).css("width", "300px");
+                        $(select + " > .add-button").css('left', '300px');
+                        break;
+                    case 2:
+                        $(select + " > .img-form").remove();
+                        $(select).append('<img class="img-form"src="../asset/img/svg/Select_2.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                        $(select + " > .img-form").css("width", "300px");
+                        $(select + " > .add-button").css('left', '300px');
+                        break;
+                    case 3:
+                        $(select + " > .img-form").remove();
+                        $(select).append('<img class="img-form"src="../asset/img/svg/Select_3.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                        $(select + " > .img-form").css("width", "300px");
+                        $(select + " > .add-button").css('left', '300px');
+                        break;
+                    case 4:
+                        $(select + " > .img-form").remove();
+                        $(select).append('<img class="img-form"src="../asset/img/svg/Select_4.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                        $(select + " > .img-form").css("width", "300px");
+                        $(select + " > .add-button").css('left', '300px');
+                        break;
+                    case 5:
+                        $(select + " > .img-form").remove();
+                        $(select).append('<img class="img-form"src="../asset/img/svg/Select_5.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                        $(select + " > .img-form").css("width", "300px");
+                        $(select + " > .add-button").css('left', '300px');
+                        break;
+                }
             }
-            nb_links++;
-            links[nb_links] = {
-                forme1: id_premier,
-                forme2: id_second
-            };
-        }
+        });
 
 
-        $(select + ' > .select-column').remove();
-        $(select + ' > .function').remove();
-        $(select).append('<p class="select-column">' + column + '</p>');
 
-        for (i = 0; i < $("#function_select > input").length; i++) {
-            label = $('#function_select label:eq(' + i + ')').text();
-            input = $('#function_select input:eq(' + i + ')').val();
-            console.log(label);
-            console.log(input);
-            $(select).append('<div class="function function_' + i + '"></div>');
-            if (i == 0) {
-                $('.function_' + i + '').append('<span class="function-name first">' + label + '</span>');
-                $('.function_' + i + '').append('<span class="function-value first">' + input + '</span>');
-            } else if (i == 1) {
-                $('.function_' + i + '').append('<span class="function-name second">' + label + '</span>');
-                $('.function_' + i + '').append('<span class="function-value second">' + input + '</span>');
-            } else if (i == 2) {
-                $('.function_' + i + '').append('<span class="function-name third">' + label + '</span>');
-                $('.function_' + i + '').append('<span class="function-value third">' + input + '</span>');
-            } else if (i == 3) {
-                $('.function_' + i + '').append('<span class="function-name fourth">' + label + '</span>');
-                $('.function_' + i + '').append('<span class="function-value fourth">' + input + '</span>');
-            } else if (i == 4) {
-                $('.function_' + i + '').append('<span class="function-name fifth">' + label + '</span>');
-                $('.function_' + i + '').append('<span class="function-value fifth">' + input + '</span>');
-            }
-        }
 
-        switch ($("#function_select > input").length) {
-            case 0:
-                $(select + " > .img-form").remove();
-                $(select).append('<img class="img-form"src="../asset/img/svg/Select_0.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(select).css("width", "300px");
-                $(select + " > .add-button").css('left', '300px');
-                break;
-            case 1:
-                $(select + " > .img-form").remove();
-                $(select).append('<img class="img-form"src="../asset/img/svg/Select_1.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(select).css("width", "300px");
-                $(select + " > .add-button").css('left', '300px');
-                break;
-            case 2:
-                $(select + " > .img-form").remove();
-                $(select).append('<img class="img-form"src="../asset/img/svg/Select_2.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(select + " > .img-form").css("width", "300px");
-                $(select + " > .add-button").css('left', '300px');
-                break;
-            case 3:
-                $(select + " > .img-form").remove();
-                $(select).append('<img class="img-form"src="../asset/img/svg/Select_3.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(select + " > .img-form").css("width", "300px");
-                $(select + " > .add-button").css('left', '300px');
-                break;
-            case 4:
-                $(select + " > .img-form").remove();
-                $(select).append('<img class="img-form"src="../asset/img/svg/Select_4.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(select + " > .img-form").css("width", "300px");
-                $(select + " > .add-button").css('left', '300px');
-                break;
-            case 5:
-                $(select + " > .img-form").remove();
-                $(select).append('<img class="img-form"src="../asset/img/svg/Select_5.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
-                $(select + " > .img-form").css("width", "300px");
-                $(select + " > .add-button").css('left', '300px');
-                break;
-        }
+
 
 
     });
@@ -1006,7 +1016,7 @@ $(document).ready(function () {
 
             target.setAttribute('data-click', 'true');
             $(target).css('border', '3px dashed red');
-        }        
+        }
     });
 
     $(document).keydown(function (event) {
