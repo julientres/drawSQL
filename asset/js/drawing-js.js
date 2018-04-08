@@ -968,6 +968,14 @@ $(document).ready(function () {
                 }
             }
         })
+        .on('click', function() {
+            $('.draggable').each(function () {
+                if ($(this).attr('data-click') == 'true') {
+                    $(this).css('border', '3px dashed transparent');
+                    $(this).attr('data-click', 'false');
+                }
+            });
+        })
 
 
     $(document).on('click', '.draggable', function (event) {
@@ -994,7 +1002,7 @@ $(document).ready(function () {
 
             target.setAttribute('data-click', 'true');
             $(target).css('border', '3px dashed red');
-        }
+        }        
     });
 
     $(document).keydown(function (event) {
@@ -1021,25 +1029,24 @@ $(document).ready(function () {
                 });
 
                 var idDeleteForm = {'idDeleteForm': arrayToDelete};
-                ajaxGet(idDeleteForm, function () {
+                ajaxGet(idDeleteForm, 
                     $('.draggable').each(function () {
-                        console.log($(this));
                         $(this).remove();
-                    });
+                    }),
 
                     $('.line').each(function () {
                         $(this).remove();
-                    });
+                    }),
 
-                    nb_select = 0;
-                    nb_from = 0;
-                    nb_where = 0;
-                    nb_join = 0;
-                    nb_subQuery = 0;
-                    nb_links = 0;
-                    forms = [];
-                    links = [];
-                })
+                    nb_select = 0,
+                    nb_from = 0,
+                    nb_where = 0,
+                    nb_join = 0,
+                    nb_subQuery = 0,
+                    nb_links = 0,
+                    forms = [],
+                    links = []           
+                )
             }
         }
     }
@@ -1065,10 +1072,10 @@ $(document).ready(function () {
                         if (confirm('Voulez vous supprimer cette forme de la zone de dessin ? Cela supprimera aussi toutes les formes associées')) {
                             var id = $(this).attr('id');
                             var idDeleteForm = "idDeleteForm=" + id;
-                            ajaxGet(idDeleteForm, $('.accept-drop').each(function () {
+                            ajaxGet(idDeleteForm, 
+                                $('.accept-drop').each(function () {
                                     if ($(this).parent(id)) {
                                         if ($(this).attr('data-type') == 'select') {
-
                                             $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_select--;
@@ -1089,40 +1096,39 @@ $(document).ready(function () {
                                             nb_join--;
                                         }
                                     }
-                                }));
-                                nb_subQuery--;
-                                delete forms[id];
-                                $(this).remove();
-
-                                //delete links ?
-
+                                }),
+                                nb_subQuery--,
+                                delete forms[id],
+                                $(this).remove()
+                            )
                         }
                     }
                     else {
                         if (confirm('Voulez vous supprimer cette forme de la zone de dessin ?')) {
                             var idDeleteForm = "idDeleteForm=" + $(this).attr('id');
-                            ajaxGet(idDeleteForm, function () {
-                                if ($(this).attr('data-type') == 'select')
-                                    nb_select--;
-                                else if ($(this).attr('data-type') == 'from')
-                                    nb_from--;
-                                else if ($(this).attr('data-type') == 'where')
-                                    nb_where--;
-                                else if ($(this).attr('data-type') == 'join')
-                                    nb_join--;
+                            ajaxGet(idDeleteForm, 
+                                $(function() {
+                                    if ($(this).attr('data-type') == 'select')
+                                        nb_select--;
+                                    else if ($(this).attr('data-type') == 'from')
+                                        nb_from--;
+                                    else if ($(this).attr('data-type') == 'where')
+                                        nb_where--;
+                                    else if ($(this).attr('data-type') == 'join')
+                                        nb_join--;
 
-                                delete forms[$(this).attr('id')];
-                                $(this).remove();
-
-                                if (links.length != 0) {
-                                    for (var i = 1; i < links.length; i++) {
-                                        if (links[i].forme1 == $(this).attr('id') || links[i].forme2 == $(this).attr('id')) {
-                                            $('#' + links[i].forme1 + '-' + links[i].forme2 + '').remove();
-                                            nb_links--;
+                                    if (links.length != 0) {
+                                        for (var i = 1; i < links.length; i++) {
+                                            if (links[i].forme1 == $(this).attr('id') || links[i].forme2 == $(this).attr('id')) {
+                                                $('#' + links[i].forme1 + '-' + links[i].forme2 + '').remove();
+                                                nb_links--;
+                                            }
                                         }
-                                    }
-                                }
-                            })
+                                    } 
+                                }),
+                                delete forms[$(this).attr('id')],
+                                $(this).remove()                              
+                            )
                         }
                     }
                 }
