@@ -10,10 +10,4 @@
         {
             return $this->column;
         }
-
-        public function convertToSQL() {
-            $queryFrom = "GROUP BY ".$this->column;
-
-            return $queryFrom;
-        }
 	}

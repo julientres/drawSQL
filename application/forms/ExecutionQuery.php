@@ -3,40 +3,11 @@ require_once('/../../fonctions.php');
 
 class ExecutionQuery
 {
-    private $select;
-    private $from;
-    private $where;
-    private $join;
-    /*
-    private $join;
-    private $having;
-    private $orderBy;
-    private $groupBy;
-    private $subQuery;
-    */
-
-    public function __construct($select, $from, $where = null,$join = null)
+    public function __construct()
     {
-        if ($where != null) {
-            $this->select = $select;
-            $this->from = $from;
-            $this->where = $where;
-        }elseif ($join != null) {
-            $this->select = $select;
-            $this->from = $from;
-            $this->join = $join;
-        }elseif ($join != null && $where != null){
-            $this->select = $select;
-            $this->from = $from;
-            $this->where = $where;
-            $this->join = $join;
-        }else {
-            $this->select = $select;
-            $this->from = $from;
-        }
     }
 
-    public function exec()
+    public function execQuery($sql)
     {
         $bdd = doConnexion();
         if (isset($this->where)) {

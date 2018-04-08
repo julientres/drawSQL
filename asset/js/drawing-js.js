@@ -22,7 +22,7 @@ $(document).ready(function () {
         clearGrid();
     });
 
-    $('#delete').click(function (event) {
+    $('#delete').click(function () {
         deleteElement();
     });
 
@@ -172,10 +172,11 @@ $(document).ready(function () {
             var table = "table2=true";
             var html = "";
             ajaxPost(table, function (data) {
+                console.log(data);
                 if (data[0][0] == null) {
                 } else {
                     html = '<option value="null"></option>';
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data[0].length; i++) {
                         html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
                     }
                     $('#optGroupTable').html(html);
@@ -235,7 +236,7 @@ $(document).ready(function () {
                 if (data[0][0] == null) {
                 } else {
                     html = '<option value="null"></option>';
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data[0].length; i++) {
                         html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
                     }
                     $('#optGroupJoinTab1').html(html);
@@ -243,23 +244,15 @@ $(document).ready(function () {
                 }
             });
         }
-        /*else if (type == 'subquery') {
-            $('#modalJoin').modal('show');
-        }*/
     });
 
     //Bouton enregistrement de la modal du Select
     $('#btdModalSelect').on('click', function () {
 
         var dataSelect = "";
-        var first = true;
         $("input[type='checkbox']:checked").each(function () {
-            if(first == true){
-                first = false;
-            }else{
-                dataSelect += ", ";
-            }
             dataSelect += $(this).val();
+            dataSelect += ",";
         });
 
         var column = dataSelect.substring(0, dataSelect.length - 1);
@@ -288,41 +281,36 @@ $(document).ready(function () {
         if (x_1 == 0 && y_1 == 0) {
 
             var select = "#" + id;
-            if(table != 'null'){
+            var target1 = $(select);
+            x = (parseFloat(target1.attr("data-x")) || 0);
+            y = (parseFloat(target1.attr('data-y')) || 0);
+            x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
+            y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
+            id_premier = $(target1).attr('id');
 
-                var target1 = $(select);
-                x = (parseFloat(target1.attr("data-x")) || 0);
-                y = (parseFloat(target1.attr('data-y')) || 0);
-                x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
-                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
-                id_premier = $(target1).attr('id');
-                
-                var table2 = '#' + table;
-                target2 = $(table2);
-                x2 = (parseFloat(target2.attr('data-x')) || 0);
-                y2 = (parseFloat(target2.attr('data-y')) || 0);
-                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
-                y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
-                id_second = $(target2).attr('id');
+            var table2 = '#' + table;
+            target2 = $(table2);
+            x2 = (parseFloat(target2.attr('data-x')) || 0);
+            y2 = (parseFloat(target2.attr('data-y')) || 0);
+            x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+            y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
+            id_second = $(target2).attr('id');
 
 
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
-                if (idLine == test) {
-                    var html = '#' + idLine;
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                } else {
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                }
-                nb_links++;
-                links[nb_links] = {
-                    forme1: id_premier,
-                    forme2: id_second
-                };
-
+            var idLine = $('.line').attr("data-id");
+            var test = id_premier + '-' + id_second;
+            if (idLine == test) {
+                var html = '#' + idLine;
+                $(html).remove();
+                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+            } else {
+                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
             }
-
+            nb_links++;
+            links[nb_links] = {
+                forme1: id_premier,
+                forme2: id_second
+            };
         }
 
 
@@ -333,6 +321,8 @@ $(document).ready(function () {
         for (i = 0; i < $("#function_select > input").length; i++) {
             label = $('#function_select label:eq(' + i + ')').text();
             input = $('#function_select input:eq(' + i + ')').val();
+            console.log(label);
+            console.log(input);
             $(select).append('<div class="function function_' + i + '"></div>');
             if (i == 0) {
                 $('.function_' + i + '').append('<span class="function-name first">' + label + '</span>');
@@ -401,18 +391,18 @@ $(document).ready(function () {
             var column = $('#modalWhere #where1').find(":selected").text();
             var operate = $('#modalWhere #where2').find(":selected").text();
             console.log(operate);
-            var value1 = $('#where3').val();
             var value2 = $('#where4').val();
             var id = $('#inputWhereId').val();
+            var value1 = $('#where3').val();
             var condition = column + " " + operate + " '" + value1 + "'";
             if (column != null && operate != null && value1 != null) {
                 var dataWhere = {
                     "whereGenerer": table,
                     "id": id,
-                    "columnWhere": column,
                     "operate": operate,
                     "value1": value1,
                     "value2": value2,
+                    "columnWhere": column,
                     "idFrom": idTable
                 };
                 ajaxGet(dataWhere, $('#modalWhere').modal('hide'));
@@ -439,57 +429,53 @@ $(document).ready(function () {
                 }else if(heightp <= 105){
                     $(where).append('<img class="img-form"src="../asset/img/svg/Where_5.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
                     $(where).css("width", "250px");
-                }else{
                     $(where).append('<img class="img-form"src="../asset/img/svg/Where_6.svg" data-container="body" data-toggle="popover" data-placement="right" data-html="true">');
+                }else{
                     $(where).css("width", "250px");
                 }
                 $(where + " > .add-button").css('left', '250px'); 
 
             }
-
             var x_1 = 0;
             var y_1 = 0;
-            var x_2 = 0;
             var y_2 = 0;
-            var id_premier;
-            var id_second;
+            var x_2 = 0;
 
             if (x_1 == 0 && y_1 == 0) {
-                
                 var join = "#" + id;
-                
-                if(idTable != 'null'){
-                    var target1 = $(join);
-                    x = (parseFloat(target1.attr("data-x")) || 0);
-                    y = (parseFloat(target1.attr('data-y')) || 0);
-                    x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
-                    y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
-                    id_premier = $(target1).attr('id');
+            var id_second;
+            var id_premier;
+                var target1 = $(join);
+                y_1 = y + ((parseFloat(target1[0].offsetHeight)) / 2);
+                id_premier = $(target1).attr('id');
+                x = (parseFloat(target1.attr("data-x")) || 0);
+                y = (parseFloat(target1.attr('data-y')) || 0);
+                x_1 = x + ((parseFloat(target1[0].offsetWidth)) / 2);
 
-                    var forme = '#' + idTable;
-                    target2 = $(forme);
-                    x2 = (parseFloat(target2.attr('data-x')) || 0);
-                    y2 = (parseFloat(target2.attr('data-y')) || 0);
-                    x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
-                    y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
-                    id_second = $(target2).attr('id');
+                target2 = $(forme);
+                x_2 = x2 + ((parseFloat(target2[0].offsetWidth)) / 2);
+                var forme = '#' + idTable;
+                y2 = (parseFloat(target2.attr('data-y')) || 0);
+                x2 = (parseFloat(target2.attr('data-x')) || 0);
 
-                    var idLine = $('.line').attr("data-id");
-                    var test = id_premier + '-' + id_second;
-                    if (idLine == test) {
-                        var html = '#' + idLine;
-                        $(html).remove();
-                        $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                    } else {
-                        $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                    }
-                    nb_links++;
-                    links[nb_links] = {
-                        forme1: id_premier,
-                        forme2: id_second
-                    };
+                y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
+                id_second = $(target2).attr('id');
+                var idLine = $('.line').attr("data-id");
+                var test = id_premier + '-' + id_second;
+
+                if (idLine == test) {
+                    $(html).remove();
+                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                    var html = '#' + idLine;
+                } else {
+                nb_links++;
+                links[nb_links] = {
                 }
+                    forme2: id_second
+                    forme1: id_premier,
 
+                };
             }
         }
     );
@@ -579,8 +565,9 @@ $(document).ready(function () {
             "tableJoinId": tableJoinId,
             "idJoin": joinForme
         };
-
+        console.log(dataLink);
         ajaxPost(dataLink, function (data) {
+            console.log(data);
             var x_1 = 0;
             var y_1 = 0;
             var x_2 = 0;
@@ -602,15 +589,18 @@ $(document).ready(function () {
                 y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
                 id_second = $(target2).attr('id');
 
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
-                if (idLine == test) {
-                    var html = '#' + idLine;
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                } else {
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                }
+
+                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+
+                /*                var idLine = $('.line').attr("data-id");
+                                var test = id_premier + '-' + id_second;
+                                if (idLine == test) {
+                                    var html = '#' + idLine;
+                                    $(html).remove();
+                                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                                } else {
+                                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                                }*/
                 nb_links++;
                 links[nb_links] = {
                     forme1: id_premier,
@@ -638,15 +628,18 @@ $(document).ready(function () {
                 y_2_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
                 id_second_2 = $(target2).attr('id');
 
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
-                if (idLine == test) {
-                    var html = '#' + idLine;
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
-                } else {
-                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
-                }
+
+                $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+
+                /*                var idLine = $('.line').attr("data-id");
+                                var test = id_premier + '-' + id_second;
+                                if (idLine == test) {
+                                    var html = '#' + idLine;
+                                    $(html).remove();
+                                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+                                } else {
+                                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+                                }*/
                 nb_links++;
                 links[nb_links] = {
                     forme1: id_premier_2,
@@ -971,6 +964,7 @@ $(document).ready(function () {
             }
         })
 
+
     $(document).on('click', '.draggable', function (event) {
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -1019,11 +1013,12 @@ $(document).ready(function () {
                 var arrayToDelete = {};
                 $('.draggable').each(function (index) {
                     arrayToDelete[index] = $(this).attr('id');
-                })
+                });
 
-                var idDeleteForm = {'idDeleteForm': arrayToDelete}
+                var idDeleteForm = {'idDeleteForm': arrayToDelete};
                 ajaxGet(idDeleteForm, function () {
                     $('.draggable').each(function () {
+                        console.log($(this));
                         $(this).remove();
                     });
 
@@ -1050,7 +1045,7 @@ $(document).ready(function () {
             if ($(this).attr('data-click') == 'true') {
                 selectedForm = true;
             }
-        })
+        });
 
         if (jQuery.isEmptyObject(forms)) {
             alert('Aucune forme sur la zone de dessin...');
@@ -1065,34 +1060,37 @@ $(document).ready(function () {
                         if (confirm('Voulez vous supprimer cette forme de la zone de dessin ? Cela supprimera aussi toutes les formes associées')) {
                             var id = $(this).attr('id');
                             var idDeleteForm = "idDeleteForm=" + id;
-                            ajaxGet(idDeleteForm, function () {
-                                $('.accept-drop').each(function () {
+                            ajaxGet(idDeleteForm, $('.accept-drop').each(function () {
                                     if ($(this).parent(id)) {
                                         if ($(this).attr('data-type') == 'select') {
+
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_select--;
                                         }
                                         else if ($(this).attr('data-type') == 'from') {
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_from--;
                                         }
                                         else if ($(this).attr('data-type') == 'where') {
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_where--;
                                         }
                                         else if ($(this).attr('data-type') == 'join') {
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_join--;
                                         }
                                     }
-                                })
-
+                                }));
                                 nb_subQuery--;
                                 delete forms[id];
                                 $(this).remove();
 
                                 //delete links ?
-                            })
+
                         }
                     }
                     else {
