@@ -22,7 +22,7 @@ $(document).ready(function () {
         clearGrid();
     });
 
-    $('#delete').click(function (event) {
+    $('#delete').click(function () {
         deleteElement();
     });
 
@@ -172,10 +172,11 @@ $(document).ready(function () {
             var table = "table2=true";
             var html = "";
             ajaxPost(table, function (data) {
+                console.log(data);
                 if (data[0][0] == null) {
                 } else {
                     html = '<option value="null"></option>';
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data[0].length; i++) {
                         html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
                     }
                     $('#optGroupTable').html(html);
@@ -235,7 +236,7 @@ $(document).ready(function () {
                 if (data[0][0] == null) {
                 } else {
                     html = '<option value="null"></option>';
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data[0].length; i++) {
                         html += '<option value="' + data[1][i] + '">' + data[0][i] + '</option>';
                     }
                     $('#optGroupJoinTab1').html(html);
@@ -243,9 +244,6 @@ $(document).ready(function () {
                 }
             });
         }
-        /*else if (type == 'subquery') {
-            $('#modalJoin').modal('show');
-        }*/
     });
 
     //Bouton enregistrement de la modal du Select
@@ -549,8 +547,9 @@ $(document).ready(function () {
             "tableJoinId": tableJoinId,
             "idJoin": joinForme
         };
-
+        console.log(dataLink);
         ajaxPost(dataLink, function (data) {
+            console.log(data);
             var x_1 = 0;
             var y_1 = 0;
             var x_2 = 0;
@@ -572,15 +571,18 @@ $(document).ready(function () {
                 y_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
                 id_second = $(target2).attr('id');
 
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
-                if (idLine == test) {
-                    var html = '#' + idLine;
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                } else {
-                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
-                }
+
+                $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+
+                /*                var idLine = $('.line').attr("data-id");
+                                var test = id_premier + '-' + id_second;
+                                if (idLine == test) {
+                                    var html = '#' + idLine;
+                                    $(html).remove();
+                                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                                } else {
+                                    $('#line-container').append('<svg id="' + id_premier + '-' + id_second + '" data-id="' + id_premier + '-' + id_second + '"  class="line" height="100%" width="100%"><line x1="' + x_1 + '" y1="' + y_1 + '" x2="' + x_2 + '" y2="' + y_2 + '" style="stroke:#000"/></svg>');
+                                }*/
                 nb_links++;
                 links[nb_links] = {
                     forme1: id_premier,
@@ -608,15 +610,18 @@ $(document).ready(function () {
                 y_2_2 = y2 + ((parseFloat(target2[0].offsetHeight)) / 2);
                 id_second_2 = $(target2).attr('id');
 
-                var idLine = $('.line').attr("data-id");
-                var test = id_premier + '-' + id_second;
-                if (idLine == test) {
-                    var html = '#' + idLine;
-                    $(html).remove();
-                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
-                } else {
-                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
-                }
+
+                $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+
+                /*                var idLine = $('.line').attr("data-id");
+                                var test = id_premier + '-' + id_second;
+                                if (idLine == test) {
+                                    var html = '#' + idLine;
+                                    $(html).remove();
+                                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+                                } else {
+                                    $('#line-container').append('<svg id="' + id_premier_2 + '-' + id_second_2 + '" data-id="' + id_premier_2 + '-' + id_second_2 + '"  class="line" height="100%" width="100%"><line x1="' + x_1_2 + '" y1="' + y_1_2 + '" x2="' + x_2_2 + '" y2="' + y_2_2 + '" style="stroke:#000"/></svg>');
+                                }*/
                 nb_links++;
                 links[nb_links] = {
                     forme1: id_premier_2,
@@ -941,6 +946,7 @@ $(document).ready(function () {
             }
         })
 
+
     $(document).on('click', '.draggable', function (event) {
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -989,11 +995,12 @@ $(document).ready(function () {
                 var arrayToDelete = {};
                 $('.draggable').each(function (index) {
                     arrayToDelete[index] = $(this).attr('id');
-                })
+                });
 
-                var idDeleteForm = {'idDeleteForm': arrayToDelete}
+                var idDeleteForm = {'idDeleteForm': arrayToDelete};
                 ajaxGet(idDeleteForm, function () {
                     $('.draggable').each(function () {
+                        console.log($(this));
                         $(this).remove();
                     });
 
@@ -1020,7 +1027,7 @@ $(document).ready(function () {
             if ($(this).attr('data-click') == 'true') {
                 selectedForm = true;
             }
-        })
+        });
 
         if (jQuery.isEmptyObject(forms)) {
             alert('Aucune forme sur la zone de dessin...');
@@ -1035,34 +1042,37 @@ $(document).ready(function () {
                         if (confirm('Voulez vous supprimer cette forme de la zone de dessin ? Cela supprimera aussi toutes les formes associées')) {
                             var id = $(this).attr('id');
                             var idDeleteForm = "idDeleteForm=" + id;
-                            ajaxGet(idDeleteForm, function () {
-                                $('.accept-drop').each(function () {
+                            ajaxGet(idDeleteForm, $('.accept-drop').each(function () {
                                     if ($(this).parent(id)) {
                                         if ($(this).attr('data-type') == 'select') {
+
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_select--;
                                         }
                                         else if ($(this).attr('data-type') == 'from') {
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_from--;
                                         }
                                         else if ($(this).attr('data-type') == 'where') {
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_where--;
                                         }
                                         else if ($(this).attr('data-type') == 'join') {
+                                            $('#' + id).remove();
                                             delete forms[$(this).attr('id')];
                                             nb_join--;
                                         }
                                     }
-                                })
-
+                                }));
                                 nb_subQuery--;
                                 delete forms[id];
                                 $(this).remove();
 
                                 //delete links ?
-                            })
+
                         }
                     }
                     else {
