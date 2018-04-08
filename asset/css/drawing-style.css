@@ -55,6 +55,10 @@ body {
     margin-right: 13px;
 }
 
+.alert-primary{
+    margin: 10px;
+}
+
 .form{
     position: absolute;
     border-radius: 8px;

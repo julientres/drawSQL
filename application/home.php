@@ -25,8 +25,9 @@
 		<div id="errorForm" class="msg"></div>
 		<div id="infoForm" class="msg"></div>
 
-		<form method="POST" action="home.php" id="connexion_form" enctype="multipart/form-data">			
-			<h3>Application de requêtes algébriques Connexion</h3>
+		<form method="POST" action="home.php" id="connexion_form" enctype="multipart/form-data">
+			<h1>DrawSQL</h1>			
+			<h3>Connexion</h3>
 			<hr>
 			<br>
 			<div class="form-group row">
