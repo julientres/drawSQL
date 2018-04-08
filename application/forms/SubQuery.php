@@ -1,5 +1,5 @@
 <?php
-	class SubQuery extends Form{
+	class SubQuery{
 		private $select;
 		private $from;
 		private $where;
@@ -9,8 +9,7 @@
 		private $groupBy;
 		private $numberOfForms;
 
-		public function __construct($image, $select, $from, $where, $join, $having, $orderBy, $groupBy, $numberOfForms) {
-			super($image);
+		public function __construct($select, $from, $where, $join, $having, $orderBy, $groupBy, $numberOfForms) {
 			$this->select = $select;
 			$this->from = $from;
 			$this->where = $where;

@@ -1,19 +1,13 @@
 <?php
-	class GroupBy extends Form {
+	class GroupBy{
 		private $column;
 
-		public function __construct($image, $column) {
-			super($image);
+		public function __construct($column) {
 			$this->column = $column;
 		}
 
-		public function convertToSQL($c) {
-			$str = implode(",", $c);
-			
-			$queryGroupBy = array("index" => 5,
-							"query" => "GROUP BY " . $str);
-
-			return $queryGroupBy;
-		}
+        public function getColumn()
+        {
+            return $this->column;
+        }
 	}
-?>

@@ -11,7 +11,7 @@ $table = $help->allTables($_SESSION['bdd']);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Algebraic Queries - drawing</title>
+    <title>DrawSQL - drawing</title>
     <meta content="" name="description">
     <meta content="RTAI - ANGLES HIOT SOLE TRESCARTES" name="author">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,72 +39,65 @@ $table = $help->allTables($_SESSION['bdd']);
 
 <?php if ($returnBDD['success'] == true) : ?>
 
-	<div id="main">
+    <div id="main">
         <div id="options">
             <ul class="list-group list-group-horizontal">
-                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
-                <button id="zoomIn" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip" data-placement="left" title="Zoom +"><i class="fas fa-search-plus"></i></button>
-                <button id="zoomOut" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Zoom -"><i class="fas fa-search-minus"></i></button>
-                <button id="zoomReset" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Revenir au zoom par défaut"><i class="fas fa-expand"></i></button>
-                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i class="fas fa-eraser"></i></button>
+                <button id="delete" class="list-group-item list-group-item-action" type="button" data-toggle="tooltip"
+                        data-placement="left" title="Supprimer un objet"><i class="fas fa-trash-alt"></i></button>
+                <button id="clear" class="list-group-item list-group-item-action" data-toggle="tooltip"
+                        data-placement="left" title="Effacer tous les objets présents dans la zone de dessin"><i
+                            class="fas fa-eraser"></i></button>
             </ul>
         </div>
-        
-		<div id="forms">
-			<ul class="list-group">
-                <button id="fromObject" class="list-group-item list-group-item-action" data-form="2" data-toggle="tooltip" data-placement="right" title="FROM">
+
+        <div id="forms">
+            <ul class="list-group">
+                <button id="fromObject" class="list-group-item list-group-item-action" data-form="2"
+                        data-toggle="tooltip"
+                        data-placement="right" title="FROM">
                     <svg height="50" width="100">
-                        <circle id="polyFrom" r="20" cx="50" cy="25" fill="#FFFFFF" stroke="#000" stroke-width="2"></circle>
+                        <circle id="polyFrom" r="20" cx="50" cy="25" fill="#FFFFFF" stroke="#000"
+                                stroke-width="2"></circle>
                     </svg>
                 </button>
 
-				<button id="selectObject" class="list-group-item list-group-item-action" data-form="1" data-toggle="tooltip" data-placement="right" title="SELECT">
-					<svg width="100" height="50">
-						<path id="polySelect" d="M10 10L30 40L70 40L90 10z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
-					</svg> 
-				</button>
+                <button id="selectObject" class="list-group-item list-group-item-action" data-form="1"
+                        data-toggle="tooltip"
+                        data-placement="right" title="SELECT">
+                    <svg width="100" height="50">
+                        <path id="polySelect" d="M10 10L30 40L70 40L90 10z" fill="#FFFFFF" stroke="#000"
+                              stroke-width="2"></path>
+                    </svg>
+                </button>
 
-				<button id="whereObject" class="list-group-item list-group-item-action" data-form="3" data-toggle="tooltip" data-placement="right" title="WHERE">
-					<svg height="50" width="100">
-						<path id="polyWhere" d="M10 5L10 45L90 32L90 18z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
-					</svg>
-				</button>
-			    <button id="joinObject" class="list-group-item list-group-item-action" data-form="4" data-toggle="tooltip" data-placement="right" title="JOIN">
-			    	<svg height="50" width="100">
-						<path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
-					</svg>
-			    </button>
-			    <button id="subQueryObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="SOUS REQUÊTE">
-			    	<svg height="80" width="100">
-			    		<path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF" stroke="#000" stroke-width="2"></path>
-			    	</svg>
-			    </button>
-                <!--
-			    <button id="groupByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="GROUP BY">GROUP BY</button>
-			    <button id="havingObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="HAVING">HAVNG</button>
-			    <button id="orderByObject" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right" title="ORDER BY">ORDER BY</button>
-			    -->
-			    <button id="link" class="list-group-item list-group-item-action" data-toggle="tooltip" data-placement="right"  data-processing="false" title="LINE">
-			    	<svg height="50" width="100">
-			    		<polyline id="polyLine" points="10,40 90,10" fill="none" stroke="#000" stroke-width="2"></polyline>
-			    	</svg>
-			    </button>
-			</ul>
-		</div>
+                <button id="whereObject" class="list-group-item list-group-item-action" data-form="3"
+                        data-toggle="tooltip"
+                        data-placement="right" title="WHERE">
+                    <svg height="50" width="100">
+                        <path id="polyWhere" d="M10 5L10 45L90 32L90 18z" fill="#FFFFFF" stroke="#000"
+                              stroke-width="2"></path>
+                    </svg>
+                </button>
+                <button id="joinObject" class="list-group-item list-group-item-action" data-form="4"
+                        data-toggle="tooltip"
+                        data-placement="right" title="JOIN">
+                    <svg height="50" width="100">
+                        <path id="polyJoin" d="M20 10L20 40L80 10L80 40z" fill="#FFFFFF" stroke="#000"
+                              stroke-width="2"></path>
+                    </svg>
+                </button>
+                <button id="subQueryObject" class="list-group-item list-group-item-action" data-form="5"
+                        data-toggle="tooltip" data-placement="right" title="SOUS-REQUÊTE">
+                    <svg height="80" width="100">
+                        <path id="polySubQuery" d="M20 40L35 33L35 10L80 10L80 70L35 70L35 48z" fill="#FFFFFF"
+                              stroke="#000"
+                              stroke-width="2"></path>
+                    </svg>
+                </button>
+            </ul>
+        </div>
         <div id="drawing">
             <div id="grille">
-                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <pattern id="smallGrid" width="6" height="6" patternUnits="userSpaceOnUse">
-                            <path d="M 6 0 L 0 0 0 6" fill="none" stroke="gray" stroke-width="0.5"></path>
-                        </pattern>
-                        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <rect width="60" height="60" fill="url(#smallGrid)"></rect>
-                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="gray" stroke-width="1"></path>
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#grid)"></rect>
-                </svg>
             </div>
 
             <div id="line-container">
@@ -131,18 +124,35 @@ $table = $help->allTables($_SESSION['bdd']);
                     </select>
                     <br>
                     <div id="divSelect">
+                        <div id="boxCheckbox">
+
+                        </div>
+                        <div id="boxSelect">
+                            <div>
+                                <button id="min" class="btn btn-outline-secondary">MIN</button>
+                                <button id="max" class="btn btn-outline-secondary">MAX</button>
+                                <button id="count" class="btn btn-outline-secondary">COUNT</button>
+                                <button id="avg" class="btn btn-outline-secondary">AVG</button>
+                                <button id="sum" class="btn btn-outline-secondary">SUM</button>
+                                <br>
+                                <button id="having" class="btn btn-outline-secondary">HAVING</button>
+                                <button id="groupby" class="btn btn-outline-secondary">GROUP BY</button>
+                                <button id="orderby" class="btn btn-outline-secondary">ORDER BY</button>
+                            </div>
+                        </div>
+                        <div id="function_select">
+                        </div>
                     </div>
-                </div>
-                <input type="hidden" id="inputSelectId" value="">
-                <input type="hidden" id="idTable" value="">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
+                    <input type="hidden" id="inputSelectId" value="">
+                    <input type="hidden" id="idTable" value="">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="button" id="btdModalSelect" class="btn btn-primary">Sauvegarder</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal From -->
     <div class="modal fade" id="modalFrom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -163,9 +173,6 @@ $table = $help->allTables($_SESSION['bdd']);
                         </optgroup>
                     </select>
                     <input type="hidden" id="inputFromId" value="">
-                </div>
-                <div id="console">
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -218,15 +225,16 @@ $table = $help->allTables($_SESSION['bdd']);
                     </select>
                     <br>
                     <br>
-                    <input type="text" class="input-group" id="where3" value="">
+                    <input type="text" class="form-control input-group" id="where3" maxlength="200">
                     <br>
                     <div id="divBetween">
                         <p>And</p>
-                        <input type="text" class="input-group" id="where4" value="">
+                        <input type="text" class="input-group" id="where4">
                     </div>
 
                 </div>
                 <input id="inputWhereId" type="hidden" value="">
+                <input id="inputFromForm" type="hidden" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="button" id="btdModalWhere" class="btn btn-primary">Sauvegarder</button>
@@ -245,32 +253,67 @@ $table = $help->allTables($_SESSION['bdd']);
                     <h5 class="modal-title" id="exampleModalLabel">Join</h5>
                 </div>
                 <div class="modal-body" id="textModal">
-                    <select class="custom-select" id="join1">
-                        <option value="null"></option>
-                        <option value="INNER JOIN">INNER JOIN</option>
-                        <option value="LEFT JOIN">LEFT JOIN</option>
-                        <option value="RIGHT JOIN">RIGHT JOIN</option>
-                        <option value="FULL JOIN">FULL JOIN</option>
-                    </select>
-                    <select class="custom-select" id="join2">
-                        <option value="null"></option>
-                        <?php
-                        foreach ($table as $t) {
-                            echo '<option value="' . $t["TABLE_NAME"] . '">' . $t["TABLE_NAME"] . '</option>';
-                        }
-                        ?>
-                    </select>
-                    ON
-                    <select class="custom-select" id="join3">
+                    <!--<label>Lier forme</label>
+                    <select class="custom-select" id="tableJoin1">
+                        <optgroup id="optGroupLie" label="Choisir une forme à lier">
+                            <?php
+                            /*$nbS = $_SESSION['nbSelect'];
+                            $nbF = $_SESSION['nbFrom'];
+                            $nbW = $_SESSION['nbWhere'];
+                            $nbJ = $_SESSION['nbJoin'];
+                            for($i=1; $i<=$nbF;$i++){
+                                $id = "from".$i;
+                                if($_SESSION[$id]['object'] != null){
+                                    echo "<option value='" .$_SESSION[$id]['id']. "'>" . $_SESSION[$id]['table'] .  "</option>";
+                                }
+                            }
+                            for($i=1; $i<=$nbW;$i++){
+                                $id = "where".$i;
+                                if($_SESSION[$id]['object'] != null){
+                                    echo "<option value='" .$_SESSION[$id]['from']. "'>" . $_SESSION[$id]['table'] .  "</option>";
+                                }
+                            }
+                            for($i=1; $i<=$nbJ;$i++){
+                                $id = "join".$i;
+                                if($_SESSION[$id]['object'] != null){
+                                    $object =  unserialize($_SESSION[$id]['object']);
+                                    $tableSelected = $object->getTable();
+                                }
+                            }*/
+                            ?>
+                        </optgroup>
+                    </select>-->
+                    <label>Table 1</label>
+                    <select class="custom-select" id="tableJoin1">
+                        <optgroup id="optGroupJoinTab1" label="Choisir une table">
 
+                        </optgroup>
                     </select>
-                    =
-                    <select class="custom-select" id="join4">
+                    <br>
+                    <br>
+                    <label>Table 2</label>
+                    <select class="custom-select" id="tableJoin2">
+                        <optgroup id="optGroupJoinTab2" label="Choisir une table">
 
+                        </optgroup>
                     </select>
-                </div>
-                <div id="console">
+                    <br>
+                    <br>
+                    <label>Valeur 1</label>
+                    <select class="custom-select" id="value1">
+                        <optgroup id="optGroupJoin1" label="Choisir une colonne">
 
+                        </optgroup>
+                    </select>
+                    <br>
+                    <br>
+                    <label>Valeur 2</label>
+                    <select class="custom-select" id="value2">
+                        <optgroup id="optGroupJoin2" label="Choisir une colonne">
+
+                        </optgroup>
+                    </select>
+                    <input type="hidden" id="inputJoinId" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

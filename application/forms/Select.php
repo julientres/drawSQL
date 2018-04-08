@@ -1,29 +1,51 @@
 <?php
-	class Select{
-		private $column;
 
-		public function __construct($column) {
-			$this->column = $column;
-		}
+class Select{
+    private $column;
+    private $min;
+    private $max;
+    private $count;
+    private $avg;
+    private $sum;
 
-		public function getColumn(){
-			return $this->column;
-		}
+    public function __construct($column, $min, $max, $count, $avg, $sum)
+    {
+        $this->column = $column;
+        $this->min = $min;
+        $this->max = $min;
+        $this->count = $min;
+        $this->avg = $min;
+        $this->sum = $min;
+    }
 
-		public function getColumnName(){
+    public function getColumn()
+    {
+        return $this->column;
+    }
 
-        }
+    public function getMin()
+    {
+        return $this->min;
+    }
 
-		public function convertToSQL() {
-		    if(is_array($this->column)){
-                $strC = implode(",", $this->column);
-            }else{
-		        $strC = $this->column;
-            }
-            $querySelect = "SELECT " . $strC;
+    public function getMax()
+    {
+        return $this->max;
+    }
 
-			return $querySelect;
-		}
+    public function getCount()
+    {
+        return $this->count;
+    }
 
+    public function getAvg()
+    {
+        return $this->avg;
+    }
 
-	}
+    public function getSum()
+    {
+        return $this->sum;
+    }
+
+}
