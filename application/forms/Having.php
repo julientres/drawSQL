@@ -1,19 +1,22 @@
 <?php
-	class Having extends Form {
+	class Having{
 		private $column;
 		private $operation;
 
-		public function __construct($image, $column, $operation) {
-			super($image);
+		public function __construct($column, $operation) {
 			$this->column = $column;
 			$this->operation = $operation;
 		}
+		public function getColumn(){
+		    return $this->column;
+        }
+        public function getOpera(){
+            return $this->operation;
+        }
 
-		public function convertToSQL($c, $o) {
-			$result = array("index" => 6,
-							"query" => "HAVING");
+        public function convertToSQL() {
+            $queryFrom = "HAVING ".$this->column. " " . $this->operation;
 
-			return $result;
-		}
+            return $queryFrom;
+        }
 	}
-?>
