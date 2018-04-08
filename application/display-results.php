@@ -10,6 +10,7 @@ require_once('forms/Join.php');
 require_once('forms/HelpDataEntry.php');
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +35,6 @@ require_once('forms/HelpDataEntry.php');
     <?php
     if ($retour['success'] == true) {
         require_once('modules/navbar/navbar-result.php');
-
     } else {
         require_once('modules/navbar/navbar-default.php');
     }

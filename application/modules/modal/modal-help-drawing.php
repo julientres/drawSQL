@@ -1,5 +1,5 @@
 <div class="modal fade helpDrawingModal" id="helpDrawingModal" tabindex="-1" role="dialog" aria-labelledby="helpDrawingModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Comment créer et exécuter une requête algébrique ?</h5>
@@ -8,11 +8,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Cum saepe multa, tum memini domi in hemicyclio sedentem, ut solebat, cum et ego essem una et pauci admodum familiares, in eum sermonem illum incidere qui tum forte multis erat in ore. Meministi enim profecto, Attice, et eo magis, quod P. Sulpicio utebare multum, cum is tribunus plebis capitali odio a Q. Pompeio, qui tum erat consul, dissideret, quocum coniunctissime et amantissime vixerat, quanta esset hominum vel admiratio vel querella.</p>
-
-        <p>Cum saepe multa, tum memini domi in hemicyclio sedentem, ut solebat, cum et ego essem una et pauci admodum familiares, in eum sermonem illum incidere qui tum forte multis erat in ore. Meministi enim profecto, Attice, et eo magis, quod P. Sulpicio utebare multum, cum is tribunus plebis capitali odio a Q. Pompeio, qui tum erat consul, dissideret, quocum coniunctissime et amantissime vixerat, quanta esset hominum vel admiratio vel querella.</p>
-
-        <p>Cum saepe multa, tum memini domi in hemicyclio sedentem, ut solebat, cum et ego essem una et pauci admodum familiares, in eum sermonem illum incidere qui tum forte multis erat in ore. Meministi enim profecto, Attice, et eo magis, quod P. Sulpicio utebare multum, cum is tribunus plebis capitali odio a Q. Pompeio, qui tum erat consul, dissideret, quocum coniunctissime et amantissime vixerat, quanta esset hominum vel admiratio vel querella.</p>
+        <p>Cette outil va vous faciliter la création de requête algébrique et en prime, vous permettre de la transformer en requête SQL. Vous pourrez alors l'éxécuter directement au sein de l'application pour visualiser les résultats. Alors commençons!</p>
+        <p><b>D'abord,</b> choissisez l'une des formes présente sur le panneau de gauche. Une fois cliquée, elle apparaitra dans la zone de dessin. Vous pourrez alors la déplacer comme bon vous semble. Ajoutez autant de formes que vous souhaitez.</p>
+        <p><b>Ensuite,</b> ajoutez des attributs à vos formes avec le boutton '+' à côté de la forme désirée. Une fenêtre vous demandera alors de saisir les champs associés. Une fois enregistrés, les liens entre vos formes se feront automatiquement.</p>
+        <p><b>Enfin,</b> quand votre requête algébrique est terminée, cliquez sur le bouton "Générer" dans le menu en haut à gauche. Une fenêtre avec votre requête SQL apparaitra, vous n'avez plus qu'à l'éxécuter et obtenir les résultats!</p>
+      </div>
+      <div class="alert alert-primary" role="alert">
+        <b>Astuce !</b><br>
+        <p>Vous pouvez supprimer une forme en la sélectionnant et en cliquant soit sur la touche Suppr de votre clavier, soit sur la Corbeille dans le panneau de droite. La Gomme vous permet d'effacer toute la zone de dessin.</p>
       </div>
       <div class="modal-footer">
         <div class="btn-group" role="group" aria-label="...">
