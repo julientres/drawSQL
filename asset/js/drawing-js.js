@@ -709,7 +709,7 @@ $(document).ready(function () {
     //Bouton qui va envoyé l'execution de la requete pour nous rediriger vers la page de résultat
     $('#btdSql').on('click', function () {
         var dataGenerer = "generer=true";
-        ajaxGet(dataGenerer, window.location.replace("./display-results.php"));
+        ajaxGet(dataGenerer, window.open("./display-results.php"));
     });
 
 
