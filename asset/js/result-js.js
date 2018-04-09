@@ -9,8 +9,8 @@ $(document).ready(function () {
         success: function (data) {
 
             data = JSON.parse(data);
-            console.log(data);
-            if(data[0]['resultat']['try']){
+            var type = true;
+            if (data[0]['resultat']['try']) {
                 //Evite de réecrire tous
                 tabResultat = data[0]['resultat']['res'];
                 tabColumn = data[1]['column'];
@@ -18,70 +18,97 @@ $(document).ready(function () {
                 console.log(tabResultat);
                 console.log(tabColumn);
 
-                if(tabColumn[1][0] != null){
+
+                if(tabColumn[0]['COLUMN_NAME'] != null){
+                    var tab1 = []
+                    for (var column in tabColumn){
+                        tab1.push(tabColumn[column]['COLUMN_NAME']);
+
+                    }
+                    type = false;
+                    tabColumn = tab1;
+                }
+                if (tabColumn != null) {
 
                     //La taille des tableaux
                     size = 0;
 
                     //Pour chaque valeur du tableau de column je boucle
-                    for(var items in tabColumn) {
-                        for (var itemsB in tabColumn) {
-                            if(tabColumn[items][itemsB] != null){
-                                size++;
-                                $('#nameColumns').append('<th scope="col">' + tabColumn[items][itemsB]['COLUMN_NAME'] +'</th>');
-                            }
+                    for (var items in tabColumn) {
+                        if (tabColumn[items] != null) {
+                            size++;
+                            $('#nameColumns').append('<th scope="col">' + tabColumn[items] + '</th>');
                         }
+
 
                     }
 
-                    if(tabResultat.length == 0){
+                    if (tabResultat.length == 0) {
                         $('#valueColumns').append('<td colspan="' + size + '">Aucun résultat trouvé</td>');
-                    }else{
+                    } else {
                         //Pour chaque valeur du tableau des resultats, je boucle et je reboucle pour afficher en fonction des columns
-                        for(var item in tabResultat) {
+                        for (var item in tabResultat) {
                             $('#valueColumns').append('<tr>');
-                            for(var itemCA in tabColumn){
-                                for (var itemCB in tabColumn){
-                                    $('#valueColumns').append('<td>' + tabResultat[item][tabColumn[itemCA][itemCB]['COLUMN_NAME']] +'</td>');
+                            for (var itemCA in tabColumn) {
+                                var text = tabColumn[itemCA];
+                                if (text.includes('MAX') || text.includes('MIN') || text.includes('COUNT') || text.includes('AVG') || text.includes('SUM')) {
+                                    $('#valueColumns').append('<td>' + tabResultat[item][text] + '</td>');
+                                }else{
+                                    var array = tabColumn[itemCA].split('.');
+                                    for(var i in array){
+                                        if(type){
+                                            if(tabResultat[item][array[i]] == null){
+
+                                            }else{
+                                                $('#valueColumns').append('<td>' + tabResultat[item][array[i]] + '</td>');
+                                            }
+
+                                        }else{
+                                            if(tabResultat[item][array[i]] == null){
+
+                                            }else{
+                                                $('#valueColumns').append('<td>' + tabResultat[item][array[i]] + '</td>');
+                                            }
+
+                                        }
+                                    }
                                 }
                             }
                             $('#valueColumns').append('</tr>');
                         }
                     }
-                }else{
+                } else {
                     //Définit la taille des tableaux
                     size = data[0]['resultat'].length;
                     size2 = data[1]['column'].length;
 
                     //Pour chaque valeur du tableau de column je boucle
-                    for(var items in tabColumn) {
-                        if(tabColumn[items] == null){
+                    for (var items in tabColumn) {
+                        if (tabColumn[items] == null) {
 
-                        }else{
-                            $('#nameColumns').append('<th scope="col">' + tabColumn[items]['COLUMN_NAME'] +'</th>');
+                        } else {
+                            $('#nameColumns').append('<th scope="col">' + tabColumn[items]['COLUMN_NAME'] + '</th>');
                         }
                     }
 
-                    if(tabResultat.length == 0){
+                    if (tabResultat.length == 0) {
                         $('#valueColumns').append('<td colspan="' + size2 + '">Aucun résultat trouvé</td>');
-                    }else{
+                    } else {
                         //Pour chaque valeur du tableau des resultats, je boucle et je reboucle pour afficher en fonction des columns
-                        for(var item in tabResultat) {
+                        for (var item in tabResultat) {
                             $('#valueColumns').append('<tr>');
-                            for(var i = 0; i < size2; i++){
-                                $('#valueColumns').append('<td>' + tabResultat[item][tabColumn[i]['COLUMN_NAME']] +'</td>');
+                            for (var i = 0; i < size2; i++) {
+                                $('#valueColumns').append('<td>' + tabResultat[item][tabColumn[i]['COLUMN_NAME']] + '</td>');
                             }
                             $('#valueColumns').append('</tr>');
                         }
                     }
                 }
 
-            }else{
+            } else {
                 err = data[0]['resultat']['res'];
                 $('#err').html(err);
             }
-
-
 
 
         },
