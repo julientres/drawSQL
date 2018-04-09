@@ -19,21 +19,23 @@ $(document).ready(function () {
                 console.log(tabColumn);
 
                 if(tabColumn[1][0] != null){
-                    //Définit la taille des tableaux
-                    size = data[0]['resultat'].length;
+
+                    //La taille des tableaux
+                    size = 0;
 
                     //Pour chaque valeur du tableau de column je boucle
                     for(var items in tabColumn) {
                         for (var itemsB in tabColumn) {
                             if(tabColumn[items][itemsB] != null){
+                                size++;
                                 $('#nameColumns').append('<th scope="col">' + tabColumn[items][itemsB]['COLUMN_NAME'] +'</th>');
                             }
                         }
 
                     }
 
-                    if(tabResultat == ""){
-                        $('#valueColumns').append('<td colspan="' + size2 + '">Aucun résultat trouvé</td>');
+                    if(tabResultat.length == 0){
+                        $('#valueColumns').append('<td colspan="' + size + '">Aucun résultat trouvé</td>');
                     }else{
                         //Pour chaque valeur du tableau des resultats, je boucle et je reboucle pour afficher en fonction des columns
                         for(var item in tabResultat) {
@@ -60,7 +62,7 @@ $(document).ready(function () {
                         }
                     }
 
-                    if(tabResultat == ""){
+                    if(tabResultat.length == 0){
                         $('#valueColumns').append('<td colspan="' + size2 + '">Aucun résultat trouvé</td>');
                     }else{
                         //Pour chaque valeur du tableau des resultats, je boucle et je reboucle pour afficher en fonction des columns

@@ -37,8 +37,8 @@ if (isset($_POST['fromInput'])) {
             array_push($array, $tableJoin . "." . $value->name);
         }
         $tabColumn = [];
-        array_push($tabColumn,$column1);
-        array_push($tabColumn,$column2);
+        array_push($tabColumn, $column1);
+        array_push($tabColumn, $column2);
 
         $_SESSION['column'] = $tabColumn;
         echo json_encode($array);
@@ -146,19 +146,16 @@ if (isset($_POST['table'])) {
 }
 if (isset($_POST['dataLinkSelect'])) {
     if ($_POST['dataLinkSelect']) {
-        $id1 = $_POST['tableId'];
-        $id2 = $_POST['tableJoinId'];
-        $idJoin = $_POST['idJoin'];
+        $id = $_POST['tableId'];
+        $idSelect = $_POST['idSelect'];
 
-        if ($_SESSION[$id1]['link'] != null && $_SESSION[$id2]['link'] != null) {
-            $link1 = $_SESSION[$id1]['link'];
-            $link2 = $_SESSION[$id2]['link'];
-            $res = ['link1' => $link1, 'link2' => $link2, 'id' => $idJoin, 'boucle' => 1];
+        if ($_SESSION[$id]['link'] != null) {
+            $link = $_SESSION[$id]['link'];
+            $res = ['link' => $link,'id' => $idSelect];
             echo json_encode($res);
         } else {
-            $link1 = $_SESSION[$id1]['id'];
-            $link2 = $_SESSION[$id1]['id'];
-            $res = ['link1' => $link1, 'link2' => $link2, 'id' => $idJoin, 'boucle' => 2];
+            $link = $_SESSION[$id]['id'];
+            $res = ['link' => $link, 'id' => $idSelect];
             echo json_encode($res);
         }
 
@@ -273,20 +270,21 @@ if (isset($_POST['table2'])) {
 // FIN WHERE //
 
 // DEBUT JOIN //
-if (isset($_GET['join'])) {
+if (isset($_GET['join'])) { //Quand on reçoit GET join
     $id = $_GET['join'];
-    $_SESSION[$id] = ['id' => $id, 'object' => null];
+    $_SESSION[$id] = ['id' => $id, 'object' => null]; //Créer une session avec un id et un object associé
     echo true;
 }
-if (isset($_POST['join'])) {
+if (isset($_POST['join'])) { //Quand on reçoit POST join
     $id = $_POST['join'];
-    if ($_SESSION[$id]['object'] != null) {
+    if ($_SESSION[$id]['object'] != null) { //Test si il existe l'oject
         $object = $_SESSION[$id]['object'];
         $join = unserialize($object);
         $table = $join->getTableJ();
         $tableJoin = $join->getTableJoin();
         $value1 = $join->getValue1();
         $value2 = $join->getValue2();
+        //Récupere les informations de la jointure pour la renvoyer en json
         $res = ['table' => $table, 'res' => true, 'id' => $id, 'tableJoin' => $tableJoin, 'value1' => $value1, 'value2' => $value2];
         echo json_encode($res);
     } else {
@@ -294,7 +292,7 @@ if (isset($_POST['join'])) {
         echo json_encode($res);
     }
 }
-if (isset($_GET['joinGenerer'])) {
+if (isset($_GET['joinGenerer'])) { //Quand on reçoit $_GET joinGenerer
     if ($_GET['joinGenerer']) {
         $table = $_GET['joinGenerer'];
         $id = $_GET['id'];
@@ -309,11 +307,12 @@ if (isset($_GET['joinGenerer'])) {
         echo false;
     }
 }
-if (isset($_POST['dataLink'])) {
+if (isset($_POST['dataLink'])) { // Quand on reçoit en POST dataLink, on execute
     if ($_POST['dataLink']) {
         $id1 = $_POST['tableId'];
         $id2 = $_POST['tableJoinId'];
         $idJoin = $_POST['idJoin'];
+        //On récupere toutes les infos
         if ($_SESSION[$id1]['link'] != null && $_SESSION[$id2]['link'] != null) {
             $link1 = $_SESSION[$id1]['link'];
             $link2 = $_SESSION[$id2]['link'];
@@ -330,12 +329,12 @@ if (isset($_POST['dataLink'])) {
         echo false;
     }
 }
-if (isset($_POST['table3'])) {
+if (isset($_POST['table3'])) { // Quand on reçoit en POST table3, on execute
     $nb = $_SESSION['nbFrom'];
     $table = array();
     $nameId = array();
     $res = array();
-    for ($i = 1; $i <= $nb; $i++) {
+    for ($i = 1; $i <= $nb; $i++) { //On va récupere chaque table avec leurs id pour le modal
         $id = "from" . $i;
         array_push($nameId, $id);
         if ($_SESSION[$id]['object'] != null) {
@@ -350,29 +349,16 @@ if (isset($_POST['table3'])) {
 }
 // FIN JOIN //
 
-/*if (isset($_GET['generer'])) {
-    if ($_GET['generer']) {
-        if (isset($_SESSION['select']) && isset($_SESSION['from']) && isset($_SESSION['where'])
-            && isset($_SESSION['join']) || isset($_SESSION['select']) && isset($_SESSION['from'])
-            && isset($_SESSION['where']) || isset($_SESSION['select']) && isset($_SESSION['from'])
-            && isset($_SESSION['join']) || isset($_SESSION['select']) && isset($_SESSION['from'])) {
-            echo true;
-        } else {
-            echo false;
-        }
-    }
-}*/
-
-if (isset($_GET['idDeleteForm'])) {
+if (isset($_GET['idDeleteForm'])) { // Quand on reçoit en GET idDeleteForm, on execute
     $formSessionArr = array();
     $formSession = "";
-    $get = $_GET['idDeleteForm'];
+    $get = $_GET['idDeleteForm']; //On récupère un id ou plusieurs pour les formes à supprimer
 
-    if (is_array($get)) {
-        foreach ($get as $value) {
+    if (is_array($get)) { //On test si c'est un tableau
+        foreach ($get as $value) { //Pour chaque id d'une forme j'ajoute dans mon tableau
             array_push($formSessionArr, $value);
         }
-
+        //Détruis les variable en session
         foreach ($formSessionArr as $value) {
             unset($_SESSION[$value]);
         }
@@ -388,7 +374,9 @@ if (isset($_GET['idDeleteForm'])) {
     } else {
         $formSession = $get;
         $form = $_SESSION[$get]['object'];
-        if (is_a($form, 'Select')) unset($_SESSION['nbSelect'],$_SESSION['column']) ;
+        //Détruis les variable en session en fonction de l'id envoyé
+        //On test si l'object est égale à une forme pour détruire son nombre associé
+        if (is_a($form, 'Select')) unset($_SESSION['nbSelect'], $_SESSION['column']);
         if (is_a($form, 'From')) unset($_SESSION['nbFrom']);
         if (is_a($form, 'Where')) unset($_SESSION['nbWhere']);
         if (is_a($form, 'Join')) unset($_SESSION['nbJoin']);
@@ -400,9 +388,9 @@ if (isset($_GET['idDeleteForm'])) {
     }
 }
 
-if (isset($_POST['modal'])) {
+if (isset($_POST['modal'])) { // Quand on reçoit en POST modal, on execute
     if ($_POST['modal']) {
-
+        //On récupere les sessions contenant le nombre de forme créé pour chaque object
         $nbFrom = $_SESSION['nbFrom'];
         $nbJoin = $_SESSION['nbJoin'];
         $nbWhere = $_SESSION['nbWhere'];
@@ -411,6 +399,7 @@ if (isset($_POST['modal'])) {
         $nbGroup = $_SESSION['nbGroup'];
         $nbHaving = $_SESSION['nbHaving'];
 
+        //On crée un tableau pour chaque object
         $from = array();
         $join = array();
         $where = array();
@@ -420,6 +409,8 @@ if (isset($_POST['modal'])) {
         $group = array();
 
 
+        //Pour chaque forme on va récupérer les infos pour créer la requête
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbOrder; $i++) {
             $id = "order" . $i;
             if ($_SESSION[$id]['object'] != null) {
@@ -428,6 +419,7 @@ if (isset($_POST['modal'])) {
                 array_push($order, $tableOrder);
             }
         }
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbHaving; $i++) {
             $id = "having" . $i;
             if ($_SESSION[$id]['object'] != null) {
@@ -436,6 +428,7 @@ if (isset($_POST['modal'])) {
                 array_push($having, $tableHaving);
             }
         }
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbGroup; $i++) {
             $id = "group" . $i;
             if ($_SESSION[$id]['object'] != null) {
@@ -444,7 +437,7 @@ if (isset($_POST['modal'])) {
                 array_push($group, $tableGroup);
             }
         }
-
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbFrom; $i++) {
             $id = "from" . $i;
             if ($_SESSION[$id]['object'] != null) {
@@ -453,7 +446,7 @@ if (isset($_POST['modal'])) {
                 array_push($from, $tableFrom);
             }
         }
-
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbJoin; $i++) {
             $id = "join" . $i;
             if ($_SESSION[$id]['object'] != null) {
@@ -466,7 +459,7 @@ if (isset($_POST['modal'])) {
                 array_push($join, $tableSelected);
             }
         }
-
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbWhere; $i++) {
             $id = "where" . $i;
             if ($_SESSION[$id]['object'] != null) {
@@ -476,97 +469,96 @@ if (isset($_POST['modal'])) {
                 $value1 = $whereObj->getValue();
                 $value2 = $whereObj->getValue2();
                 $table = $_SESSION[$id]['table'];
-                $tableWhere = ['table' => $table , 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2];
+                $tableWhere = ['table' => $table, 'column' => $column, 'operate' => $operate, 'value1' => $value1, 'value2' => $value2];
                 array_push($where, $tableWhere);
             }
         }
-
+        //Pour chaque object existant on récupère l'object puis on rentre les infos important dans son tableau
         for ($i = 0; $i <= $nbSelect; $i++) {
             $id = "select" . $i;
             if ($_SESSION[$id]['object'] != null) {
                 $selectObj = unserialize($_SESSION[$id]['object']);
                 $column = $selectObj->getColumn();
-
                 /*$min = $selectObj->getMin();
                 $max = $selectObj->getMax();
                 $count = $selectObj->getCount();
                 $avg = $selectObj->getAvg();
                 $sum = $selectObj->getSum();*/
-
                 $tableSelected = ['column' => $column, 'min' => $min, 'max' => $max, 'count' => $count, 'avg' => $avg, 'sum' => $sum];
                 array_push($select, $tableSelected);
 
             }
         }
+        //On prépare la requête en prenant chaque tableau et les inserer ensemble pour en faire une requête
 
-
-        if (isset($select) && !empty($select)) {
+        //On récupère les champs du select
+        if (isset($select) && !empty($select)) {//Si il existe un select
             $sqlSelect = "SELECT " . $select[0]['column'];
         } else {
             $sqlSelect = null;
         }
-        if (isset($from) && !empty($from)) {
+        //On récupère les champs du from
+        if (isset($from) && !empty($from)) { //Si il existe un from
             $sqlFrom = " FROM ";
             foreach ($from as $value) {
                 $sqlFrom .= $value . ",";
             }
-            $sqlFrom = rtrim($sqlFrom, ", ");
+            $sqlFrom = rtrim($sqlFrom, ", "); //Pour enlever la dernière virgule
         } else {
             $sqlFrom = null;
         }
 
-        if (isset($join) && !empty($join)) {
+        //On récupère les champs de la jointure
+        if (isset($join) && !empty($join)) { //Si il existe une jointure
             $sqlWhere = " WHERE " . $join[0]['table'] . "." . $join[0]['value1'] . "=" . $join[0]['tableJoin'] . "." . $join[0]['value2'];
             foreach ($where as $value) {
-                $sqlWhere .= " AND " . $value['table'].".".$value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                $sqlWhere .= " AND " . $value['table'] . "." . $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
             }
-        } else if (isset($where) && !empty($where)) {
+        } else if (isset($where) && !empty($where)) { //Si il existe une restriction
             $sqlWhere = " WHERE ";
             foreach ($where as $value) {
-                $sqlWhere .= $value['table'].".".$value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
-                if(count($where) > 1) $sqlWhere .= " AND ";
+                $sqlWhere .= $value['table'] . "." . $value['column'] . $value['operate'] . "'" . $value['value1'] . "'";
+                if (count($where) > 1) $sqlWhere .= " AND ";
             }
         } else {
             $sqlWhere = null;
         }
-
-        if (isset($group) && !empty($group)) {
+        //On récupère les champs du Group By
+        if (isset($group) && !empty($group)) { //Si il existe un group by
             $sqlGroup = " GROUP BY " . $group[0];
         } else {
             $sqlGroup = null;
         }
         //$sqlOrder = " ORDER BY " . $order->getColumn();
 
-
+        //On encodre en json les parties pour faire la requête
         $sql = ['select' => $sqlSelect, 'from' => $sqlFrom, 'where' => $sqlWhere, 'group' => $sqlGroup];
+        //On place la requête sql en session pour la récupérer dans la page résultat
         $_SESSION['sql'] = $sql;
         echo json_encode($sql);
     }
 }
 
 
-if (isset($_POST['result'])) {
+if (isset($_POST['result'])) { // Quand on reçoit en POST result, on execute
     if ($_POST['result']) {
 
+        //On récupère la requête sql en session et découpe en partie
         $sql = $_SESSION['sql'];
         $select = $sql['select'];
         $from = $sql['from'];
         $where = $sql['where'];
         $group = $sql['group'];
 
+        //Assemble la requête
         $req = $select . " " . $from . " " . $where . " " . $group;
         $execution = new ExecutionQuery();
-        $result = $execution->execQuery($req);
+        $result = $execution->execQuery($req); //Execute la requête
 
         $table = [];
-        array_push($table, array('resultat' => $result));
+        array_push($table, array('resultat' => $result)); //Place le résultat dans le tableau
         $column = $_SESSION['column'];
-        array_push($table, array('column' => $column));
-
-
-        //var_dump($table);
-        //var_dump($_SESSION['column']);
-        //var_dump($_SESSION['name']);
+        array_push($table, array('column' => $column)); //Place les colonnes associés dans le tableau pour le tableau des résultats
 
         echo json_encode($table);
     }
