@@ -19,8 +19,6 @@ $table = $help->allTables($_SESSION['bdd']);
     <link rel="stylesheet" href="librairies/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../asset/css/drawing-style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
-
 </head>
 <body>
 <div id="menu">
