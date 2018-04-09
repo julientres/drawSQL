@@ -46,6 +46,7 @@ if (isset($_POST['fromInput'])) {
         $fromSelect = $_POST['fromInput'];
         $column = $help->columnsFromTable($fromSelect, $_SESSION['bdd']);
         $_SESSION['column'] = $column;
+        //var_dump($_SESSION['column']);
         $name = $help->showResultsColumns($column);
         $_SESSION['name'] = json_decode($name);
         echo $help->showResultsColumns($column);
@@ -74,7 +75,7 @@ if (isset($_POST['select'])) {
 }
 if (isset($_GET['selectGenerer'])) {
     if ($_GET['selectGenerer']) {
-        $column = $_GET['selectGenerer'];
+        $column = $_GET['column'];
         $id = $_GET['id'];
         $table = $_GET['table'];
         $_SESSION['nbSelect'] += 1;
@@ -108,7 +109,7 @@ if (isset($_GET['selectGenerer'])) {
         $max = $_GET['max'];
         $sum = $_GET['sum'];
         $avg = $_GET['avg'];
-        $selectObj = new Select("" . $column . "", "" . $min != null ? $min : null . "", "" . $max != null ? $max : null . "", "" . $count != null ? $count : null . "", "" . $avg != null ? $avg : null . "", "" . $sum != null ? $sum : null . "");
+        $selectObj = new Select("" . $column . "", "" . $min. "", "" . $max. "", "" . $count . "", "" . $avg . "", "" . $sum . "");
         $_SESSION[$id]['object'] = serialize($selectObj);
         $_SESSION[$id]['table'] = $table;
         echo true;
@@ -313,12 +314,25 @@ if (isset($_POST['dataLink'])) { // Quand on reçoit en POST dataLink, on execut
         $id2 = $_POST['tableJoinId'];
         $idJoin = $_POST['idJoin'];
         //On récupere toutes les infos
-        if ($_SESSION[$id1]['link'] != null && $_SESSION[$id2]['link'] != null) {
+        if ($_SESSION[$id1]['link'] != null ) {
+            $link1 = $_SESSION[$id1]['link'];
+            $link2 = $_SESSION[$id2]['id'];
+            $res = ['link1' => $link1, 'link2' => $link2, 'id' => $idJoin];
+            echo json_encode($res);
+        }
+        else  if ($_SESSION[$id2]['link'] != null) {
+            $link1 = $_SESSION[$id1]['id'];
+            $link2 = $_SESSION[$id2]['link'];
+            $res = ['link1' => $link1, 'link2' => $link2, 'id' => $idJoin];
+            echo json_encode($res);
+        }
+        else if($_SESSION[$id1]['link'] != null && $_SESSION[$id2]['link'] != null){
             $link1 = $_SESSION[$id1]['link'];
             $link2 = $_SESSION[$id2]['link'];
             $res = ['link1' => $link1, 'link2' => $link2, 'id' => $idJoin];
             echo json_encode($res);
-        } else {
+        }
+        else {
             $link1 = $_SESSION[$id1]['id'];
             $link2 = $_SESSION[$id2]['id'];
             $res = ['link1' => $link1, 'link2' => $link2, 'id' => $idJoin];
@@ -479,24 +493,59 @@ if (isset($_POST['modal'])) { // Quand on reçoit en POST modal, on execute
             if ($_SESSION[$id]['object'] != null) {
                 $selectObj = unserialize($_SESSION[$id]['object']);
                 $column = $selectObj->getColumn();
-                /*$min = $selectObj->getMin();
+                $min = $selectObj->getMin();
                 $max = $selectObj->getMax();
                 $count = $selectObj->getCount();
                 $avg = $selectObj->getAvg();
-                $sum = $selectObj->getSum();*/
+                $sum = $selectObj->getSum();
                 $tableSelected = ['column' => $column, 'min' => $min, 'max' => $max, 'count' => $count, 'avg' => $avg, 'sum' => $sum];
                 array_push($select, $tableSelected);
 
             }
         }
-        //On prépare la requête en prenant chaque tableau et les inserer ensemble pour en faire une requête
 
+        //On prépare la requête en prenant chaque tableau et les inserer ensemble pour en faire une requête
         //On récupère les champs du select
         if (isset($select) && !empty($select)) {//Si il existe un select
-            $sqlSelect = "SELECT " . $select[0]['column'];
+            $sqlSelect = "SELECT ";
+            $columnSelect = array();
+            if($select[0]['column'] != null){
+                $sqlSelect .= $select[0]['column'] . ",";
+                $columnSelect = explode(",", $select[0]['column']);
+                foreach($items as $columnSelect){
+                    array_push($columnSelect,$columnSelect[$items]);
+                }
+            }
+            if($select[0]['min'] != null){
+                $sqlSelect .= "MIN(" . $select[0]['min'] . "), ";
+                $minColumn = "MIN(" . $select[0]['min'] . ")";
+                array_push($columnSelect,$minColumn);
+            }
+            if($select[0]['max'] != null){
+                $sqlSelect .= "MAX(" . $select[0]['max'] . "), ";
+                $maxColumn = "MAX(" . $select[0]['max'] . ")";
+                array_push($columnSelect,$maxColumn);
+            }
+            if($select[0]['count'] != null){
+                $sqlSelect .= "COUNT(" .$select[0]['count'] . "), ";
+                $countColumn = "COUNT(" .$select[0]['count'] . ")";
+                array_push($columnSelect,$countColumn);
+            }
+            if($select[0]['avg'] != null){
+                $sqlSelect .= "AVG(" .$select[0]['avg'] . "), ";
+                $avgColumn = "AVG(" . $select[0]['avg'] . ")";
+                array_push($columnSelect,$avgColumn);
+            }
+            if($select[0]['sum'] != null){
+                $sqlSelect .= "SUM(" .$select[0]['sum'] . "), ";
+                $sumColumn = "SUM(" . $select[0]['sum'] . ")";
+                array_push($columnSelect,$sumColumn);
+            }
+            $sqlSelect = rtrim($sqlSelect, ", ");
         } else {
             $sqlSelect = null;
         }
+
         //On récupère les champs du from
         if (isset($from) && !empty($from)) { //Si il existe un from
             $sqlFrom = " FROM ";
@@ -530,9 +579,11 @@ if (isset($_POST['modal'])) { // Quand on reçoit en POST modal, on execute
             $sqlGroup = null;
         }
         //$sqlOrder = " ORDER BY " . $order->getColumn();
-
+        if($columnSelect[0] == "*"){
+            $columnSelect = $_SESSION['column'];
+        }
         //On encodre en json les parties pour faire la requête
-        $sql = ['select' => $sqlSelect, 'from' => $sqlFrom, 'where' => $sqlWhere, 'group' => $sqlGroup];
+        $sql = ['select' => $sqlSelect, 'from' => $sqlFrom, 'where' => $sqlWhere, 'group' => $sqlGroup, 'column' => $columnSelect];
         //On place la requête sql en session pour la récupérer dans la page résultat
         $_SESSION['sql'] = $sql;
         echo json_encode($sql);
@@ -549,15 +600,13 @@ if (isset($_POST['result'])) { // Quand on reçoit en POST result, on execute
         $from = $sql['from'];
         $where = $sql['where'];
         $group = $sql['group'];
-
         //Assemble la requête
         $req = $select . " " . $from . " " . $where . " " . $group;
         $execution = new ExecutionQuery();
         $result = $execution->execQuery($req); //Execute la requête
-
         $table = [];
         array_push($table, array('resultat' => $result)); //Place le résultat dans le tableau
-        $column = $_SESSION['column'];
+        $column = $sql['column'];
         array_push($table, array('column' => $column)); //Place les colonnes associés dans le tableau pour le tableau des résultats
 
         echo json_encode($table);

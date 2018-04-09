@@ -255,36 +255,34 @@ $table = $help->allTables($_SESSION['bdd']);
                     <h5 class="modal-title" id="exampleModalLabel">Jointure</h5>
                 </div>
                 <div class="modal-body" id="textModal">
-                    <label>Table 1</label>
-                    <select class="custom-select" id="tableJoin1">
-                        <optgroup id="optGroupJoinTab1" label="Choisir une table">
+                    <div class="join-modal rigth">
+                        <label>Table 1</label>
+                        <select class="custom-select" id="tableJoin1">
+                            <optgroup id="optGroupJoinTab1" label="Choisir une table">
 
-                        </optgroup>
-                    </select>
-                    <br>
-                    <br>
-                    <label>Table 2</label>
-                    <select class="custom-select" id="tableJoin2">
-                        <optgroup id="optGroupJoinTab2" label="Choisir une table">
+                            </optgroup>
+                        </select>
+                        <label>Valeur 1</label>
+                        <select class="custom-select" id="value1">
+                            <optgroup id="optGroupJoin1" label="Choisir une colonne">
 
-                        </optgroup>
-                    </select>
-                    <br>
-                    <br>
-                    <label>Valeur 1</label>
-                    <select class="custom-select" id="value1">
-                        <optgroup id="optGroupJoin1" label="Choisir une colonne">
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="join-modal">
+                        <label>Table 2</label>
+                        <select class="custom-select" id="tableJoin2">
+                            <optgroup id="optGroupJoinTab2" label="Choisir une table">
 
-                        </optgroup>
-                    </select>
-                    <br>
-                    <br>
-                    <label>Valeur 2</label>
-                    <select class="custom-select" id="value2">
-                        <optgroup id="optGroupJoin2" label="Choisir une colonne">
+                            </optgroup>
+                        </select>
+                        <label>Valeur 2</label>
+                        <select class="custom-select" id="value2">
+                            <optgroup id="optGroupJoin2" label="Choisir une colonne">
 
-                        </optgroup>
-                    </select>
+                            </optgroup>
+                        </select>
+                    </div>
                     <input type="hidden" id="inputJoinId" value="">
                 </div>
                 <div class="modal-footer">

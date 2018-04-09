@@ -266,7 +266,7 @@ $(document).ready(function () {
         var having =$('#selectHaving').val();
         var group = $('#selectGroup').val();
         var order = $('#selectOrdre').val();
-        var dataSelectColumn = {"selectGenerer": column, "id": id, "table": table, "min":min,"max":max,"count":count,"avg":avg,"sum":sum,"having":having,"group":group,"order":order};
+        var dataSelectColumn = {"selectGenerer":true,"column": column, "id": id, "table": table, "min":min,"max":max,"count":count,"avg":avg,"sum":sum,"having":having,"group":group,"order":order};
 
         ajaxGet(dataSelectColumn, $('#modalSelect').modal('hide'));
 

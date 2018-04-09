@@ -12,10 +12,10 @@ class Select{
     {
         $this->column = $column;
         $this->min = $min;
-        $this->max = $min;
-        $this->count = $min;
-        $this->avg = $min;
-        $this->sum = $min;
+        $this->max = $max;
+        $this->count = $count;
+        $this->avg = $avg;
+        $this->sum = $sum;
     }
 
     public function getColumn()
