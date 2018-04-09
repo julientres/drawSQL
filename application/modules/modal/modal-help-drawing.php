@@ -15,7 +15,9 @@
       </div>
       <div class="alert alert-primary" role="alert">
         <b>Astuce !</b><br>
+        <p>Dans la barre de navigation, le texte en italique qui succède le nom de l'application ("DrawSQL") précise sur quelle base de données vous êtes connecté.</p>
         <p>Vous pouvez supprimer une forme en la sélectionnant et en cliquant soit sur la touche Suppr de votre clavier, soit sur la Corbeille dans le panneau de droite. La Gomme vous permet d'effacer toute la zone de dessin.</p>
+        <p>Vous pouvez également déplacer la grille de sorte à avoir plus d'espace pour créer vos requêtes algébriques. Le déplacement est possible vers la droite et en bas, mais est bloquer vers la gauche et en haut.</p>
       </div>
       <div class="modal-footer">
         <div class="btn-group" role="group" aria-label="...">
